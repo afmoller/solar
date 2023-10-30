@@ -1,0 +1,90 @@
+<div>
+  <div>
+    <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">
+          iid
+        </label>
+        <input id="name" type="text" formControlName="iid">
+      </div>
+      <button class="button" type="submit">Load</button>
+    </form>
+  </div>
+
+  <div >
+    <table border="1" >
+      <thead>
+      <tr>
+        <th scope="col">iid</th>
+        <th scope="col">id</th>
+        <th scope="col">timestamp</th>
+        <th scope="col">timestampYear</th>
+        <th scope="col">timestampMonth</th>
+        <th scope="col">timestampDay</th>
+        <th scope="col">di_1</th>
+        <th scope="col">di_2</th>
+        <th scope="col">di_3</th>
+        <th scope="col">di_4</th>
+        <th scope="col">di_5</th>
+        <th scope="col">di_6</th>
+        <th scope="col">di_7</th>
+        <th scope="col">di_8</th>
+        <th scope="col">importRead</th>
+        <th scope="col">di_9</th>
+        <th scope="col">di_10</th>
+        <th scope="col">updateTime</th>
+        <th scope="col">ip</th>
+        <th scope="col">wlan</th>
+        <th scope="col">version</th>
+        <th scope="col">di_11</th>
+        <th scope="col">di_12</th>
+        <th scope="col">di_13</th>
+        <th scope="col">di_14</th>
+        <th scope="col">di_15</th>
+        <th scope="col">di_16</th>
+        <th scope="col">di_17</th>
+        <th scope="col">di_18</th>
+        <th scope="col">di_19</th>
+        <th scope="col">di_20</th>
+        <th scope="col">multichannelSwitchOverride</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>{{ dataexportentry?.iid }}</td>
+        <td>{{ dataexportentry?.id }}</td>
+        <td>{{ dataexportentry?.timestamp }}</td>
+        <td>{{ dataexportentry?.timestampYear }}</td>
+        <td>{{ dataexportentry?.timestampMonth }}</td>
+        <td>{{ dataexportentry?.timestampDay }}</td>
+        <td>{{ dataexportentry?.di_1 }}</td>
+        <td>{{ dataexportentry?.di_2 }}</td>
+        <td>{{ dataexportentry?.di_3 }}</td>
+        <td>{{ dataexportentry?.di_4 }}</td>
+        <td>{{ dataexportentry?.di_5 }}</td>
+        <td>{{ dataexportentry?.di_6 }}</td>
+        <td>{{ dataexportentry?.di_7 }}</td>
+        <td>{{ dataexportentry?.di_8 }}</td>
+        <td>{{ dataexportentry?.importRead }}</td>
+        <td>{{ dataexportentry?.di_9 }}</td>
+        <td>{{ dataexportentry?.di_10 }}</td>
+        <td>{{ dataexportentry?.updateTime }}</td>
+        <td>{{ dataexportentry?.ip }}</td>
+        <td>{{ dataexportentry?.wlan }}</td>
+        <td>{{ dataexportentry?.version }}</td>
+        <td>{{ dataexportentry?.di_11 }}</td>
+        <td>{{ dataexportentry?.di_12 }}</td>
+        <td>{{ dataexportentry?.di_13 }}</td>
+        <td>{{ dataexportentry?.di_14 }}</td>
+        <td>{{ dataexportentry?.di_15 }}</td>
+        <td>{{ dataexportentry?.di_16 }}</td>
+        <td>{{ dataexportentry?.di_17 }}</td>
+        <td>{{ dataexportentry?.di_18 }}</td>
+        <td>{{ dataexportentry?.di_19 }}</td>
+        <td>{{ dataexportentry?.di_20 }}</td>
+        <td>{{ dataexportentry?.multichannelSwitchOverride }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
