@@ -1,0 +1,34 @@
+export interface Dataexportentry {
+  iid: string;
+  id: string;
+  timestamp: Date;
+  timestampYear: string;
+  timestampMonth: string;
+  timestampDay: string;
+  di_1: string;
+  di_2: string;
+  di_3: string;
+  di_4: string;
+  di_5: string;
+  di_6: string;
+  di_7: string;
+  di_8: string;
+  importRead: string;
+  di_9: string;
+  di_10: string;
+  updateTime: Date;
+  ip: string;
+  wlan: string;
+  version: string;
+  di_11: string;
+  di_12: string;
+  di_13: string;
+  di_14: string;
+  di_15: string;
+  di_16: string;
+  di_17: string;
+  di_18: string;
+  di_19: string;
+  di_20: string;
+  multichannelSwitchOverride: string;
+}
