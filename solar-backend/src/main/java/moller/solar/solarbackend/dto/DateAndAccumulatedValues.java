@@ -90,4 +90,22 @@ public class DateAndAccumulatedValues {
             return new DateAndAccumulatedValues(this);
         }
     }
+
+    public static DateAndAccumulatedValues createDateAndAccumulatedValues(
+            List<LocalDate> date,
+            List<Integer> accumulatedConsumptionWattHours,
+            List<Integer> accumulatedProductionWattHours,
+            List<Integer> accumulatedPurchaseWattHours,
+            List<Integer> accumulatedSelfConsumptionWattHours,
+            List<Integer> accumulatedSaleWattHours) {
+
+        return new DateAndAccumulatedValues.DateAndAccumulatedValuesBuilder()
+                .setDate(date)
+                .setAccumulatedConsumptionWattHours(accumulatedConsumptionWattHours)
+                .setAccumulatedProductionWattHours(accumulatedProductionWattHours)
+                .setAccumulatedPurchaseWattHours(accumulatedPurchaseWattHours)
+                .setAccumulatedSelfConsumptionWattHours(accumulatedSelfConsumptionWattHours)
+                .setAccumulatedSaleWattHours(accumulatedSaleWattHours)
+                .build();
+    }
 }

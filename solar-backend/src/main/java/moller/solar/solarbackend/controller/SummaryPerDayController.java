@@ -7,8 +7,8 @@ import moller.solar.solarbackend.persistence.DataExportRepository;
 import moller.solar.solarbackend.persistence.SummaryPerDayEntry;
 import moller.solar.solarbackend.persistence.SummaryPerDayRepository;
 import moller.solar.solarbackend.summary.SummaryEntryValues;
+import moller.solar.solarbackend.util.ValueAggregator;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +21,16 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:4200/")
 public class SummaryPerDayController {
 
+    private final ValueAggregator valueAggregator;
     private final DataExportRepository dataExportRepository;
     private final SummaryPerDayRepository summaryPerDayRepository;
 
-    public SummaryPerDayController(DataExportRepository dataExportRepository, SummaryPerDayRepository summaryPerDayRepository) {
+    public SummaryPerDayController(
+            ValueAggregator valueAggregator,
+            DataExportRepository dataExportRepository,
+            SummaryPerDayRepository summaryPerDayRepository) {
+
+        this.valueAggregator = valueAggregator;
         this.dataExportRepository = dataExportRepository;
         this.summaryPerDayRepository = summaryPerDayRepository;
     }
@@ -81,7 +87,7 @@ public class SummaryPerDayController {
             accumulatedSaleWattHours.add(summaryPerDayEntry.getAccumulatedSaleWattHours());
         });
 
-        DateAndAccumulatedValues dateAndAccumulatedValues = createDateAndAccumulatedValues(
+        DateAndAccumulatedValues dateAndAccumulatedValues = DateAndAccumulatedValues.createDateAndAccumulatedValues(
                 date,
                 accumulatedConsumptionWattHours,
                 accumulatedProductionWattHours,
@@ -93,7 +99,7 @@ public class SummaryPerDayController {
     }
 
     @GetMapping(value = "/getAggregatedMonthValues")
-    public ResponseEntity<YearAndMonthProductionValues> getAggregatedMonthValues() {
+    public ResponseEntity<YearAndMonthProductionValues> getAggregatedMonthValues(@RequestParam String valueType) {
         List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.findAll(Sort.by(Sort.Order.asc("date")));
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());
@@ -101,20 +107,23 @@ public class SummaryPerDayController {
 
         Map<Integer, Map<Integer, Integer>> yearToMonthAndValue = new TreeMap<>();
 
-        allEntries.forEach(summaryPerDayEntry -> {
-            Integer yearOfEntry = summaryPerDayEntry.getYearOfEntry();
-            Integer monthOfEntry = summaryPerDayEntry.getMonthOfEntry();
-            Integer productionWattHours = summaryPerDayEntry.getProductionWattHours();
-
-            Map<Integer, Integer> monthToValue = yearToMonthAndValue.get(yearOfEntry);
-            if (monthToValue == null) {
-                monthToValue = new TreeMap<>();
-                initateMonthToValueMap(monthToValue);
-                yearToMonthAndValue.put(yearOfEntry, monthToValue);
-            }
-
-            monthToValue.put(monthOfEntry, monthToValue.get(monthOfEntry) + productionWattHours);
-        });
+        switch (valueType) {
+            case "production":
+                yearToMonthAndValue = valueAggregator.aggregateOnMonth(allEntries, SummaryPerDayEntry::getProductionWattHours);
+                break;
+            case "consumption":
+                yearToMonthAndValue = valueAggregator.aggregateOnMonth(allEntries, SummaryPerDayEntry::getConsumptionWattHours);
+                break;
+            case "purchase":
+                yearToMonthAndValue = valueAggregator.aggregateOnMonth(allEntries, SummaryPerDayEntry::getPurchaseWattHours);
+                break;
+            case "sale":
+                yearToMonthAndValue = valueAggregator.aggregateOnMonth(allEntries, SummaryPerDayEntry::getSaleWattHours);
+                break;
+            case "selfconsumption":
+                yearToMonthAndValue = valueAggregator.aggregateOnMonth(allEntries, SummaryPerDayEntry::getSelfConsumptionWattHours);
+                break;
+        }
 
         List<Integer> years = new ArrayList<>();
         years.addAll(yearToMonthAndValue.keySet().stream().sorted().toList());
@@ -122,8 +131,9 @@ public class SummaryPerDayController {
         values.setYears(years);
 
         List<Integer> monthValues = new ArrayList<>();
+        Map<Integer, Map<Integer, Integer>> finalYearToMonthAndValue = yearToMonthAndValue;
         years.forEach(year -> {
-            Map<Integer, Integer> monthAndValue = yearToMonthAndValue.get(year);
+            Map<Integer, Integer> monthAndValue = finalYearToMonthAndValue.get(year);
             monthValues.addAll(monthAndValue.values());
         });
 
@@ -132,11 +142,7 @@ public class SummaryPerDayController {
         return ResponseEntity.of(Optional.of(values));
     }
 
-    private void initateMonthToValueMap(Map<Integer, Integer> mapToInitiate) {
-        for (int i = 1; i <= 12; i++) {
-            mapToInitiate.put(i, 0);
-        }
-    }
+
 
     @GetMapping(value = "/findEntryWithHighestAccumulatedValues")
     public ResponseEntity<SummaryPerDayEntry> getEntryWithHighestAccumulatedValues() {
@@ -187,23 +193,5 @@ public class SummaryPerDayController {
 
     private static SummaryPerDayEntry mapToSummaryPerDayEntry(Map.Entry<LocalDate, SummaryEntryValues> entry) {
         return entry.getValue().mapToSummaryPerDayEntry(entry.getKey());
-    }
-
-    public DateAndAccumulatedValues createDateAndAccumulatedValues(
-            List<LocalDate> date,
-            List<Integer> accumulatedConsumptionWattHours,
-            List<Integer> accumulatedProductionWattHours,
-            List<Integer> accumulatedPurchaseWattHours,
-            List<Integer> accumulatedSelfConsumptionWattHours,
-            List<Integer> accumulatedSaleWattHours) {
-
-        return new DateAndAccumulatedValues.DateAndAccumulatedValuesBuilder()
-                .setDate(date)
-                .setAccumulatedConsumptionWattHours(accumulatedConsumptionWattHours)
-                .setAccumulatedProductionWattHours(accumulatedProductionWattHours)
-                .setAccumulatedPurchaseWattHours(accumulatedPurchaseWattHours)
-                .setAccumulatedSelfConsumptionWattHours(accumulatedSelfConsumptionWattHours)
-                .setAccumulatedSaleWattHours(accumulatedSaleWattHours)
-                .build();
     }
 }

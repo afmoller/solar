@@ -12,14 +12,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataexportentryComponent} from './features/dataexportentry/dataexportentry.component';
 import { AccumulatedAllComponent } from './features/diagrams/accumulated/accumulated-all.component';
 import { SummaryperdayentryComponent} from './features/summaryperdayentry/summaryperdayentry.component';
-import { YearOverYearProductionComponent} from './features/diagrams/yearoveryear/year-over-year-production.component';
+import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over-year.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccumulatedAllComponent,
     DataexportentryComponent,
-    YearOverYearProductionComponent
+    YearOverYearComponent
   ],
   imports: [
     FormsModule,
