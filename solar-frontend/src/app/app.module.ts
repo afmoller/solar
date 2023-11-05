@@ -11,8 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataexportentryComponent} from './features/dataexportentry/dataexportentry.component';
 import { AccumulatedAllComponent } from './features/diagrams/accumulated/accumulated-all.component';
-import { SummaryperdayentryComponent} from './features/summaryperdayentry/summaryperdayentry.component';
+import { SummaryperdayentryComponent} from './features/tables/summaryperdayentry/summaryperdayentry.component';
 import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over-year.component';
+import { SummarypermonthentryComponent } from './features/tables/symmarypermonthentry/summarypermonthentry.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over
     MatFormFieldModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    SummaryperdayentryComponent
+    SummaryperdayentryComponent,
+    SummarypermonthentryComponent
   ],
   providers: [
     { provide: NgChartsConfiguration, useValue: { generateColors: false }}

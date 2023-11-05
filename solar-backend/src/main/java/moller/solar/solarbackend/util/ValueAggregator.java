@@ -17,7 +17,7 @@ public class ValueAggregator {
         allEntries.forEach(summaryPerDayEntry -> {
             Integer yearOfEntry = summaryPerDayEntry.getYearOfEntry();
             Integer monthOfEntry = summaryPerDayEntry.getMonthOfEntry();
-            Integer productionWattHours = getIntegerValue(summaryPerDayEntry, function);
+            Integer value = getIntegerValue(summaryPerDayEntry, function);
 
             Map<Integer, Integer> monthToValue = yearToMonthAndValue.get(yearOfEntry);
             if (monthToValue == null) {
@@ -26,7 +26,7 @@ public class ValueAggregator {
                 yearToMonthAndValue.put(yearOfEntry, monthToValue);
             }
 
-            monthToValue.put(monthOfEntry, monthToValue.get(monthOfEntry) + productionWattHours);
+            monthToValue.put(monthOfEntry, monthToValue.get(monthOfEntry) + value);
         });
 
         return yearToMonthAndValue;
