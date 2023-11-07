@@ -1,17 +1,43 @@
-<!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
-<nav>
-  <ul>
-    <li><a routerLink="/dataexportentry" routerLinkActive="active" ariaCurrentWhenActive="page">dataexportentry</a></li>
-    <li><a routerLink="/summaryperdayentry" routerLinkActive="active" ariaCurrentWhenActive="page">summaryperdayentry</a></li>
-    <li><a routerLink="/summarypermonthentry" routerLinkActive="active" ariaCurrentWhenActive="page">summarypermonthentry</a></li>
-    <li><a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page">accumulated-all</a></li>
-    <li><a [routerLink]="['/year-over-year', 'production']" >year-over-year-production</a></li>
-    <li><a [routerLink]="['/year-over-year', 'consumption']" >year-over-year-consumption</a></li>
-    <li><a [routerLink]="['/year-over-year', 'purchase']" >year-over-year-purchase</a></li>
-    <li><a [routerLink]="['/year-over-year', 'sale']" >year-over-year-sale</a></li>
-    <li><a [routerLink]="['/year-over-year', 'selfconsumption']" >year-over-year-selfconsumption</a></li>
-  </ul>
-</nav>
-
-<!-- The routed views render in the <router-outlet>-->
-<router-outlet></router-outlet>
+<div class="left">
+  <nav>
+  
+    <h4>Menu</h4>
+    
+    <h5>Tables - Data aggregations</h5>
+    <p>
+      <a routerLink="/summaryperdayentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per day</a>
+      <br>
+      <a routerLink="/summarypermonthentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per month</a>
+    </p>
+    <br>
+  
+    <h5>Diagrams - Year over year</h5>
+    <p>
+      <a [routerLink]="['/year-over-year', 'production']" >Production</a>
+      <br>
+      <a [routerLink]="['/year-over-year', 'consumption']" >Consumption</a>
+      <br>
+      <a [routerLink]="['/year-over-year', 'purchase']" >Purchase</a>
+      <br>
+      <a [routerLink]="['/year-over-year', 'sale']" >Sale</a>
+      <br>
+      <a [routerLink]="['/year-over-year', 'selfconsumption']" >Selfconsumption</a>
+    </p>
+    <br>
+  
+    <h5>Diagram - Accumulated</h5>
+    <p>
+      <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page">All values</a>
+    </p>
+    <br>
+  
+    <h5>Debug</h5>
+    <p>
+      <a routerLink="/dataexportentry" routerLinkActive="active" ariaCurrentWhenActive="page">Data export entry</a>
+    </p>
+    
+  </nav>
+</div>
+<div class="right">
+  <router-outlet></router-outlet>
+</div>

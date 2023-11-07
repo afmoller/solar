@@ -14,3 +14,8 @@
 .mat-mdc-form-field {
   width: 100%;
 }
+
+.table-container {
+  max-height: 100vh;
+  overflow: auto;
+}

@@ -1,4 +1,3 @@
-import { FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { MatInputModule} from '@angular/material/input';
@@ -15,14 +14,14 @@ import { SummaryPerMonthEntryService } from 'src/app/core/services/summary-per-m
 export class SummarypermonthentryComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['productionWattHours',
+  displayedColumns: string[] = ['yearMonthOfEntry',
+                                'productionWattHours',
                                 'saleWattHours',
                                 'selfConsumptionWattHours',
                                 'purchaseWattHours',
                                 'consumptionWattHours',
-                                'autarchy',
-                                'yearOfEntry',
-                                'monthOfEntry'];
+                                'autarchy'
+                              ];
 
   constructor(
     private summaryPerMonthEntryService: SummaryPerMonthEntryService
