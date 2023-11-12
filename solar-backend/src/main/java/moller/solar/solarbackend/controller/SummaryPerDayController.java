@@ -142,8 +142,6 @@ public class SummaryPerDayController {
         return ResponseEntity.of(Optional.of(values));
     }
 
-
-
     @GetMapping(value = "/findEntryWithHighestAccumulatedValues")
     public ResponseEntity<SummaryPerDayEntry> getEntryWithHighestAccumulatedValues() {
         SummaryPerDayEntry entryWithHighestAccumulatedValues = summaryPerDayRepository.findEntryWithHighestAccumulatedValues();

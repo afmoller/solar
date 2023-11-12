@@ -1,0 +1,42 @@
+.valueTable {
+    width: 100%;
+}
+
+.tableHeader {
+    border-style: solid;
+    border-color: black;
+    background-color: lightgrey;
+}
+
+.tableRow:nth-child(even) {
+    background-color: lightgreen;
+}
+
+.tableRow:nth-child(odd) {
+    background-color: lightblue;
+}
+
+.tableCell {
+    text-align: right;
+}
+
+.tableContainer {
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 5px;
+    padding: 1px;
+    margin: 4px;
+}
+
+.centered {
+    text-align: center;
+}
+
+.contentConteiner {
+    border-style: solid;
+    border-width: 1px;
+    background-color: white;
+    border-radius: 5px;
+    margin: 2px;
+}

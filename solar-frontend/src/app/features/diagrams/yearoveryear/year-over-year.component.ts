@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
@@ -14,8 +14,14 @@ import { ActivatedRoute } from '@angular/router';
 
 export class YearOverYearComponent implements OnInit {
 
-  valueType: string | null = '';
+  mode: string | null = '';
+  valueType: string = '';
+  menuTitle: string = '';
 
+  tableRows : number[][] = [];
+  private monthLabels: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  displayedColumns: string[] = ['Year'].concat(this.monthLabels);
+  
   constructor(
     private yearOverYearEntryService: YearOverYearEntryService,
     private route: ActivatedRoute) {
@@ -25,11 +31,15 @@ export class YearOverYearComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.route.params.subscribe(routeParams => {
+      this.mode = routeParams['mode'];
+      this.mode = this.mode ?? 'normal';
+
       this.valueType = routeParams['valuetype'];
-    
       this.valueType = this.valueType ?? 'production';
+      this.menuTitle = this.getDiagramTitle(this.valueType, this.mode);
+
+      this.tableRows = [];
     
       this.yearOverYearEntryService.findAll(this.valueType).subscribe(data => {
 
@@ -37,21 +47,78 @@ export class YearOverYearComponent implements OnInit {
         let index = 0;
   
         let monthValues = data.monthValues;
-  
+        
         for (let i = 0; i < monthValues.length; i += nrOfMonthsPerYear) {
           const twelveMonths = monthValues.slice(i, i + nrOfMonthsPerYear);
   
-          this.lineChartData.datasets[index].data = twelveMonths;
+          if(this.mode === 'normal') {
+            this.lineChartData.datasets[index].data = twelveMonths;
+          } else {
+            for(let i = 0; i < 12; i++) {
+              if (i > 0) {
+                twelveMonths[i] = twelveMonths[i] + twelveMonths[i-1];     
+              } 
+            }
+            this.lineChartData.datasets[index].data = twelveMonths;
+            
+          }
           this.lineChartData.datasets[index].label = data.years[index];
+        
+          let tableRow: Array<number> = [];
+          tableRow.push(Number(data.years[index]));
+          tableRow = tableRow.concat(twelveMonths);
+
+          this.tableRows.push(tableRow);
   
           index++;
         }
   
-        this.lineChartData.labels = [1,2,3,4,5,6,7,8,9,10,11,12];
-  
+        this.lineChartData.labels = this.monthLabels;  
         this.chart?.update();
+
       });    
     });
+  }
+
+  private getDiagramTitle(valueType: string, mode: string): string {
+    let suffix: string = '';
+    
+    if (mode) {
+      switch (mode) {
+        case 'normal':
+          suffix = 'in Watt hours per month';
+          break;
+        case 'accumulated':
+          suffix = 'in Watt hours per month accumulated';
+          break;
+      }
+    }
+    
+    if (valueType) {
+      let diagramTitle: string = '';
+
+      switch (valueType) {
+        case 'production':
+          diagramTitle = 'Production';
+          break;
+        case 'consumption':
+          diagramTitle = 'Consumption';
+          break;
+        case 'purchase':
+          diagramTitle =  'Purchase';
+          break;
+        case 'sale':
+          diagramTitle =  'Sale';
+          break;
+        case 'selfconsumption':
+          diagramTitle =  'Selfconsumption';
+          break;
+      } 
+
+      return diagramTitle + ' ' + suffix;
+    }
+
+    return 'The valueType is either not set or has an unknown value';
   }
 
   public lineChartData: ChartConfiguration['data'] = {
@@ -82,7 +149,10 @@ export class YearOverYearComponent implements OnInit {
     },
 
     plugins: {
-      legend: { display: true }
+      legend: { 
+        display: true,
+        position: 'bottom'
+      }
     },
     responsive: true,
     maintainAspectRatio: true,

@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'summaryperdayentry', component: SummaryperdayentryComponent },
   { path: 'summarypermonthentry', component: SummarypermonthentryComponent },
   { path: 'accumulated-all', component: AccumulatedAllComponent },
-  { path: 'year-over-year/:valuetype', component: YearOverYearComponent },
+  { path: 'year-over-year/:valuetype/:mode', component: YearOverYearComponent },
 ];
 
 @NgModule({

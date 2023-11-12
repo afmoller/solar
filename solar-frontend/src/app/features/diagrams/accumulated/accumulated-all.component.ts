@@ -76,7 +76,10 @@ export class AccumulatedAllComponent implements OnInit {
     },
 
     plugins: {
-      legend: { display: true }
+      legend: { 
+        display: true,
+        position: 'bottom'
+      }
     },
     responsive: true,
     maintainAspectRatio: true,

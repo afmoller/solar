@@ -1,40 +1,58 @@
 <div class="left">
   <nav>
   
-    <h4>Menu</h4>
+    <h4 class="centered">Menu</h4>
     
-    <h5>Tables - Data aggregations</h5>
-    <p>
-      <a routerLink="/summaryperdayentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per day</a>
+    <div class="menuSection">
+      <h4>Tables</h4>
+      <h5>Data aggregations</h5>
+      <p>
+        <a routerLink="/summaryperdayentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per day</a>
+        <br>
+        <a routerLink="/summarypermonthentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per month</a>
+      </p>
       <br>
-      <a routerLink="/summarypermonthentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per month</a>
-    </p>
-    <br>
+    </div>
+    
+    <div class="menuSection">
+      <h4>Diagrams</h4>
+      <h5>Year over year</h5>
+      <p>
+        <a [routerLink]="['/year-over-year', 'production', 'normal']" >Production</a>
+        <br>
+        <a [routerLink]="['/year-over-year', 'consumption', 'normal']" >Consumption</a>
+        <br>
+        <a [routerLink]="['/year-over-year', 'purchase', 'normal']" >Purchase</a>
+        <br>
+        <a [routerLink]="['/year-over-year', 'sale', 'normal']" >Sale</a>
+        <br>
+        <a [routerLink]="['/year-over-year', 'selfconsumption', 'normal']" >Selfconsumption</a>
+      </p>
+      <br>
   
-    <h5>Diagrams - Year over year</h5>
-    <p>
-      <a [routerLink]="['/year-over-year', 'production']" >Production</a>
+      <h5>Accumulated</h5>
+      <p>
+        <a [routerLink]="['/year-over-year', 'production', 'accumulated']" >Production</a>
+        <br>
+        <a [routerLink]="['/year-over-year', 'consumption', 'accumulated']" >Consumption</a>
+        <br>
+        <a [routerLink]="['/year-over-year', 'purchase', 'accumulated']" >Purchase</a>
+        <br>
+        <a [routerLink]="['/year-over-year', 'sale', 'accumulated']" >Sale</a>
+        <br>
+        <a [routerLink]="['/year-over-year', 'selfconsumption', 'accumulated']" >Selfconsumption</a>
+        <br>
+        <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page">All values</a>
+      </p>
       <br>
-      <a [routerLink]="['/year-over-year', 'consumption']" >Consumption</a>
-      <br>
-      <a [routerLink]="['/year-over-year', 'purchase']" >Purchase</a>
-      <br>
-      <a [routerLink]="['/year-over-year', 'sale']" >Sale</a>
-      <br>
-      <a [routerLink]="['/year-over-year', 'selfconsumption']" >Selfconsumption</a>
-    </p>
-    <br>
-  
-    <h5>Diagram - Accumulated</h5>
-    <p>
-      <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page">All values</a>
-    </p>
-    <br>
-  
-    <h5>Debug</h5>
-    <p>
-      <a routerLink="/dataexportentry" routerLinkActive="active" ariaCurrentWhenActive="page">Data export entry</a>
-    </p>
+    </div>
+    
+    <div class="menuSection">
+      <h4>Debug</h4>
+      <p>
+        <a routerLink="/dataexportentry" routerLinkActive="active" ariaCurrentWhenActive="page">Data export entry</a>
+      </p>
+    </div>
     
   </nav>
 </div>

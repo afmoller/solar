@@ -1,11 +1,45 @@
 .left {
     float: left;
-    width: 200px;
-    height: 100%;
+    width: 194px;
+    height: 99%;
     background-color: rgb(243, 243, 243);
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 5px;
+    margin: 1px;
+    padding: 3px;
 }
 
 .right {
     float: left;
-    width: calc(100% - 200px);
+    width: calc(100% - 218px);
+    height: 99%;
+    background-color: rgb(243, 243, 243);
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    border-radius: 5px;
+    margin: 1px;
+    padding: 3px;
 }
+
+.menuSection {
+    border-style: solid;
+    border-width: 1px;
+    background-color: white;
+    border-radius: 5px;
+    margin: 2px;
+    padding: 3px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.centered {
+    text-align: center;
+}
+
+
+
