@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
@@ -86,10 +86,10 @@ export class YearOverYearComponent implements OnInit {
     if (mode) {
       switch (mode) {
         case 'normal':
-          suffix = 'in Watt hours per month';
+          suffix = 'in watt hours per month';
           break;
         case 'accumulated':
-          suffix = 'in Watt hours per month accumulated';
+          suffix = 'in watt hours per month accumulated';
           break;
       }
     }
@@ -126,10 +126,12 @@ export class YearOverYearComponent implements OnInit {
       {
         data: [],
         fill: false,
+        borderColor: 'rgb(144, 238, 144)',
       },
       {
         data: [],
         fill: false,
+        borderColor: 'rgb(173, 216, 230)',
       },
     ],
     labels: [],

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Accumulatedallentry } from '../models/accumulatedallentry';
 import { Observable } from 'rxjs';
 

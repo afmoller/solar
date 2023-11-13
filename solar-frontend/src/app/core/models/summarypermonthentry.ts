@@ -1,5 +1,4 @@
 export interface Summarypermonthentry {
-  
   autarchy: number;
   yearOfEntry: number;
   monthOfEntry: number;

@@ -1,20 +1,21 @@
 <div>
   <h4 class="centered">{{menuTitle}}</h4>
 </div>
-<div class="contentConteiner">
+<div class="diagramContainer">
   <canvas
-  baseChart
-  class="chart"
-  [data]="lineChartData"
-  [options]="lineChartOptions"
-  [type]="lineChartType"
-  (chartHover)="chartHovered($event)"
-  (chartClick)="chartClicked($event)"
-></canvas>
+    baseChart
+    class="chart"
+    [data]="lineChartData"
+    [options]="lineChartOptions"
+    [type]="lineChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+  </canvas>
+</div>
 <div class="tableContainer">
   <table class="valueTable">
     <tr class="tableHeader">
-      <th *ngFor="let columnName of displayedColumns">
+      <th class="tableHeaderCell" *ngFor="let columnName of displayedColumns">
         {{ columnName }}
       </th>
     </tr>
@@ -25,5 +26,3 @@
     </tr>
   </table>
 </div>
-</div>
-

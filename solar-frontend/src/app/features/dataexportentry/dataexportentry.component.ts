@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Dataexportentry } from '../../core/models/dataexportentry';
 import { DataExportEntryService } from '../../core/services/data-export-entry.service';
 import { FormBuilder } from '@angular/forms';

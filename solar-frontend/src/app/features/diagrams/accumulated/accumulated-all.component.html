@@ -1,15 +1,14 @@
 <div>
-  <h4 class="centered">All values accumulated</h4>
+  <h4 class="centered">All values in watt hours accumulated</h4>
 </div>
-<div class="contentConteiner">
+<div class="contentContainer">
   <canvas
-  baseChart
-  class="chart"
-  [data]="lineChartData"
-  [options]="lineChartOptions"
-  [type]="lineChartType"
-  (chartHover)="chartHovered($event)"
-  (chartClick)="chartClicked($event)"
-></canvas>
+    baseChart
+    class="chart"
+    [data]="lineChartData"
+    [options]="lineChartOptions"
+    [type]="lineChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+  </canvas>
 </div>
-

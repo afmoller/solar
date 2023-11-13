@@ -3,31 +3,31 @@
 }
 
 .mat-column {
-  border-right: 1px solid currentColor;
+    border-right: 1px solid currentColor;
 }
 
 .mat-column-date {
-  width: 107px;
-  border-right: 1px solid currentColor;
+    width: 107px;
+    border-right: 1px solid currentColor;
 }
 
 .mat-mdc-form-field {
-  width: 100%;
+    width: 100%;
 }
 
 .table-container {
-  max-height: 95vh;
-  overflow: auto;
+    max-height: 95vh;
+    overflow: auto;
 }
 
 .centered {
-  text-align: center;
+    text-align: center;
 }
 
 .contentContainer {
-  border-style: solid;
-  border-width: 1px;
-  background-color: white;
-  border-radius: 5px;
-  margin: 2px;
+    margin: 2px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+    background-color: white; 
 }
