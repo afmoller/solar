@@ -1,4 +1,8 @@
-<canvas
+<div>
+  <h4 class="centered">All values accumulated</h4>
+</div>
+<div class="contentConteiner">
+  <canvas
   baseChart
   class="chart"
   [data]="lineChartData"
@@ -7,3 +11,5 @@
   (chartHover)="chartHovered($event)"
   (chartClick)="chartClicked($event)"
 ></canvas>
+</div>
+
