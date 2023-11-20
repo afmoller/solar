@@ -83,14 +83,18 @@ export class YearOverYearComponent implements OnInit {
   private getDiagramTitle(valueType: string, mode: string): string {
     let suffix: string = '';
     
-    if (mode) {
-      switch (mode) {
-        case 'normal':
-          suffix = 'in watt hours per month';
-          break;
-        case 'accumulated':
-          suffix = 'in watt hours per month accumulated';
-          break;
+    if (valueType === 'autarky') {
+      suffix = 'in %'
+    } else {
+      if (mode) {
+        switch (mode) {
+          case 'normal':
+            suffix = 'in watt hours per month';
+            break;
+          case 'accumulated':
+            suffix = 'in watt hours per month accumulated';
+            break;
+        }
       }
     }
     
@@ -113,6 +117,9 @@ export class YearOverYearComponent implements OnInit {
         case 'selfconsumption':
           diagramTitle =  'Selfconsumption';
           break;
+        case 'autarky':
+          diagramTitle =  'Autarky';
+          break;  
       } 
 
       return diagramTitle + ' ' + suffix;

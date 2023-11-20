@@ -123,6 +123,15 @@ public class SummaryPerDayController {
             case "selfconsumption":
                 yearToMonthAndValue = valueAggregator.aggregateOnMonth(allEntries, SummaryPerDayEntry::getSelfConsumptionWattHours);
                 break;
+            case "autarky":
+                Map<Integer, Map<Integer, Integer>> yearToMonthAndValueConsumption = valueAggregator.aggregateOnMonth(allEntries, SummaryPerDayEntry::getConsumptionWattHours);
+                Map<Integer, Map<Integer, Integer>> yearToMonthAndValueSelfConsumption = valueAggregator.aggregateOnMonth(allEntries, SummaryPerDayEntry::getSelfConsumptionWattHours);
+
+                yearToMonthAndValue = calculateAutarkyValues(
+                        yearToMonthAndValueConsumption,
+                        yearToMonthAndValueSelfConsumption
+                );
+                break;
         }
 
         List<Integer> years = new ArrayList<>();
@@ -140,6 +149,29 @@ public class SummaryPerDayController {
         values.setMonthValues(monthValues);
 
         return ResponseEntity.of(Optional.of(values));
+    }
+
+    private Map<Integer, Map<Integer, Integer>> calculateAutarkyValues(Map<Integer, Map<Integer, Integer>> yearToMonthAndValueConsumption, Map<Integer, Map<Integer, Integer>> yearToMonthAndValueSelfConsumption) {
+
+        Map<Integer, Map<Integer, Integer>> returnValue = new TreeMap<>();
+
+        for (Integer year : yearToMonthAndValueConsumption.keySet()) {
+            Map<Integer, Integer> monthAndValueConsumption = yearToMonthAndValueConsumption.get(year);
+            Map<Integer, Integer> monthAndValueSelfConsumption = yearToMonthAndValueSelfConsumption.get(year);
+
+            returnValue.put(year, new TreeMap<>());
+
+            for (Integer month : monthAndValueConsumption.keySet()) {
+                Integer valueConsumption = monthAndValueConsumption.get(month);
+                Integer valueSelfConsumption = monthAndValueSelfConsumption.get(month);
+
+                Integer autarky = Long.valueOf(Math.round( (valueSelfConsumption.doubleValue() / valueConsumption.doubleValue()) * 100)).intValue();
+
+                Map<Integer, Integer> monthToValue = returnValue.get(year);
+                monthToValue.put(month, autarky);
+            }
+        }
+        return returnValue;
     }
 
     @GetMapping(value = "/findEntryWithHighestAccumulatedValues")
