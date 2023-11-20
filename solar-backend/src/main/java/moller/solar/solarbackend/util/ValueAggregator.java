@@ -22,7 +22,7 @@ public class ValueAggregator {
             Map<Integer, Integer> monthToValue = yearToMonthAndValue.get(yearOfEntry);
             if (monthToValue == null) {
                 monthToValue = new TreeMap<>();
-                initateMonthToValueMap(monthToValue);
+                initiateMonthToValueMap(monthToValue);
                 yearToMonthAndValue.put(yearOfEntry, monthToValue);
             }
 
@@ -36,7 +36,7 @@ public class ValueAggregator {
         return function.apply(summaryPerDayEntry);
     }
 
-    private void initateMonthToValueMap(Map<Integer, Integer> mapToInitiate) {
+    private void initiateMonthToValueMap(Map<Integer, Integer> mapToInitiate) {
         for (int i = 1; i <= 12; i++) {
             mapToInitiate.put(i, 0);
         }
