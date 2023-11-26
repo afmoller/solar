@@ -1,7 +1,8 @@
 package moller.solar.solarbackend.controller;
 
-import moller.solar.solarbackend.dto.DateAndAccumulatedValues;
+import moller.solar.solarbackend.dto.DateAndValues;
 import moller.solar.solarbackend.dto.YearAndMonthProductionValues;
+import moller.solar.solarbackend.enumerations.Period;
 import moller.solar.solarbackend.persistence.DataExportEntry;
 import moller.solar.solarbackend.persistence.DataExportRepository;
 import moller.solar.solarbackend.persistence.SummaryPerDayEntry;
@@ -65,7 +66,7 @@ public class SummaryPerDayController {
     }
 
     @GetMapping(value = "/getAllAccumulatedValues")
-    public ResponseEntity<DateAndAccumulatedValues> getAllAccumulatedValues() {
+    public ResponseEntity<DateAndValues> getAllAccumulatedValues() {
         List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.findAll(Sort.by(Sort.Order.asc("date")));
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());
@@ -87,7 +88,7 @@ public class SummaryPerDayController {
             accumulatedSaleWattHours.add(summaryPerDayEntry.getAccumulatedSaleWattHours());
         });
 
-        DateAndAccumulatedValues dateAndAccumulatedValues = DateAndAccumulatedValues.createDateAndAccumulatedValues(
+        DateAndValues dateAndValues = DateAndValues.createDateAndValues(
                 date,
                 accumulatedConsumptionWattHours,
                 accumulatedProductionWattHours,
@@ -95,8 +96,63 @@ public class SummaryPerDayController {
                 accumulatedSelfConsumptionWattHours,
                 accumulatedSaleWattHours);
 
-        return ResponseEntity.of(Optional.of(dateAndAccumulatedValues));
+        return ResponseEntity.of(Optional.of(dateAndValues));
     }
+
+
+    @GetMapping(value = "/getAllValuesForPeriod")
+    public ResponseEntity<DateAndValues> getAllValuesForPeriod(@RequestParam Period period, @RequestParam LocalDate selectedDate) {
+
+        int year = LocalDate.now().getYear();
+        int month = LocalDate.now().getMonthValue();;
+
+        switch (period) {
+            case DATE -> {
+            }
+            case MONTH -> {
+                year = selectedDate.getYear();
+                month = selectedDate.getMonthValue();
+            }
+            case YEAR -> {
+            }
+        }
+
+
+
+
+
+        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.getAllValuesForPeriod(year, month);
+        if (allEntries == null || allEntries.isEmpty()) {
+            return ResponseEntity.of(Optional.empty());
+        }
+
+        List<LocalDate> date = new ArrayList<>();
+        List<Integer> consumptionWattHours = new ArrayList<>();
+        List<Integer> productionWattHours = new ArrayList<>();
+        List<Integer> purchaseWattHours = new ArrayList<>();
+        List<Integer> selfConsumptionWattHours = new ArrayList<>();
+        List<Integer> saleWattHours = new ArrayList<>();
+
+        allEntries.forEach(summaryPerDayEntry -> {
+            date.add(summaryPerDayEntry.getDate());
+            consumptionWattHours.add(summaryPerDayEntry.getConsumptionWattHours());
+            productionWattHours.add(summaryPerDayEntry.getProductionWattHours());
+            purchaseWattHours.add(summaryPerDayEntry.getPurchaseWattHours());
+            selfConsumptionWattHours.add(summaryPerDayEntry.getSelfConsumptionWattHours());
+            saleWattHours.add(summaryPerDayEntry.getSaleWattHours());
+        });
+
+        DateAndValues dateAndValues = DateAndValues.createDateAndValues(
+                date,
+                consumptionWattHours,
+                productionWattHours,
+                purchaseWattHours,
+                selfConsumptionWattHours,
+                saleWattHours);
+
+        return ResponseEntity.of(Optional.of(dateAndValues));
+    }
+
 
     @GetMapping(value = "/getAggregatedMonthValues")
     public ResponseEntity<YearAndMonthProductionValues> getAggregatedMonthValues(@RequestParam String valueType) {

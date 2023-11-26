@@ -1,0 +1,14 @@
+<div>
+  <h4 class="centered">All values in watt hours</h4>
+</div>
+<div class="contentContainer">
+  <canvas
+    baseChart
+    class="chart"
+    [data]="lineChartData"
+    [options]="lineChartOptions"
+    [type]="lineChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+  </canvas>
+</div>

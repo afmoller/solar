@@ -2,23 +2,28 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
-import { AccumulatedAllEntryService } from '../../../core/services/accumulated-all-entry.service';
+import { Allentry } from '../../../core/models/allentry';
+import { AllEntryService } from '../../../core/services/all-entry.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-accumulated-all',
-  templateUrl: './accumulated-all.component.html',
-  styleUrls: ['./accumulated-all.component.scss']
+  selector: 'app-all',
+  templateUrl: './all.component.html',
+  styleUrls: ['./all.component.scss']
 })
 
-export class AccumulatedAllComponent implements OnInit {
+export class AllComponent implements OnInit {
 
-  constructor(private accumulatedAllEntryService: AccumulatedAllEntryService) {
+  constructor(
+    private allEntryService: AllEntryService,
+    private route: ActivatedRoute) {
+    
     Chart.register(Annotation);
     Chart.register(Colors);
   }
 
   ngOnInit() {
-    this.accumulatedAllEntryService.findAll().subscribe(data => {
+    this.allEntryService.findAll('MONTH', '2023-05-01').subscribe(data => {
       this.lineChartData.datasets[0].data = data.saleWattHours;
       this.lineChartData.datasets[1].data = data.purchaseWattHours
       this.lineChartData.datasets[2].data = data.productionWattHours;
@@ -34,27 +39,27 @@ export class AccumulatedAllComponent implements OnInit {
     datasets: [
       {
         data: [],
-        label: 'Accumulated Sale (watt hours)',
+        label: 'Sale (watt hours)',
         fill: false,
       },
       {
         data: [],
-        label: 'Accumulated Purchase (watt hours)',
+        label: 'Purchase (watt hours)',
         fill: false,
       },
       {
         data: [],
-        label: 'Accumulated Production (watt hours)',
+        label: 'Production (watt hours)',
         fill: false,
       },
       {
         data: [],
-        label: 'Accumulated Consumption (watt hours)',
+        label: 'Consumption (watt hours)',
         fill: false,
       },
       {
         data: [],
-        label: 'Accumulated Self Consumption (watt hours)',
+        label: 'Self Consumption (watt hours)',
         fill: false,
       },
     ],

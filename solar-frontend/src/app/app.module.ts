@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AllComponent } from './features/diagrams/all/all.component';
 import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over-year.component';
 import { DataexportentryComponent} from './features/dataexportentry/dataexportentry.component';
 import { AccumulatedAllComponent } from './features/diagrams/accumulated/accumulated-all.component';
@@ -18,6 +19,7 @@ import { SummarypermonthentryComponent } from './features/tables/symmarypermonth
 @NgModule({
   declarations: [
     AppComponent,
+    AllComponent,
     YearOverYearComponent,
     AccumulatedAllComponent,
     DataexportentryComponent

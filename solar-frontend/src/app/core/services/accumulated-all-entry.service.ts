@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Accumulatedallentry } from '../models/accumulatedallentry';
+import { Allentry } from '../models/allentry';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class AccumulatedAllEntryService {
     this.accumulatedallentriesUrl = 'http://localhost:8080/getAllAccumulatedValues';
   }
 
-  public findAll(): Observable<Accumulatedallentry> {
-    return this.http.get<Accumulatedallentry>(this.accumulatedallentriesUrl);
+  public findAll(): Observable<Allentry> {
+    return this.http.get<Allentry>(this.accumulatedallentriesUrl);
   }
 }
