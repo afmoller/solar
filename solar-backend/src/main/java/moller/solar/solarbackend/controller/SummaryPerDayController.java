@@ -101,27 +101,40 @@ public class SummaryPerDayController {
 
 
     @GetMapping(value = "/getAllValuesForPeriod")
-    public ResponseEntity<DateAndValues> getAllValuesForPeriod(@RequestParam Period period, @RequestParam LocalDate selectedDate) {
+    public ResponseEntity<DateAndValues> getAllValuesForPeriod(@RequestParam Period period, @RequestParam LocalDate selectedFromDate, @RequestParam LocalDate selectedToDate) {
 
-        int year = LocalDate.now().getYear();
-        int month = LocalDate.now().getMonthValue();;
+        int yearFrom = LocalDate.now().getYear();
+        int monthFrom = LocalDate.now().getMonthValue();
+
+        int yearTo = LocalDate.now().getYear();
+        int monthTo = LocalDate.now().getMonthValue();
 
         switch (period) {
             case DATE -> {
             }
             case MONTH -> {
-                year = selectedDate.getYear();
-                month = selectedDate.getMonthValue();
+                yearFrom = selectedFromDate.getYear();
+                monthFrom = selectedFromDate.getMonthValue();
+
+                yearTo = selectedToDate.getYear();
+                monthTo = selectedToDate.getMonthValue();
+
+
             }
             case YEAR -> {
             }
         }
 
 
+        LocalDate fromDate = LocalDate.of(yearFrom, monthFrom, 1);
+
+        LocalDate toDateStartOfMonth = LocalDate.of(yearTo, monthTo,1);
+
+        LocalDate toDateStartOfMonthMinusOneDay = toDateStartOfMonth.minusDays(1);
+        LocalDate toDate = toDateStartOfMonthMinusOneDay.plusMonths(1);
 
 
-
-        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.getAllValuesForPeriod(year, month);
+        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.getAllValuesForPeriod(fromDate, toDate);
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());
         }

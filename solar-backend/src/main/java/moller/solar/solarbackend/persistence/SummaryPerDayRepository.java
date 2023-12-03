@@ -18,8 +18,8 @@ public interface SummaryPerDayRepository extends JpaRepository<SummaryPerDayEntr
     @Query(value = "SELECT s.date, s.accumulatedSaleWattHours, s.accumulatedPurchaseWattHours, s.accumulatedProductionWattHours, s.accumulatedConsumptionWattHours, s.accumulatedSelfConsumptionWattHours FROM SummaryPerDayEntry s ORDER BY s.date")
     List<DateAndValues> getAllAccumulatedValues();
 
-    @Query(value = "SELECT s FROM SummaryPerDayEntry s WHERE s.yearOfEntry = :yearOfEntry AND s.monthOfEntry = :monthOfEntry ORDER BY s.date")
-    List<SummaryPerDayEntry> getAllValuesForPeriod(int yearOfEntry, int monthOfEntry);
+    @Query(value = "SELECT s FROM SummaryPerDayEntry s WHERE s.date between :fromDate AND :toDate ORDER BY s.date")
+    List<SummaryPerDayEntry> getAllValuesForPeriod(LocalDate fromDate, LocalDate toDate);
 
 
 }
