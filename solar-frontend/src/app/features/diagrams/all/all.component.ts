@@ -4,6 +4,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
 import { Allentry } from '../../../core/models/allentry';
 import { AllEntryService } from '../../../core/services/all-entry.service';
+import { SummaryPerDayEntryService } from '../../../core/services/summary-per-day-entry.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -20,6 +21,7 @@ export class AllComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private allEntryService: AllEntryService,
+    private summaryPerDayEntryService: SummaryPerDayEntryService,
     private route: ActivatedRoute) {
     
     Chart.register(Annotation);
@@ -32,7 +34,14 @@ export class AllComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadDataAndPopulateChart('2023-05-01', '2023-05-01');
+    this.summaryPerDayEntryService.findNewestEntry().subscribe(data => {
+      let dateAsString: string = this.getDateAsString(new Date(data.date));
+      
+      this.inputForm.get('fromDate')?.setValue(dateAsString);
+      this.inputForm.get('toDate')?.setValue(dateAsString);
+
+      this.loadDataAndPopulateChart(dateAsString, dateAsString);
+    });
   }
 
   public fromDateChange(): void {
@@ -160,6 +169,7 @@ export class AllComponent implements OnInit {
     event?: ChartEvent;
     active?: object[];
   }): void {
+    
   }
 
   setChartType(type: string) {

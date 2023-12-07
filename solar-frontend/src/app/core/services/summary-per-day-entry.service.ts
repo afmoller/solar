@@ -8,13 +8,17 @@ import { Observable } from 'rxjs';
 })
 export class SummaryPerDayEntryService {
 
-  private summaryperdayentriesUrl: string;
+  private summaryperdayentriesBaseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.summaryperdayentriesUrl = 'http://localhost:8080/getAll';
+    this.summaryperdayentriesBaseUrl = 'http://localhost:8080/';
   }
 
   public findAll(): Observable<Summaryperdayentry[]> {
-    return this.http.get<Summaryperdayentry[]>(this.summaryperdayentriesUrl);
+    return this.http.get<Summaryperdayentry[]>(this.summaryperdayentriesBaseUrl + 'getAll');
+  }
+
+  public findNewestEntry(): Observable<Summaryperdayentry> {
+    return this.http.get<Summaryperdayentry>(this.summaryperdayentriesBaseUrl + 'getNewestEntry');
   }
 }

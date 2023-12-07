@@ -65,6 +65,13 @@ public class SummaryPerDayController {
         return ResponseEntity.of(Optional.of(allEntries));
     }
 
+    @GetMapping(value = "/getNewestEntry")
+    public ResponseEntity<SummaryPerDayEntry> getNewestEntry() {
+        SummaryPerDayEntry newestEntry = summaryPerDayRepository.getNewestEntry();
+
+        return ResponseEntity.of(Optional.of(newestEntry));
+    }
+
     @GetMapping(value = "/getAllAccumulatedValues")
     public ResponseEntity<DateAndValues> getAllAccumulatedValues() {
         List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.findAll(Sort.by(Sort.Order.asc("date")));

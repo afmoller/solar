@@ -21,5 +21,6 @@ public interface SummaryPerDayRepository extends JpaRepository<SummaryPerDayEntr
     @Query(value = "SELECT s FROM SummaryPerDayEntry s WHERE s.date between :fromDate AND :toDate ORDER BY s.date")
     List<SummaryPerDayEntry> getAllValuesForPeriod(LocalDate fromDate, LocalDate toDate);
 
-
+    @Query(value = "SELECT s FROM SummaryPerDayEntry s ORDER BY s.date DESC LIMIT 1")
+    SummaryPerDayEntry getNewestEntry();
 }
