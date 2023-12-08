@@ -1,6 +1,6 @@
 
 <div>
-  <h4 class="centered">All values in watt hours</h4>
+  <h4 class="centered">All values in watt hours ({{menuTitle}})</h4>
 </div>
 <div class="contentContainer">
   <canvas
@@ -15,28 +15,59 @@
 </div>
 
 <div>
-  <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
-    <div>
-      <div>
-        <label for="fromDate">From</label>
-      </div>
-      <div>
-        <input id="fromDate" type="date" formControlName="fromDate" (change)="fromDateChange()">
-        <button class="button" type="button" (click)="decreaseMonth('fromDate')">-</button>
-        <button class="button" type="button" (click)="increaseMonth('fromDate')">+</button>
-      </div>
-      <div>
-        <label for="toDate">To</label>
-      </div>
-      <div>
-        <input id="toDate" type="date" formControlName="toDate" (change)="toDateChange()">
-        <button class="button" type="button" (click)="decreaseMonth('toDate')">-</button>
-        <button class="button" type="button" (click)="increaseMonth('toDate')">+</button>
+  <form [formGroup]="inputForm">
+    <div> 
+      <div class="table">
+        <div class="contentContainer padding">
+          <div>
+            <span>Date selection</span>
+          </div>
+          <div class="table">   
+            <div>
+              <div class="table">
+                <div>
+                  <div>
+                    <span>From</span>
+                  </div>
+                  <div>
+                    <span>To</span>
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <input id="fromDate" type="date" formControlName="fromDate" (change)="fromDateChange()">
+                    <button class="button" type="button" (click)="decreaseMonth('fromDate')">-</button>
+                    <button class="button" type="button" (click)="increaseMonth('fromDate')">+</button>
+                  </div>
+                  <div>
+                    <input id="toDate" type="date" formControlName="toDate" (change)="toDateChange()">
+                    <button class="button" type="button" (click)="decreaseMonth('toDate')">-</button>
+                    <button class="button" type="button" (click)="increaseMonth('toDate')">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contentContainer padding">
+          <div>
+            <span>Shift date selection</span>
+          </div>
+          <div>
+            <button class="button" type="button" (click)="decreaseMonths()">-</button>
+            <button class="button" type="button" (click)="increaseMonths()">+</button>
+          </div>   
+        </div>
+        <div class="contentContainer padding">
+          <div>
+            <span>Diagram type</span>
+          </div>
+          <div>
+            <button class="button" type="button" (click)="setChartType('line')">Line</button>
+            <button class="button" type="button" (click)="setChartType('bar')">Bar</button>
+          </div>
+        </div>
       </div>
     </div>
-    <button class="button" type="submit">Load</button>
   </form>
-
-  <button class="button" type="button" (click)="setChartType('line')">Line</button>
-  <button class="button" type="button" (click)="setChartType('bar')">Bar</button>
 </div>

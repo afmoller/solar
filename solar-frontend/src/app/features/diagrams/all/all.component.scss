@@ -10,7 +10,10 @@
     background-color: white;
 }
 
+.padding {
+    padding: 4px;
+}
 
 .table {
-    float: left;
+    display: flex;
 }

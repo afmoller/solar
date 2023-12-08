@@ -17,6 +17,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class AllComponent implements OnInit {
 
   inputForm: FormGroup;
+  menuTitle: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,7 +58,6 @@ export class AllComponent implements OnInit {
     this.loadDataAndPopulateChart(fromDateValue, this.inputForm.get('toDate')?.value);
   }
 
-
   public toDateChange(): void {
     let fromDateValue: string = this.inputForm.get('fromDate')?.value;
     let toDateValue: string = this.inputForm.get('toDate')?.value
@@ -68,16 +68,7 @@ export class AllComponent implements OnInit {
       this.inputForm.get('fromDate')?.setValue(toDateValue);
     }
 
-    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, toDateValue, );
-  }
-
-
-  onSubmit(): void {
-
-    let dateValueFromFromDate = this.inputForm.get('fromDate')?.value ?? '2022-06-01';
-    let dateValueFromToDate = this.inputForm.get('toDate')?.value ?? '2022-06-01';
-
-    this.loadDataAndPopulateChart(dateValueFromFromDate, dateValueFromToDate);
+    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, toDateValue);
   }
 
   private loadDataAndPopulateChart(dateFrom: string, dateTo: string): void {
@@ -89,6 +80,7 @@ export class AllComponent implements OnInit {
       this.lineChartData.datasets[4].data = data.selfConsumptionWattHours;
       this.lineChartData.labels = data.date;
 
+      this.menuTitle = dateFrom + ' - ' + dateTo;
       this.chart?.update();
     });
   }  
@@ -182,44 +174,44 @@ export class AllComponent implements OnInit {
 
   decreaseMonth(dateField: string): void {
     if (dateField === 'toDate') {
-
-      let dateValue: string = this.inputForm.get('toDate')?.value;
-      let dateValueAsDate: Date = new Date(dateValue);
-      dateValueAsDate.setMonth(dateValueAsDate.getMonth() - 1);
-
-      this.inputForm.get('toDate')?.setValue(this.getDateAsString(dateValueAsDate));
+      this.shiftMonthFieldValue('toDate', -1);
       this.toDateChange();
-
     } else if (dateField === 'fromDate') {
-      let dateValue: string = this.inputForm.get('fromDate')?.value;
-      let dateValueAsDate: Date = new Date(dateValue);
-      dateValueAsDate.setMonth(dateValueAsDate.getMonth() - 1);
-
-      this.inputForm.get('fromDate')?.setValue(this.getDateAsString(dateValueAsDate));
+      this.shiftMonthFieldValue('fromDate', -1);
       this.fromDateChange();
     }
+  }
 
+  decreaseMonths(): void {
+    this.shiftMonthFieldValue('fromDate', -1);
+    this.shiftMonthFieldValue('toDate', -1);
+
+    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value)
   }
     
   increaseMonth(dateField: string): void {
-    
     if (dateField === 'toDate') {
-
-      let dateValue: string = this.inputForm.get('toDate')?.value;
-      let dateValueAsDate: Date = new Date(dateValue);
-      dateValueAsDate.setMonth(dateValueAsDate.getMonth() + 1);
-
-      this.inputForm.get('toDate')?.setValue(this.getDateAsString(dateValueAsDate));
+      this.shiftMonthFieldValue('toDate', 1);
       this.toDateChange();
-
     } else if (dateField === 'fromDate') {
-      let dateValue: string = this.inputForm.get('fromDate')?.value;
-      let dateValueAsDate: Date = new Date(dateValue);
-      dateValueAsDate.setMonth(dateValueAsDate.getMonth() + 1);
-
-      this.inputForm.get('fromDate')?.setValue(this.getDateAsString(dateValueAsDate));
+      this.shiftMonthFieldValue('toDate', 1);
       this.fromDateChange();
     }
+  }
+
+  increaseMonths(): void {
+    this.shiftMonthFieldValue('fromDate', 1);
+    this.shiftMonthFieldValue('toDate', 1);
+
+    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value)
+  }
+
+  private shiftMonthFieldValue(dateField: string, shiftValue: number) {
+    let dateValue: string = this.inputForm.get(dateField)?.value;
+    let dateValueAsDate: Date = new Date(dateValue);
+    dateValueAsDate.setMonth(dateValueAsDate.getMonth() + shiftValue);
+
+    this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));
   }
 
   private getDateAsString(date: Date): string {
