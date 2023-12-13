@@ -30,7 +30,6 @@ public class DataExportController {
         return ResponseEntity.of(dataExportRepository.findById(iid));
     }
 
-
     @GetMapping(value = "/getDateTimeAndValuesForTimespan")
     public ResponseEntity<DateTimeAndValues> getDateTimeAndValuesForTimespan(@RequestParam LocalDate selectedFromDate, @RequestParam LocalDate selectedToDate) {
         LocalDateTime localDateTimeFrom = LocalDateTime.of(selectedFromDate, LocalTime.MIDNIGHT);

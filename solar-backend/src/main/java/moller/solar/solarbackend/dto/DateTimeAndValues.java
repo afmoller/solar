@@ -9,6 +9,11 @@ import java.util.List;
 public class DateTimeAndValues {
 
     private final List<LocalDateTime> dateTimes;
+    private final List<Integer> saleWattages;
+    private final List<Integer> purchaseWattages;
+    private final List<Integer> productionWattages;
+    private final List<Integer> consumptionWattages;
+    private final List<Integer> selfConsumptionWattages;
 
     public List<LocalDateTime> getDateTimes() {
         return dateTimes;
@@ -33,12 +38,6 @@ public class DateTimeAndValues {
     public List<Integer> getConsumptionWattages() {
         return consumptionWattages;
     }
-
-    private final List<Integer> productionWattages;
-    private final List<Integer> saleWattages;
-    private final List<Integer> selfConsumptionWattages;
-    private final List<Integer> purchaseWattages;
-    private final List<Integer> consumptionWattages;
 
     private DateTimeAndValues(DateTimeAndValuesBuilder dateExportEntryBuilder) {
         this.dateTimes = dateExportEntryBuilder.dateTimes;

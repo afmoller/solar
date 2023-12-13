@@ -7,6 +7,8 @@ import { AllEntryService } from '../../../core/services/all-entry.service';
 import { SummaryPerDayEntryService } from '../../../core/services/summary-per-day-entry.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DataExportEntryService } from 'src/app/core/services/data-export-entry.service';
+import { sample } from 'rxjs';
 
 @Component({
   selector: 'app-all',
@@ -23,8 +25,9 @@ export class AllComponent implements OnInit {
     private formBuilder: FormBuilder,
     private allEntryService: AllEntryService,
     private summaryPerDayEntryService: SummaryPerDayEntryService,
+    private dataExportEntryService: DataExportEntryService,
     private route: ActivatedRoute) {
-    
+
     Chart.register(Annotation);
     Chart.register(Colors);
 
@@ -37,7 +40,7 @@ export class AllComponent implements OnInit {
   ngOnInit() {
     this.summaryPerDayEntryService.findNewestEntry().subscribe(data => {
       let dateAsString: string = this.getDateAsString(new Date(data.date));
-      
+
       this.inputForm.get('fromDate')?.setValue(dateAsString);
       this.inputForm.get('toDate')?.setValue(dateAsString);
 
@@ -49,7 +52,7 @@ export class AllComponent implements OnInit {
     let fromDateValue: string = this.inputForm.get('fromDate')?.value;
     let toDateValue: string = this.inputForm.get('toDate')?.value
 
-    // Only change the to date automatically if the value is not set or if the 
+    // Only change the to date automatically if the value is not set or if the
     // from date is later than the to date.
     if ((fromDateValue && !toDateValue) || (new Date(fromDateValue) > new Date(toDateValue))) {
       this.inputForm.get('toDate')?.setValue(fromDateValue);
@@ -62,7 +65,7 @@ export class AllComponent implements OnInit {
     let fromDateValue: string = this.inputForm.get('fromDate')?.value;
     let toDateValue: string = this.inputForm.get('toDate')?.value
 
-    // Only change the from date automatically if the value is not set or if the 
+    // Only change the from date automatically if the value is not set or if the
     // from date is later than the to date.
     if ((!fromDateValue && toDateValue) || (new Date(fromDateValue) > new Date(toDateValue))) {
       this.inputForm.get('fromDate')?.setValue(toDateValue);
@@ -72,18 +75,34 @@ export class AllComponent implements OnInit {
   }
 
   private loadDataAndPopulateChart(dateFrom: string, dateTo: string): void {
-    this.allEntryService.findAll('MONTH', dateFrom, dateTo).subscribe(data => {
-      this.lineChartData.datasets[0].data = data.saleWattHours;
-      this.lineChartData.datasets[1].data = data.purchaseWattHours
-      this.lineChartData.datasets[2].data = data.productionWattHours;
-      this.lineChartData.datasets[3].data = data.consumptionWattHours;
-      this.lineChartData.datasets[4].data = data.selfConsumptionWattHours;
-      this.lineChartData.labels = data.date;
+    this.dataExportEntryService.getDateTimeAndValuesForTimespan(dateFrom, dateTo).subscribe(data => {
+      this.lineChartData.datasets[0].data = data.saleWattages;
+      this.lineChartData.datasets[1].data = data.purchaseWattages;
+      this.lineChartData.datasets[2].data = data.productionWattages;
+      this.lineChartData.datasets[3].data = data.consumptionWattages;
+      this.lineChartData.datasets[4].data = data.selfConsumptionWattages;
+      this.lineChartData.labels = data.dateTimes;
 
       this.menuTitle = dateFrom + ' - ' + dateTo;
       this.chart?.update();
-    });
-  }  
+    })
+
+
+
+
+
+    // this.allEntryService.findAll('MONTH', dateFrom, dateTo).subscribe(data => {
+    //   this.lineChartData.datasets[0].data = data.saleWattHours;
+    //   this.lineChartData.datasets[1].data = data.purchaseWattHours
+    //   this.lineChartData.datasets[2].data = data.productionWattHours;
+    //   this.lineChartData.datasets[3].data = data.consumptionWattHours;
+    //   this.lineChartData.datasets[4].data = data.selfConsumptionWattHours;
+    //   this.lineChartData.labels = data.date;
+
+    //   this.menuTitle = dateFrom + ' - ' + dateTo;
+    //   this.chart?.update();
+    // });
+  }
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
@@ -121,16 +140,23 @@ export class AllComponent implements OnInit {
       line: {
         tension: 0.1,
       },
+      point: {
+        radius: 0 // default to disabled in all datasets
+      }
     },
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
       y: {
         position: 'left',
-      }
+        ticks: {
+          // Disabled rotation for performance
+          maxRotation: 0,
+        },
+      },
     },
 
     plugins: {
-      legend: { 
+      legend: {
         display: true,
         position: 'bottom'
       }
@@ -138,6 +164,7 @@ export class AllComponent implements OnInit {
     responsive: true,
     maintainAspectRatio: true,
     aspectRatio: 3,
+    animation: false,
   };
 
   public lineChartType: ChartType = 'line';
@@ -161,7 +188,7 @@ export class AllComponent implements OnInit {
     event?: ChartEvent;
     active?: object[];
   }): void {
-    
+
   }
 
   setChartType(type: string) {
@@ -188,13 +215,13 @@ export class AllComponent implements OnInit {
 
     this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value)
   }
-    
+
   increaseMonth(dateField: string): void {
     if (dateField === 'toDate') {
       this.shiftMonthFieldValue('toDate', 1);
       this.toDateChange();
     } else if (dateField === 'fromDate') {
-      this.shiftMonthFieldValue('toDate', 1);
+      this.shiftMonthFieldValue('fromDate', 1);
       this.fromDateChange();
     }
   }
