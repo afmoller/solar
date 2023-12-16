@@ -51,7 +51,7 @@
         </div>
         <div class="contentContainer padding">
           <div>
-            <span>Shift date selection</span>
+            <span>Shift date selection 1 {{selectionScope}} </span>
           </div>
           <div>
             <button class="button" type="button" (click)="decreaseMonths()">-</button>
@@ -63,8 +63,25 @@
             <span>Diagram type</span>
           </div>
           <div>
-            <button class="button" type="button" (click)="setChartType('line')">Line</button>
-            <button class="button" type="button" (click)="setChartType('bar')">Bar</button>
+            <label>
+              <input type="radio" name="diagramType" value="line" checked="checked" (change)="setChartType('line')">Line
+            </label>
+            <label>
+              <input type="radio" name="diagramType" value="bar" (change)="setChartType('bar')">Bar
+            </label>
+          </div>
+        </div>
+        <div class="contentContainer padding">
+          <div>
+            <span>Selection scope</span>
+          </div>
+          <div>
+            <label>
+              <input type="radio" name="selectionScope" value="month" checked="checked" (change)="setSelectionScope('month')">Month
+            </label>
+            <label>
+              <input type="radio" name="selectionScope" value="day" (change)="setSelectionScope('day')">Day
+            </label>
           </div>
         </div>
       </div>

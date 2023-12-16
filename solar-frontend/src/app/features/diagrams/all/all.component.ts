@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DataExportEntryService } from 'src/app/core/services/data-export-entry.service';
 import { sample } from 'rxjs';
+import { MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'app-all',
@@ -20,7 +21,8 @@ export class AllComponent implements OnInit {
 
   inputForm: FormGroup;
   menuTitle: string = '';
-
+  selectionScope: string = 'month';
+  
   constructor(
     private formBuilder: FormBuilder,
     private allEntryService: AllEntryService,
@@ -44,7 +46,7 @@ export class AllComponent implements OnInit {
       this.inputForm.get('fromDate')?.setValue(dateAsString);
       this.inputForm.get('toDate')?.setValue(dateAsString);
 
-      this.loadDataAndPopulateChart(dateAsString, dateAsString);
+      this.loadDataAndPopulateChart(dateAsString, dateAsString, this.selectionScope);
     });
   }
 
@@ -58,7 +60,7 @@ export class AllComponent implements OnInit {
       this.inputForm.get('toDate')?.setValue(fromDateValue);
     }
 
-    this.loadDataAndPopulateChart(fromDateValue, this.inputForm.get('toDate')?.value);
+    this.loadDataAndPopulateChart(fromDateValue, this.inputForm.get('toDate')?.value, this.selectionScope);
   }
 
   public toDateChange(): void {
@@ -71,37 +73,33 @@ export class AllComponent implements OnInit {
       this.inputForm.get('fromDate')?.setValue(toDateValue);
     }
 
-    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, toDateValue);
+    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, toDateValue, this.selectionScope);
   }
 
-  private loadDataAndPopulateChart(dateFrom: string, dateTo: string): void {
-    this.dataExportEntryService.getDateTimeAndValuesForTimespan(dateFrom, dateTo).subscribe(data => {
-      this.lineChartData.datasets[0].data = data.saleWattages;
-      this.lineChartData.datasets[1].data = data.purchaseWattages;
-      this.lineChartData.datasets[2].data = data.productionWattages;
-      this.lineChartData.datasets[3].data = data.consumptionWattages;
-      this.lineChartData.datasets[4].data = data.selfConsumptionWattages;
-      this.lineChartData.labels = data.dateTimes;
-
-      this.menuTitle = dateFrom + ' - ' + dateTo;
-      this.chart?.update();
-    })
-
-
-
-
-
-    // this.allEntryService.findAll('MONTH', dateFrom, dateTo).subscribe(data => {
-    //   this.lineChartData.datasets[0].data = data.saleWattHours;
-    //   this.lineChartData.datasets[1].data = data.purchaseWattHours
-    //   this.lineChartData.datasets[2].data = data.productionWattHours;
-    //   this.lineChartData.datasets[3].data = data.consumptionWattHours;
-    //   this.lineChartData.datasets[4].data = data.selfConsumptionWattHours;
-    //   this.lineChartData.labels = data.date;
-
-    //   this.menuTitle = dateFrom + ' - ' + dateTo;
-    //   this.chart?.update();
-    // });
+  private loadDataAndPopulateChart(dateFrom: string, dateTo: string, selectionType: string): void {
+    
+    if (selectionType === 'month') {
+      this.allEntryService.findAll('MONTH', dateFrom, dateTo).subscribe(data => {
+        this.lineChartData.datasets[0].data = data.saleWattHours;
+        this.lineChartData.datasets[1].data = data.purchaseWattHours
+        this.lineChartData.datasets[2].data = data.productionWattHours;
+        this.lineChartData.datasets[3].data = data.consumptionWattHours;
+        this.lineChartData.datasets[4].data = data.selfConsumptionWattHours;
+        this.lineChartData.labels = data.date;
+        this.chart?.update();
+      });
+    } else if (selectionType === 'day') {
+      this.dataExportEntryService.getDateTimeAndValuesForTimespan(dateFrom, dateTo).subscribe(data => {
+        this.lineChartData.datasets[0].data = data.saleWattages;
+        this.lineChartData.datasets[1].data = data.purchaseWattages;
+        this.lineChartData.datasets[2].data = data.productionWattages;
+        this.lineChartData.datasets[3].data = data.consumptionWattages;
+        this.lineChartData.datasets[4].data = data.selfConsumptionWattages;
+        this.lineChartData.labels = data.dateTimes;
+        this.chart?.update();
+      })
+    }
+    this.menuTitle = dateFrom + ' - ' + dateTo;
   }
 
   public lineChartData: ChartConfiguration['data'] = {
@@ -199,6 +197,11 @@ export class AllComponent implements OnInit {
     }
   }
 
+  setSelectionScope(selectionScope:string): void {
+    this.selectionScope = selectionScope;
+    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value, selectionScope)
+  }
+
   decreaseMonth(dateField: string): void {
     if (dateField === 'toDate') {
       this.shiftMonthFieldValue('toDate', -1);
@@ -213,7 +216,7 @@ export class AllComponent implements OnInit {
     this.shiftMonthFieldValue('fromDate', -1);
     this.shiftMonthFieldValue('toDate', -1);
 
-    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value)
+    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value, this.selectionScope)
   }
 
   increaseMonth(dateField: string): void {
@@ -230,15 +233,25 @@ export class AllComponent implements OnInit {
     this.shiftMonthFieldValue('fromDate', 1);
     this.shiftMonthFieldValue('toDate', 1);
 
-    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value)
+    this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value, this.selectionScope)
   }
 
   private shiftMonthFieldValue(dateField: string, shiftValue: number) {
-    let dateValue: string = this.inputForm.get(dateField)?.value;
-    let dateValueAsDate: Date = new Date(dateValue);
-    dateValueAsDate.setMonth(dateValueAsDate.getMonth() + shiftValue);
 
-    this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));
+    if (this.selectionScope === 'month') {
+      let dateValue: string = this.inputForm.get(dateField)?.value;
+      let dateValueAsDate: Date = new Date(dateValue);
+      dateValueAsDate.setMonth(dateValueAsDate.getMonth() + shiftValue);
+  
+      this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));
+    } else if (this.selectionScope === 'day') {
+      let dateValue: string = this.inputForm.get(dateField)?.value;
+      let dateValueAsDate: Date = new Date(dateValue);
+      dateValueAsDate.setDate(dateValueAsDate.getDate() + shiftValue);
+  
+      this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));
+    }
+    
   }
 
   private getDateAsString(date: Date): string {
@@ -248,4 +261,5 @@ export class AllComponent implements OnInit {
   private zeroPadIfNecessary(value: number): string {
     return value < 10 ? '0' + value : value + '';
   }
+
 }
