@@ -4,12 +4,10 @@
     <h4 class="centered">Menu</h4>
     
     <div class="menuSection">
-      <h4>Tables</h4>
-      <h5 class="underline">Data aggregations</h5>
+      <h4>Dashboard</h4>
+      <h5 class="underline">Dashboard</h5>
       <p>
         <a routerLink="/summaryperdayentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per day</a>
-        <br>
-        <a routerLink="/summarypermonthentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per month</a>
       </p>
       <br>
     </div>
@@ -20,8 +18,6 @@
       <p>
         <a [routerLink]="['/year-over-year', 'sale', 'normal']" >Sale</a>
         <br>
-        <a [routerLink]="['/year-over-year', 'autarky', 'normal']" >Autarky</a>
-        <br>
         <a [routerLink]="['/year-over-year', 'purchase', 'normal']" >Purchase</a>
         <br>
         <a [routerLink]="['/year-over-year', 'production', 'normal']" >Production</a>
@@ -29,6 +25,8 @@
         <a [routerLink]="['/year-over-year', 'consumption', 'normal']" >Consumption</a>
         <br>
         <a [routerLink]="['/year-over-year', 'selfconsumption', 'normal']" >Selfconsumption</a>
+        <br>
+        <a [routerLink]="['/year-over-year', 'autarky', 'normal']" >Autarky</a>
       </p>
       <br>
   
@@ -42,25 +40,29 @@
         <br>
         <a [routerLink]="['/year-over-year', 'consumption', 'accumulated']" >Consumption</a>
         <br>
-        <a [routerLink]="['/year-over-year', 'selfconsumption', 'accumulated']" >Selfconsumption</a>
-        <br>
-        <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page">All values</a>
+        <a [routerLink]="['/year-over-year', 'selfconsumption', 'accumulated']">Selfconsumption</a>      
       </p>
       <br>
 
-      <h5 class="underline">All</h5>
+      <h5 class="underline">All values</h5>
       <p>
-        <a routerLink="/all">Date</a>
+        <a routerLink="/all">Date selection</a>
         <br>
-        <a routerLink="/all">Month</a>
-        <br>
-        <a routerLink="/all">Year</a>
+        <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page">All time accumulated</a>
       </p>
       <br>
     </div>
     
     <div class="menuSection">
-      <h4>Debug</h4>
+      <h4>Data Tables</h4>
+      <h5 class="underline">Data aggregations</h5>
+      <p>
+        <a routerLink="/summaryperdayentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per day</a>
+        <br>
+        <a routerLink="/summarypermonthentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per month</a>
+      </p>
+      
+      <h5 class="underline">Debug</h5>
       <p>
         <a routerLink="/dataexportentry" routerLinkActive="active" ariaCurrentWhenActive="page">Data export entry</a>
       </p>

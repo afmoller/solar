@@ -149,11 +149,18 @@ export class YearOverYearComponent implements OnInit {
       line: {
         tension: 0.1,
       },
+      point: {
+        radius: 0 // default to disabled in all datasets
+      }
     },
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
       y: {
         position: 'left',
+        ticks: {
+          // Disabled rotation for performance
+          maxRotation: 0,
+        },
       }
     },
 
@@ -166,6 +173,7 @@ export class YearOverYearComponent implements OnInit {
     responsive: true,
     maintainAspectRatio: true,
     aspectRatio: 3,
+    animation: false,
   };
 
   public lineChartType: ChartType = 'line';
