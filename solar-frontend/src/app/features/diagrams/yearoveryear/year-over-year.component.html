@@ -1,7 +1,7 @@
 <div>
   <h4 class="centered">{{menuTitle}}</h4>
 </div>
-<div class="diagramContainer">
+<div class="diagram-container">
   <canvas
     baseChart
     class="chart"
@@ -12,15 +12,15 @@
     (chartClick)="chartClicked($event)">
   </canvas>
 </div>
-<div class="tableContainer">
-  <table class="valueTable">
-    <tr class="tableHeader">
-      <th class="tableHeaderCell" *ngFor="let columnName of displayedColumns">
+<div class="table-container">
+  <table class="value-table">
+    <tr class="table-header">
+      <th class="table-header-cell" *ngFor="let columnName of displayedColumns">
         {{ columnName }}
       </th>
     </tr>
-    <tr class="tableRow" *ngFor="let row of tableRows" > 
-      <td class="tableCell" *ngFor="let column of row">
+    <tr class="table-row" *ngFor="let row of tableRows" > 
+      <td class="table-cell" *ngFor="let column of row">
         {{ column }}
       </td>
     </tr>
