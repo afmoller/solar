@@ -1,53 +1,53 @@
 .valueTable {
-    width: 100%;
+  width: 100%;
 }
 
 .tableHeader {
-    border-style: solid;
-    border-color: black;
-    background-color: white;
+  border-style: solid;
+  border-color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
 }
 
 .tableRow:nth-child(even) {
-    background-color: lightgreen;
+  background-color: rgb(144, 238, 144);
 }
 
 .tableRow:nth-child(odd) {
-    background-color: lightblue;
+  background-color: rgb(173, 216, 230);
 }
 
 .tableHeaderCell {
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(0, 0, 0);
+  border-radius: 3px;
 }
 
 .tableCell {
-    text-align: right;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    border-radius: 3px;
+  text-align: right;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(0, 0, 0);
+  border-radius: 3px;
 }
 
 .centered {
-    text-align: center;
+  text-align: center;
 }
 
 .diagramContainer {
-    margin: 2px;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 5px;
-    background-color: white;
+  margin: 2px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
 }
 
 .tableContainer {
-    margin: 1px;
-    padding: 0px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
-    border-radius: 5px;  
+  margin: 1px;
+  padding: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(0, 0, 0);
+  border-radius: 5px;
 }
