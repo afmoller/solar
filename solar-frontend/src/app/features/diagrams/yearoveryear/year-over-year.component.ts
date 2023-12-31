@@ -40,44 +40,48 @@ export class YearOverYearComponent implements OnInit {
       this.menuTitle = this.getDiagramTitle(this.valueType, this.mode);
 
       this.tableRows = [];
-    
-      this.yearOverYearEntryService.findAll(this.valueType).subscribe(data => {
 
-        const nrOfMonthsPerYear = 12;
-        let index = 0;
-  
-        let monthValues = data.monthValues;
-        
-        for (let i = 0; i < monthValues.length; i += nrOfMonthsPerYear) {
-          const twelveMonths = monthValues.slice(i, i + nrOfMonthsPerYear);
-  
-          if(this.mode === 'normal') {
-            this.lineChartData.datasets[index].data = twelveMonths;
-          } else {
-            for(let i = 0; i < 12; i++) {
-              if (i > 0) {
-                twelveMonths[i] = twelveMonths[i] + twelveMonths[i-1];     
-              } 
-            }
-            this.lineChartData.datasets[index].data = twelveMonths;
-            
-          }
-          this.lineChartData.datasets[index].label = data.years[index];
-        
-          let tableRow: Array<number> = [];
-          tableRow.push(Number(data.years[index]));
-          tableRow = tableRow.concat(twelveMonths);
-
-          this.tableRows.push(tableRow);
-  
-          index++;
-        }
-  
-        this.lineChartData.labels = this.monthLabels;  
-        this.chart?.update();
-
-      });    
+      this.loadDataAndUpdateDiagram();
     });
+  }
+
+  private loadDataAndUpdateDiagram() {
+    this.yearOverYearEntryService.findAll(this.valueType).subscribe(data => {
+
+      const nrOfMonthsPerYear = 12;
+      let index = 0;
+
+      let monthValues = data.monthValues;
+      
+      for (let i = 0; i < monthValues.length; i += nrOfMonthsPerYear) {
+        const twelveMonths = monthValues.slice(i, i + nrOfMonthsPerYear);
+
+        if(this.mode === 'normal') {
+          this.lineChartData.datasets[index].data = twelveMonths;
+        } else {
+          for(let i = 0; i < 12; i++) {
+            if (i > 0) {
+              twelveMonths[i] = twelveMonths[i] + twelveMonths[i-1];     
+            } 
+          }
+          this.lineChartData.datasets[index].data = twelveMonths;
+          
+        }
+        this.lineChartData.datasets[index].label = data.years[index];
+      
+        let tableRow: Array<number> = [];
+        tableRow.push(Number(data.years[index]));
+        tableRow = tableRow.concat(twelveMonths);
+
+        this.tableRows.push(tableRow);
+
+        index++;
+      }
+
+      this.lineChartData.labels = this.monthLabels;  
+      this.chart?.update();
+
+    }); 
   }
 
   private getDiagramTitle(valueType: string, mode: string): string {
