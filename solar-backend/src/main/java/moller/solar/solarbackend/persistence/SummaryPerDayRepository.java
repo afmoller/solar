@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface SummaryPerDayRepository extends JpaRepository<SummaryPerDayEntry, LocalDateTime> {
 
-    @Query(value = "SELECT s FROM SummaryPerDayEntry s WHERE s.accumulatedProductionWattHours = (SELECT MAX(s1.accumulatedProductionWattHours) FROM SummaryPerDayEntry s1)")
+    @Query(value = "SELECT s FROM SummaryPerDayEntry s WHERE s.accumulatedConsumptionWattHours = (SELECT MAX(s1.accumulatedConsumptionWattHours) FROM SummaryPerDayEntry s1)")
     SummaryPerDayEntry findEntryWithHighestAccumulatedValues();
 
     @Query(value = "SELECT s.date, s.accumulatedSaleWattHours, s.accumulatedPurchaseWattHours, s.accumulatedProductionWattHours, s.accumulatedConsumptionWattHours, s.accumulatedSelfConsumptionWattHours FROM SummaryPerDayEntry s ORDER BY s.date")
