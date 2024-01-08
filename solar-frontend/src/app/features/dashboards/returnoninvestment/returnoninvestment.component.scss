@@ -1,0 +1,33 @@
+.striped-row {
+  background-color: rgb(236, 236, 236)
+}
+
+.mat-column {
+  border-right: 1px solid currentColor;
+}
+
+.mat-column-date {
+  width: 107px;
+  border-right: 1px solid currentColor;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.table-container {
+  max-height: 95vh;
+  overflow: auto;
+}
+
+.centered {
+  text-align: center;
+}
+
+.content-container {
+  margin: 2px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: rgb(255, 255, 255);
+}
