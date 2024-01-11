@@ -15,9 +15,12 @@ export class ReturnOnInvestmentComponent implements OnInit {
 
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['date',
+                                'cost',
+                                'income',
                                 'description',
-                                'amountInMinorUnit',
-                                'amountIsPositive'
+                                'saldo',
+                                'deltaSinceStart',
+                                'numberOfYearsUntilPaid',
                               ];
 
   constructor(
@@ -34,4 +37,23 @@ export class ReturnOnInvestmentComponent implements OnInit {
       this.dataSource.data = data;
     });
   }
+
+
+  getValueIfPositive(amount: number, isPositive: boolean): string {
+    if (isPositive) {
+      return amount.toString();
+    } else {
+      return '';
+    }
+  }
+
+  getValueIfNegative(amount: number, isPositive: boolean): string {
+    if (!isPositive) {
+      return '-' + amount.toString();
+    } else {
+      return '';
+    }
+  }
 }
+
+
