@@ -1,8 +1,10 @@
 package moller.solar.solarbackend.enumerations;
 
-public enum Period {
+public enum Resolution {
 
-    DATE,
+    MINUTE,
+    HOUR,
+    DAY,
     MONTH,
     YEAR;
 }

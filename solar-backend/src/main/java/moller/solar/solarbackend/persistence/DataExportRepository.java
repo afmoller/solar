@@ -16,5 +16,5 @@ public interface DataExportRepository extends JpaRepository<DataExportEntry, Int
     List<DataExportEntry> findByYearAndMonth(int year, int month);
 
     @Query(value = "SELECT d FROM DataExportEntry d WHERE d.timestamp between :fromDateTime AND :toDateTime ORDER BY d.timestamp")
-    List<DataExportEntry> findByTimespan(LocalDateTime fromDateTime, LocalDateTime toDateTime);
+    List<DataExportEntry> findByTimespanOrderedByTimestamp(LocalDateTime fromDateTime, LocalDateTime toDateTime);
 }

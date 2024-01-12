@@ -14,7 +14,7 @@ export class AllEntryService {
     this.allentriesUrl = 'http://localhost:8080/getAllValuesForPeriod';
   }
 
-  public findAll(period: String, fromDate: string, toDate: string): Observable<Allentry> {
-    return this.http.get<Allentry>(this.allentriesUrl + '?period=' + period + '&selectedFromDate=' + fromDate + '&selectedToDate=' + toDate);
+  public findAll(resolution: String, fromDate: string, toDate: string): Observable<Allentry> {
+    return this.http.get<Allentry>(this.allentriesUrl + '?resolution=' + resolution + '&selectedFromDate=' + fromDate + '&selectedToDate=' + toDate);
   }
 }

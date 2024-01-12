@@ -2,7 +2,7 @@ package moller.solar.solarbackend.controller;
 
 import moller.solar.solarbackend.dto.DateAndValues;
 import moller.solar.solarbackend.dto.YearAndMonthProductionValues;
-import moller.solar.solarbackend.enumerations.Period;
+import moller.solar.solarbackend.enumerations.Resolution;
 import moller.solar.solarbackend.persistence.DataExportEntry;
 import moller.solar.solarbackend.persistence.DataExportRepository;
 import moller.solar.solarbackend.persistence.SummaryPerDayEntry;
@@ -108,7 +108,7 @@ public class SummaryPerDayController {
 
 
     @GetMapping(value = "/getAllValuesForPeriod")
-    public ResponseEntity<DateAndValues> getAllValuesForPeriod(@RequestParam Period period, @RequestParam LocalDate selectedFromDate, @RequestParam LocalDate selectedToDate) {
+    public ResponseEntity<DateAndValues> getAllValuesForPeriod(@RequestParam Resolution resolution, @RequestParam LocalDate selectedFromDate, @RequestParam LocalDate selectedToDate) {
 
         int yearFrom = LocalDate.now().getYear();
         int monthFrom = LocalDate.now().getMonthValue();
@@ -116,15 +116,16 @@ public class SummaryPerDayController {
         int yearTo = LocalDate.now().getYear();
         int monthTo = LocalDate.now().getMonthValue();
 
-        switch (period) {
-            case DATE -> {
-            }
-            case MONTH -> {
+        switch (resolution) {
+            case DAY -> {
                 yearFrom = selectedFromDate.getYear();
                 monthFrom = selectedFromDate.getMonthValue();
 
                 yearTo = selectedToDate.getYear();
                 monthTo = selectedToDate.getMonthValue();
+            }
+            case MONTH -> {
+
 
 
             }

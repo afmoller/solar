@@ -78,8 +78,8 @@ export class AllComponent implements OnInit {
 
   private loadDataAndPopulateChart(dateFrom: string, dateTo: string, selectionType: string): void {
     
-    if (selectionType === 'month') {
-      this.allEntryService.findAll('MONTH', dateFrom, dateTo).subscribe(data => {
+    if (selectionType === 'day') {
+      this.allEntryService.findAll('DAY', dateFrom, dateTo).subscribe(data => {
         this.lineChartData.datasets[0].data = data.saleWattHours;
         this.lineChartData.datasets[1].data = data.purchaseWattHours
         this.lineChartData.datasets[2].data = data.productionWattHours;
@@ -88,8 +88,8 @@ export class AllComponent implements OnInit {
         this.lineChartData.labels = data.date;
         this.chart?.update();
       });
-    } else if (selectionType === 'day') {
-      this.dataExportEntryService.getDateTimeAndValuesForTimespan(dateFrom, dateTo).subscribe(data => {
+    } else if (selectionType === 'MINUTE') {
+      this.dataExportEntryService.getDateTimeAndValuesForTimespan(selectionType, dateFrom, dateTo).subscribe(data => {
         this.lineChartData.datasets[0].data = data.saleWattages;
         this.lineChartData.datasets[1].data = data.purchaseWattages;
         this.lineChartData.datasets[2].data = data.productionWattages;
@@ -97,7 +97,17 @@ export class AllComponent implements OnInit {
         this.lineChartData.datasets[4].data = data.selfConsumptionWattages;
         this.lineChartData.labels = data.dateTimes;
         this.chart?.update();
-      })
+      });
+    } else if (selectionType === 'HOUR') {
+      this.dataExportEntryService.getDateTimeAndValuesForTimespanWatthours(selectionType, dateFrom, dateTo).subscribe(data => {
+        this.lineChartData.datasets[0].data = data.saleWatthours;
+        this.lineChartData.datasets[1].data = data.purchaseWatthours;
+        this.lineChartData.datasets[2].data = data.productionWatthours;
+        this.lineChartData.datasets[3].data = data.consumptionWatthours;
+        this.lineChartData.datasets[4].data = data.selfConsumptionWatthours;
+        this.lineChartData.labels = data.dateTimes;
+        this.chart?.update();
+      });
     }
     this.menuTitle = dateFrom + ' - ' + dateTo;
   }
