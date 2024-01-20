@@ -21,7 +21,7 @@ export class AllComponent implements OnInit {
 
   inputForm: FormGroup;
   menuTitle: string = '';
-  selectionScope: string = 'month';
+  selectionScope: string = 'DAY';
   
   constructor(
     private formBuilder: FormBuilder,
@@ -78,8 +78,8 @@ export class AllComponent implements OnInit {
 
   private loadDataAndPopulateChart(dateFrom: string, dateTo: string, selectionType: string): void {
     
-    if (selectionType === 'day') {
-      this.allEntryService.findAll('DAY', dateFrom, dateTo).subscribe(data => {
+    if (selectionType === 'DAY' || selectionType === 'MONTH') {
+      this.allEntryService.findAll(selectionType, dateFrom, dateTo).subscribe(data => {
         this.lineChartData.datasets[0].data = data.saleWattHours;
         this.lineChartData.datasets[1].data = data.purchaseWattHours
         this.lineChartData.datasets[2].data = data.productionWattHours;

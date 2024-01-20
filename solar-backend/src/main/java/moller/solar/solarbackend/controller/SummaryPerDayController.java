@@ -2,7 +2,6 @@ package moller.solar.solarbackend.controller;
 
 import moller.solar.solarbackend.dto.DateAndValues;
 import moller.solar.solarbackend.dto.YearAndMonthProductionValues;
-import moller.solar.solarbackend.enumerations.Resolution;
 import moller.solar.solarbackend.persistence.DataExportEntry;
 import moller.solar.solarbackend.persistence.DataExportRepository;
 import moller.solar.solarbackend.persistence.SummaryPerDayEntry;
@@ -53,7 +52,7 @@ public class SummaryPerDayController {
         List<SummaryPerDayEntry> summaryPerDayEntries = createSummaryPerDayEntries(dateToSummaryEntryValues);
         summaryPerDayRepository.saveAll(summaryPerDayEntries);
 
-        return ResponseEntity.of(Optional.of(Integer.valueOf(summaryPerDayEntries.size())));
+        return ResponseEntity.of(Optional.of(summaryPerDayEntries.size()));
     }
 
     @GetMapping(value = "/getAll")
@@ -108,31 +107,13 @@ public class SummaryPerDayController {
 
 
     @GetMapping(value = "/getAllValuesForPeriod")
-    public ResponseEntity<DateAndValues> getAllValuesForPeriod(@RequestParam Resolution resolution, @RequestParam LocalDate selectedFromDate, @RequestParam LocalDate selectedToDate) {
+    public ResponseEntity<DateAndValues> getAllValuesForPeriod(@RequestParam LocalDate selectedFromDate, @RequestParam LocalDate selectedToDate) {
 
-        int yearFrom = LocalDate.now().getYear();
-        int monthFrom = LocalDate.now().getMonthValue();
+        int yearFrom = selectedFromDate.getYear();
+        int yearTo = selectedToDate.getYear();
 
-        int yearTo = LocalDate.now().getYear();
-        int monthTo = LocalDate.now().getMonthValue();
-
-        switch (resolution) {
-            case DAY -> {
-                yearFrom = selectedFromDate.getYear();
-                monthFrom = selectedFromDate.getMonthValue();
-
-                yearTo = selectedToDate.getYear();
-                monthTo = selectedToDate.getMonthValue();
-            }
-            case MONTH -> {
-
-
-
-            }
-            case YEAR -> {
-            }
-        }
-
+        int monthFrom = selectedFromDate.getMonthValue();
+        int monthTo = selectedToDate.getMonthValue();
 
         LocalDate fromDate = LocalDate.of(yearFrom, monthFrom, 1);
 
@@ -273,7 +254,7 @@ public class SummaryPerDayController {
                 .keySet()
                 .stream()
                 .sorted(LocalDate::compareTo)
-                .collect(Collectors.toList());
+                .toList();
 
         datesSortedFromEarliestToLatest.forEach(date -> {
             SummaryEntryValues summaryEntryValuesForDate = dateToSummaryEntryValues.get(date);

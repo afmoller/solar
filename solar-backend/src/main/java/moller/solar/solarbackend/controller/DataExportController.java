@@ -67,10 +67,15 @@ public class DataExportController {
         int consumptionImpulses = 0;
         int selfConsumptionImpulses = 0;
 
-        for (DataExportEntry dataExportEntry : dataExportEntries) {
+        int numberOfEntries = dataExportEntries.size();
+
+        for (int index = 0; index < numberOfEntries; index++) {
+
+            DataExportEntry dataExportEntry = dataExportEntries.get(index);
+
             int currentHour = dataExportEntry.getTimestamp().getHour();
 
-            if (hour != currentHour) {
+            if (hour != currentHour || index == numberOfEntries - 1) {
                 if (hour != -1) {
 
                     DataExportEntry currentAggregatedDataExportEntry = new DataExportEntry.DateExportEntryBuilder()

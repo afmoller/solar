@@ -8,13 +8,26 @@ import { Observable } from 'rxjs';
 })
 export class AllEntryService {
 
-  private allentriesUrl: string;
+  private allentriesUrlDay: string;
+  private allentriesUrlMonth: string;
 
   constructor(private http: HttpClient) {
-    this.allentriesUrl = 'http://localhost:8080/getAllValuesForPeriod';
+    this.allentriesUrlDay = 'http://localhost:8080/getAllValuesForPeriod';
+    this.allentriesUrlMonth ='http://localhost:8080/getMonthlyAccumulatedValuesForPeriod';
   }
 
   public findAll(resolution: String, fromDate: string, toDate: string): Observable<Allentry> {
-    return this.http.get<Allentry>(this.allentriesUrl + '?resolution=' + resolution + '&selectedFromDate=' + fromDate + '&selectedToDate=' + toDate);
+
+    let service: string;
+
+    if (resolution === 'DAY') {
+      service = this.allentriesUrlDay;
+    } else if (resolution === 'MONTH') {
+      service = this.allentriesUrlMonth;
+    } else {
+      service = this.allentriesUrlMonth;
+    }
+    
+    return this.http.get<Allentry>(service + '?selectedFromDate=' + fromDate + '&selectedToDate=' + toDate);
   }
 }
