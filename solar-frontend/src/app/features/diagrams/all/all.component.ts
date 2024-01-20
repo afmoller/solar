@@ -21,8 +21,13 @@ export class AllComponent implements OnInit {
 
   inputForm: FormGroup;
   menuTitle: string = '';
+  menuTitlePrefix: string = '';
   selectionScope: string = 'DAY';
+  shiftSelectionScope: string = 'month'
   
+  static readonly menuTitlePrefixWatts: string = 'watts';
+  static readonly menuTitlePrefixWattHours: string = 'watt hours';
+      
   constructor(
     private formBuilder: FormBuilder,
     private allEntryService: AllEntryService,
@@ -78,7 +83,8 @@ export class AllComponent implements OnInit {
 
   private loadDataAndPopulateChart(dateFrom: string, dateTo: string, selectionType: string): void {
     
-    if (selectionType === 'DAY' || selectionType === 'MONTH') {
+    if (selectionType === 'MONTH' || selectionType === 'DAY') {
+      this.menuTitlePrefix = AllComponent.menuTitlePrefixWattHours;
       this.allEntryService.findAll(selectionType, dateFrom, dateTo).subscribe(data => {
         this.lineChartData.datasets[0].data = data.saleWattHours;
         this.lineChartData.datasets[1].data = data.purchaseWattHours
@@ -88,17 +94,8 @@ export class AllComponent implements OnInit {
         this.lineChartData.labels = data.date;
         this.chart?.update();
       });
-    } else if (selectionType === 'MINUTE') {
-      this.dataExportEntryService.getDateTimeAndValuesForTimespan(selectionType, dateFrom, dateTo).subscribe(data => {
-        this.lineChartData.datasets[0].data = data.saleWattages;
-        this.lineChartData.datasets[1].data = data.purchaseWattages;
-        this.lineChartData.datasets[2].data = data.productionWattages;
-        this.lineChartData.datasets[3].data = data.consumptionWattages;
-        this.lineChartData.datasets[4].data = data.selfConsumptionWattages;
-        this.lineChartData.labels = data.dateTimes;
-        this.chart?.update();
-      });
     } else if (selectionType === 'HOUR') {
+      this.menuTitlePrefix = AllComponent.menuTitlePrefixWattHours;
       this.dataExportEntryService.getDateTimeAndValuesForTimespanWatthours(selectionType, dateFrom, dateTo).subscribe(data => {
         this.lineChartData.datasets[0].data = data.saleWatthours;
         this.lineChartData.datasets[1].data = data.purchaseWatthours;
@@ -108,35 +105,48 @@ export class AllComponent implements OnInit {
         this.lineChartData.labels = data.dateTimes;
         this.chart?.update();
       });
+    } else if (selectionType === 'MINUTE') {
+      this.menuTitlePrefix = AllComponent.menuTitlePrefixWatts;
+      this.dataExportEntryService.getDateTimeAndValuesForTimespan(selectionType, dateFrom, dateTo).subscribe(data => {
+        this.lineChartData.datasets[0].data = data.saleWattages;
+        this.lineChartData.datasets[1].data = data.purchaseWattages;
+        this.lineChartData.datasets[2].data = data.productionWattages;
+        this.lineChartData.datasets[3].data = data.consumptionWattages;
+        this.lineChartData.datasets[4].data = data.selfConsumptionWattages;
+        this.lineChartData.labels = data.dateTimes;
+        this.chart?.update();
+      });
     }
     this.menuTitle = dateFrom + ' - ' + dateTo;
+
+    this.lineChartData.datasets[0].label = 'Sale (' + this.menuTitlePrefix +')';
+    this.lineChartData.datasets[1].label = 'Purchase (' + this.menuTitlePrefix +')';
+    this.lineChartData.datasets[2].label = 'Production (' + this.menuTitlePrefix +')';
+    this.lineChartData.datasets[3].label = 'Consumption (' + this.menuTitlePrefix +')';
+    this.lineChartData.datasets[4].label = 'Self Consumption (' + this.menuTitlePrefix +')';
+
   }
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
         data: [],
-        label: 'Sale (watt hours)',
         fill: false,
       },
       {
         data: [],
-        label: 'Purchase (watt hours)',
         fill: false,
       },
       {
         data: [],
-        label: 'Production (watt hours)',
         fill: false,
       },
       {
         data: [],
-        label: 'Consumption (watt hours)',
         fill: false,
       },
       {
         data: [],
-        label: 'Self Consumption (watt hours)',
         fill: false,
       },
     ],
@@ -209,7 +219,18 @@ export class AllComponent implements OnInit {
 
   setSelectionScope(selectionScope:string): void {
     this.selectionScope = selectionScope;
+    this.adjustShifSelectionScope();
     this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value, selectionScope)
+  }
+
+  adjustShifSelectionScope() {
+    if (this.selectionScope === 'MONTH') {
+      this.shiftSelectionScope = 'year';
+    } else if (this.selectionScope === 'DAY') {
+      this.shiftSelectionScope = 'month';
+    } else if (this.selectionScope === 'HOUR' || this.selectionScope === 'MINUTE') {
+      this.shiftSelectionScope = 'day';
+    }    
   }
 
   decreaseMonth(dateField: string): void {
@@ -248,20 +269,19 @@ export class AllComponent implements OnInit {
 
   private shiftMonthFieldValue(dateField: string, shiftValue: number) {
 
-    if (this.selectionScope === 'month') {
+    if (this.selectionScope === 'DAY') {
       let dateValue: string = this.inputForm.get(dateField)?.value;
       let dateValueAsDate: Date = new Date(dateValue);
       dateValueAsDate.setMonth(dateValueAsDate.getMonth() + shiftValue);
   
       this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));
-    } else if (this.selectionScope === 'day') {
+    } else if (this.selectionScope === 'HOUR' || this.selectionScope === 'MINUTE') {
       let dateValue: string = this.inputForm.get(dateField)?.value;
       let dateValueAsDate: Date = new Date(dateValue);
       dateValueAsDate.setDate(dateValueAsDate.getDate() + shiftValue);
   
       this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));
     }
-    
   }
 
   private getDateAsString(date: Date): string {

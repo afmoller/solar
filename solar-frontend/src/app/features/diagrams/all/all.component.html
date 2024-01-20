@@ -1,6 +1,6 @@
 
 <div>
-  <h4 class="centered">All values in watt hours ({{menuTitle}})</h4>
+  <h4 class="centered">All values in {{menuTitlePrefix}} ({{menuTitle}})</h4>
 </div>
 <div class="content-container">
   <canvas
@@ -83,7 +83,7 @@
         </div>
         <div class="content-container padding">
           <div>
-            <span>Shift date selection 1 {{selectionScope}} </span>
+            <span>Shift date selection 1 {{shiftSelectionScope}} </span>
           </div>
           <div>
             <button class="button" type="button" (click)="decreaseMonths()">-</button>
