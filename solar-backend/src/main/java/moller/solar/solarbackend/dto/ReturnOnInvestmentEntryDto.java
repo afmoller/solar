@@ -4,10 +4,19 @@ import java.time.LocalDate;
 
 public class ReturnOnInvestmentEntryDto {
 
+    private Integer id;
     private LocalDate date;
     private String description;
     private Boolean amountIsPositive;
     private Integer amountInMinorUnit;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public LocalDate getDate() {
         return date;

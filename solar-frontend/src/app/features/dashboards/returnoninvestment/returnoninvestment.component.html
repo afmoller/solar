@@ -14,11 +14,11 @@
         <td mat-cell *matCellDef="let row"> {{row.date}} </td>
       </ng-container>
       <ng-container matColumnDef="cost">
-        <th mat-header-cell *matHeaderCellDef>Cost</th>
+        <th mat-header-cell *matHeaderCellDef>Cost (CHF)</th>
         <td mat-cell *matCellDef="let row" class="cost">{{getValueIfNegative(row.amountInMinorUnit, row.amountIsPositive)}}</td>
       </ng-container>
       <ng-container matColumnDef="income">
-        <th mat-header-cell *matHeaderCellDef>Income</th>
+        <th mat-header-cell *matHeaderCellDef>Income (CHF)</th>
         <td mat-cell *matCellDef="let row" class="income">{{getValueIfPositive(row.amountInMinorUnit, row.amountIsPositive)}}</td>
       </ng-container>
       <ng-container matColumnDef="description">
@@ -27,15 +27,15 @@
       </ng-container>
       <ng-container matColumnDef="saldo">
         <th mat-header-cell *matHeaderCellDef>Saldo</th>
-        <td mat-cell *matCellDef="let row"> {{row.amountInMinorUnit}} </td>
+        <td mat-cell *matCellDef="let row" class="align-right"> {{formatValue(row.saldo)}} </td>
       </ng-container>
       <ng-container matColumnDef="deltaSinceStart">
         <th mat-header-cell *matHeaderCellDef>Delta since beginning (CHF)</th>
-        <td mat-cell *matCellDef="let row"> {{row.amountInMinorUnit}} </td>
+        <td mat-cell *matCellDef="let row" class="align-right"> {{formatValue(row.deltaSinceBegin)}} </td>
       </ng-container>
       <ng-container matColumnDef="numberOfYearsUntilPaid">
         <th mat-header-cell *matHeaderCellDef>Number of years until paid</th>
-        <td mat-cell *matCellDef="let row"> {{row.amountInMinorUnit}} </td>
+        <td mat-cell *matCellDef="let row" class="align-right"> {{row.numberOfYearsUntilPaid}} </td>
       </ng-container>
               
       <!-- Header and Row Declarations -->
@@ -48,4 +48,54 @@
       </tr>
     </table>  
   </div>
+</div>
+
+<div>
+  <!-- <form [formGroup]="inputForm"> -->
+    <div> 
+      <div class="table">
+        <div class="content-container padding">
+          <div>
+            <span>Totals</span>
+          </div>
+          <div>
+            <span>Income {{formatValue(returnOnInvestmentDashboard.totalIncome)}}</span>
+          </div>
+          <div>
+            <span>Cost {{formatValue(returnOnInvestmentDashboard.totalCost)}}</span>
+          </div>
+
+
+        </div>
+        <div class="content-container padding">
+          <div>
+            <span>Diagram type</span>
+          </div>
+          <div>
+            
+          </div>
+        </div>
+        <div class="content-container padding">
+          <div>
+            <span>Date selection</span>
+          </div>
+          <div class="table">   
+            <div>
+              <div class="table">
+                
+                  
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-container padding">
+          <div>
+            <span>Shift date selection 1 </span>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  <!-- </form> -->
 </div>

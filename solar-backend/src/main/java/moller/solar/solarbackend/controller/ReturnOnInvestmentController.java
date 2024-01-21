@@ -1,5 +1,6 @@
 package moller.solar.solarbackend.controller;
 
+import moller.solar.solarbackend.dto.ReturnOnInvestmentDashboard;
 import moller.solar.solarbackend.dto.ReturnOnInvestmentEntryDto;
 import moller.solar.solarbackend.persistence.ReturnOnInvestmentEntry;
 import moller.solar.solarbackend.persistence.ReturnOnInvestmentRepository;
@@ -23,6 +24,16 @@ public class ReturnOnInvestmentController {
     @GetMapping(value = "/return-on-investments")
     public ResponseEntity<List<ReturnOnInvestmentEntry>> getAllReturnOnInvestmentEntries() {
         return ResponseEntity.of(Optional.of(returnOnInvestmentRepository.findAll(Sort.by("date", "id").ascending())));
+    }
+
+    @GetMapping(value = "/return-on-investment-dashboard")
+    public ResponseEntity<ReturnOnInvestmentDashboard> getReturnOnInvestmentDashboard() {
+        List<ReturnOnInvestmentEntry> all = returnOnInvestmentRepository.findAll(Sort.by("date", "id").ascending());
+
+        ReturnOnInvestmentDashboard returnOnInvestmentDashboard = new ReturnOnInvestmentDashboard();
+        returnOnInvestmentDashboard.initMembers(all);
+
+        return ResponseEntity.of(Optional.of(returnOnInvestmentDashboard));
     }
 
     @PostMapping(value = "/return-on-investments")
