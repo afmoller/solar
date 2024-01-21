@@ -1,3 +1,15 @@
+<div class="content-container">
+  <canvas
+    baseChart
+    class="chart"
+    [data]="lineChartData"
+    [options]="lineChartOptions"
+    [type]="lineChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+  </canvas>
+</div>
+
 <div>
   <h4 class="centered">Return on Investment</h4>
 </div>
