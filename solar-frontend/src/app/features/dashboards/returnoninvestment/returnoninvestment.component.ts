@@ -18,7 +18,9 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 export class ReturnOnInvestmentComponent implements OnInit {
 
-  returnOnInvestmentDashboard!: ReturnOnInvestmentDashboard;
+  totalCost: string = '0';
+  totalIncome: string = '0';
+
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['date',
                                 'cost',
@@ -43,12 +45,14 @@ export class ReturnOnInvestmentComponent implements OnInit {
 
   ngOnInit() {
     this.returnOnInvestmentService.find().subscribe(data => {
-      this.returnOnInvestmentDashboard = data;
       this.dataSource.data = data.returnOnInvestmentDashboardEntryDtos;
 
       this.lineChartData.datasets[0].data = data.numberOfYearsUntilPaid;
       this.lineChartData.labels = data.dates;
       this.chart?.update();
+
+      this.totalCost = this.formatValue(data.totalCost);
+      this.totalIncome = this.formatValue(data.totalIncome);
     });
   }
 
@@ -120,9 +124,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
       }
     },
     responsive: true,
-    maintainAspectRatio: true,
-    aspectRatio: 3,
-    animation: false,
+    animation: false
   };
 
   public lineChartType: ChartType = 'line';
