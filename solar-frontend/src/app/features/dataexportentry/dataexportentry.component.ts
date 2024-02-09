@@ -22,9 +22,9 @@ export class DataexportentryComponent  {
   });
 
   onSubmit(): void {
-      this.dataexportentryservice.findByIid(this.inputForm.get('iid')?.value).subscribe(data => {
-        this.dataexportentry = data;
-      });
-      this.inputForm.reset();
-    }
+    this.dataexportentryservice.findByIid(this.inputForm.get('iid')?.value).subscribe(data => {
+      this.dataexportentry = data;
+    });
+    this.inputForm.reset();
+  }
 }

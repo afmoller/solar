@@ -16,7 +16,6 @@
     </canvas>
   </div>
 
-
   <div class="content-container">
     <div class="table-container">
       <mat-form-field>
@@ -69,10 +68,11 @@
 </div>
 
 <div>
-  <!-- <form [formGroup]="inputForm"> -->
-    <div>
-      <div class="table">
-        <div class="content-container padding">
+  <div>
+    <div class="table">
+      <div class="content-container table">
+
+        <div class="content-container">
           <div>
             <span>Totals</span>
           </div>
@@ -83,32 +83,47 @@
             <span>Cost {{totalCost}}</span>
           </div>
         </div>
-        <div class="content-container padding">
+
+        <div class="content-container">
           <div>
-            <span>Diagram type</span>
-          </div>
-          <div>
-          </div>
-        </div>
-        <div class="content-container padding">
-          <div>
-            <span>Date selection</span>
-          </div>
-          <div class="table">
-            <div>
+            <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
               <div class="table">
+                <div class="padding">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Choose a date</mat-label>
+                    <input id="date" matInput [matDatepicker]="picker" formControlName="date">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>  
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                  
+                <div class="padding">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Cost</mat-label>
+                    <input id="cost" type="number" formControlName="cost" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="padding">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Income</mat-label>
+                    <input id="income" type="number" formControlName="income" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="padding">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Description</mat-label>
+                    <input id="description" type="text" formControlName="description" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="padding">
+                  <button type="submit" mat-raised-button [disabled]="formIsInvalid()">Save</button>
+                </div>
               </div>
-            </div>
-          </div>
+                
+            </form>
+          </div> 
         </div>
-        <div class="content-container padding">
-          <div>
-            <span>Shift date selection 1 </span>
-          </div>
-
-        </div>
-
       </div>
     </div>
-  <!-- </form> -->
+  </div>
 </div>

@@ -1,26 +1,64 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'
-import { MatInputModule} from '@angular/material/input';
-import { MatFormFieldModule} from '@angular/material/form-field';
-import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
-import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
 import { BaseChartDirective } from 'ng2-charts';
+import { MatInputModule} from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table'
+import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
+import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
+import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
+import {MatButtonModule} from '@angular/material/button';
+
+
+export const atLeastOne = (validator: ValidatorFn, controls:string[]) => (
+  group: FormGroup,
+): ValidationErrors | null => {
+  if(!controls){
+    controls = Object.keys(group.controls)
+  }
+
+  const hasAtLeastOne = group && group.controls && controls
+    .some(k => !validator(group.controls[k]));
+
+  return hasAtLeastOne ? null : {
+    atLeastOne: true,
+  };
+};
 
 @Component({
   selector: 'app-returnoninvestment',
   templateUrl: './returnoninvestment.component.html',
   styleUrls: ['./returnoninvestment.component.scss'],
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, NgChartsModule]
+  
+  imports: [
+    MatInputModule,
+    MatTableModule,
+    NgChartsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule, 
+    ReactiveFormsModule
+  ],
+  providers: [  
+    MatDatepickerModule,  
+  ],
 })
+
+
+
 export class ReturnOnInvestmentComponent implements OnInit {
+
+  inputForm: FormGroup;
 
   totalCost: string = '0';
   totalIncome: string = '0';
-
+  
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['date',
                                 'cost',
@@ -32,10 +70,42 @@ export class ReturnOnInvestmentComponent implements OnInit {
                               ];
 
   constructor(
+    private formBuilder: FormBuilder,
     private returnOnInvestmentService: ReturnOnInvestmentService
   ) {
     Chart.register(Annotation);
     Chart.register(Colors);
+
+    this.inputForm = this.buildInputForm(formBuilder);
+
+  }
+
+  
+
+  formIsInvalid() {
+    return !this.inputForm.valid;
+  }
+
+  costFieldHasValue(): boolean {
+    debugger;
+    return !this.inputForm.get('cost')?.value.empty;
+  }
+  
+  incomeFieldHasValue(): boolean {
+    debugger;
+    return !this.inputForm.get('income')?.value.empty;
+  }
+  
+  onSubmit(): void {
+
+    this.inputForm.get('iid')
+
+
+
+   /*  this.dataexportentryservice.findByIid(this.inputForm.get('iid')?.value).subscribe(data => {
+      this.dataexportentry = data;
+    }); */
+    this.inputForm.reset();
   }
 
   applyFilter(event: Event) {
@@ -54,6 +124,44 @@ export class ReturnOnInvestmentComponent implements OnInit {
       this.totalCost = this.formatValue(data.totalCost);
       this.totalIncome = this.formatValue(data.totalIncome);
     });
+  }
+
+  buildInputForm(formBuilder: FormBuilder): FormGroup  {
+    let inputForm: FormGroup = formBuilder.group({
+      date: [
+        new Date(),
+        Validators.required
+      ],
+      description: [
+        '',
+        Validators.required
+      ],
+      income: [
+        '',
+      ],
+      cost: [
+        ''
+      ]
+    }, { validator: atLeastOne(Validators.required, ['income','cost']) });
+
+
+    inputForm.get('income')?.valueChanges.subscribe(value => {
+      if (value) {
+        inputForm.get('cost')?.disable();
+      } else {
+        inputForm.get('cost')?.enable();
+      }
+    });
+
+    inputForm.get('cost')?.valueChanges.subscribe(value => {
+      if (value) {
+        inputForm.get('income')?.disable();
+      } else {
+        inputForm.get('income')?.enable();
+      }
+    });
+
+    return inputForm;
   }
 
   getValueIfPositive(amount: number, isPositive: boolean): string {
