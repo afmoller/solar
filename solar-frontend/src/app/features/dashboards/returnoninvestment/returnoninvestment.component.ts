@@ -8,10 +8,11 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
-import { FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
 import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
 import {MatButtonModule} from '@angular/material/button';
+import { ReturnOnInvestmentCreateentry } from 'src/app/core/models/returnoninvestmentcreateentry';
 
 
 export const atLeastOne = (validator: ValidatorFn, controls:string[]) => (
@@ -34,7 +35,7 @@ export const atLeastOne = (validator: ValidatorFn, controls:string[]) => (
   templateUrl: './returnoninvestment.component.html',
   styleUrls: ['./returnoninvestment.component.scss'],
   standalone: true,
-  
+
   imports: [
     MatInputModule,
     MatTableModule,
@@ -42,15 +43,13 @@ export const atLeastOne = (validator: ValidatorFn, controls:string[]) => (
     MatButtonModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatNativeDateModule, 
+    MatNativeDateModule,
     ReactiveFormsModule
   ],
-  providers: [  
-    MatDatepickerModule,  
+  providers: [
+    MatDatepickerModule,
   ],
 })
-
-
 
 export class ReturnOnInvestmentComponent implements OnInit {
 
@@ -58,7 +57,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
 
   totalCost: string = '0';
   totalIncome: string = '0';
-  
+
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['date',
                                 'cost',
@@ -67,6 +66,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
                                 'saldo',
                                 'deltaSinceStart',
                                 'numberOfYearsUntilPaid',
+                                'delete'
                               ];
 
   constructor(
@@ -77,35 +77,41 @@ export class ReturnOnInvestmentComponent implements OnInit {
     Chart.register(Colors);
 
     this.inputForm = this.buildInputForm(formBuilder);
-
   }
-
-  
 
   formIsInvalid() {
     return !this.inputForm.valid;
   }
 
   costFieldHasValue(): boolean {
-    debugger;
-    return !this.inputForm.get('cost')?.value.empty;
+    return this.fieldHasValue(this.inputForm.get('cost'));
   }
-  
+
   incomeFieldHasValue(): boolean {
-    debugger;
-    return !this.inputForm.get('income')?.value.empty;
+    return this.fieldHasValue(this.inputForm.get('income'));
   }
-  
+
+  fieldHasValue(abstractControl: AbstractControl | null): boolean {
+    if (abstractControl?.value) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   onSubmit(): void {
+    let dateValue: Date = this.inputForm.get('date')?.value;
 
-    this.inputForm.get('iid')
+    const newEntry: ReturnOnInvestmentCreateentry =  {
+      date: dateValue.toLocaleDateString(),
+      amountInMinorUnit: this.incomeFieldHasValue() ? this.inputForm.get('income')?.value : this.inputForm.get('cost')?.value,
+      amountIsPositive: this.incomeFieldHasValue(),
+      description: this.inputForm.get('description')?.value
+    }
 
-
-
-   /*  this.dataexportentryservice.findByIid(this.inputForm.get('iid')?.value).subscribe(data => {
-      this.dataexportentry = data;
-    }); */
+    this.returnOnInvestmentService.create(newEntry);
     this.inputForm.reset();
+    this.ngOnInit();
   }
 
   applyFilter(event: Event) {
@@ -144,20 +150,19 @@ export class ReturnOnInvestmentComponent implements OnInit {
       ]
     }, { validator: atLeastOne(Validators.required, ['income','cost']) });
 
-
     inputForm.get('income')?.valueChanges.subscribe(value => {
       if (value) {
-        inputForm.get('cost')?.disable();
+        inputForm.get('cost')?.disable({emitEvent: false});
       } else {
-        inputForm.get('cost')?.enable();
+        inputForm.get('cost')?.enable({emitEvent: false});
       }
     });
 
     inputForm.get('cost')?.valueChanges.subscribe(value => {
       if (value) {
-        inputForm.get('income')?.disable();
+        inputForm.get('income')?.disable({emitEvent: false});
       } else {
-        inputForm.get('income')?.enable();
+        inputForm.get('income')?.enable({emitEvent: false});
       }
     });
 
@@ -191,6 +196,10 @@ export class ReturnOnInvestmentComponent implements OnInit {
     let minorPart: string = amountAsUnformattedString.substring(amountAsUnformattedString.length - 2);
 
      return majorPart + '.' + minorPart;
+  }
+
+  deleteRow(id: number) {
+    this.returnOnInvestmentService.delete(id);
   }
 
   public lineChartData: ChartConfiguration['data'] = {

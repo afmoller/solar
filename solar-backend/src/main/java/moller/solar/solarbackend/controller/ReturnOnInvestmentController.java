@@ -37,7 +37,7 @@ public class ReturnOnInvestmentController {
     }
 
     @PostMapping(value = "/return-on-investments")
-    public ResponseEntity<ReturnOnInvestmentEntry> createReturnOnInvestmentEntry(ReturnOnInvestmentEntryDto returnOnInvestmentEntryDto) {
+    public ResponseEntity<ReturnOnInvestmentEntry> createReturnOnInvestmentEntry(@RequestBody ReturnOnInvestmentEntryDto returnOnInvestmentEntryDto) {
         ReturnOnInvestmentEntry returnOnInvestmentEntry = new ReturnOnInvestmentEntry.ReturnOnInvestmentEntryBuilder()
                 .setDate(returnOnInvestmentEntryDto.getDate())
                 .setDescription(returnOnInvestmentEntryDto.getDescription())
