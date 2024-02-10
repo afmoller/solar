@@ -2,33 +2,18 @@ import { NgChartsModule } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatInputModule} from '@angular/material/input';
+import { MatRadioModule} from '@angular/material/radio';
+import { MatButtonModule} from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
 import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
-import {MatButtonModule} from '@angular/material/button';
 import { ReturnOnInvestmentCreateentry } from 'src/app/core/models/returnoninvestmentcreateentry';
-
-
-export const atLeastOne = (validator: ValidatorFn, controls:string[]) => (
-  group: FormGroup,
-): ValidationErrors | null => {
-  if(!controls){
-    controls = Object.keys(group.controls)
-  }
-
-  const hasAtLeastOne = group && group.controls && controls
-    .some(k => !validator(group.controls[k]));
-
-  return hasAtLeastOne ? null : {
-    atLeastOne: true,
-  };
-};
 
 @Component({
   selector: 'app-returnoninvestment',
@@ -40,6 +25,7 @@ export const atLeastOne = (validator: ValidatorFn, controls:string[]) => (
     MatInputModule,
     MatTableModule,
     NgChartsModule,
+    MatRadioModule,
     MatButtonModule,
     MatFormFieldModule,
     MatDatepickerModule,
@@ -83,35 +69,20 @@ export class ReturnOnInvestmentComponent implements OnInit {
     return !this.inputForm.valid;
   }
 
-  costFieldHasValue(): boolean {
-    return this.fieldHasValue(this.inputForm.get('cost'));
-  }
-
-  incomeFieldHasValue(): boolean {
-    return this.fieldHasValue(this.inputForm.get('income'));
-  }
-
-  fieldHasValue(abstractControl: AbstractControl | null): boolean {
-    if (abstractControl?.value) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   onSubmit(): void {
     let dateValue: Date = this.inputForm.get('date')?.value;
 
     const newEntry: ReturnOnInvestmentCreateentry =  {
       date: dateValue.toLocaleDateString(),
-      amountInMinorUnit: this.incomeFieldHasValue() ? this.inputForm.get('income')?.value : this.inputForm.get('cost')?.value,
-      amountIsPositive: this.incomeFieldHasValue(),
+      amountInMinorUnit: this.inputForm.get('value')?.value,
+      amountIsPositive: this.inputForm.get('type')?.value === 'income' ? true : false,
       description: this.inputForm.get('description')?.value
     }
 
-    this.returnOnInvestmentService.create(newEntry);
-    this.inputForm.reset();
-    this.ngOnInit();
+    this.returnOnInvestmentService.create(newEntry).subscribe(data => {
+      this.inputForm.reset();
+      this.loadData();
+    });
   }
 
   applyFilter(event: Event) {
@@ -120,6 +91,10 @@ export class ReturnOnInvestmentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  loadData() {
     this.returnOnInvestmentService.find().subscribe(data => {
       this.dataSource.data = data.returnOnInvestmentDashboardEntryDtos;
 
@@ -142,28 +117,14 @@ export class ReturnOnInvestmentComponent implements OnInit {
         '',
         Validators.required
       ],
-      income: [
+      value: [
         '',
+        Validators.required
       ],
-      cost: [
-        ''
+      type: [
+        'income',
+        Validators.required
       ]
-    }, { validator: atLeastOne(Validators.required, ['income','cost']) });
-
-    inputForm.get('income')?.valueChanges.subscribe(value => {
-      if (value) {
-        inputForm.get('cost')?.disable({emitEvent: false});
-      } else {
-        inputForm.get('cost')?.enable({emitEvent: false});
-      }
-    });
-
-    inputForm.get('cost')?.valueChanges.subscribe(value => {
-      if (value) {
-        inputForm.get('income')?.disable({emitEvent: false});
-      } else {
-        inputForm.get('income')?.enable({emitEvent: false});
-      }
     });
 
     return inputForm;
@@ -199,7 +160,9 @@ export class ReturnOnInvestmentComponent implements OnInit {
   }
 
   deleteRow(id: number) {
-    this.returnOnInvestmentService.delete(id);
+    this.returnOnInvestmentService.delete(id).subscribe(data => {
+      this.loadData();
+    });
   }
 
   public lineChartData: ChartConfiguration['data'] = {

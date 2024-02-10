@@ -24,11 +24,11 @@ export class ReturnOnInvestmentService {
     return this.http.get<ReturnOnInvestmentDashboard>(this.returnOnInvestmentDashboardUrl);
   }
 
-  public create(newEntry: ReturnOnInvestmentCreateentry): void {
-    this.http.post(this.returnOnInvestmentUrl, newEntry).subscribe();
+  public create(newEntry: ReturnOnInvestmentCreateentry): Observable<Object> {
+    return this.http.post(this.returnOnInvestmentUrl, newEntry);
   }
 
-  public delete(id: number) {
-    this.http.delete(this.returnOnInvestmentUrl + '/' + id).subscribe();
+  public delete(id: number): Observable<Object>  {
+    return this.http.delete(this.returnOnInvestmentUrl + '/' + id);
   }
 }

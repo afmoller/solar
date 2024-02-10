@@ -69,8 +69,49 @@
         </tr>
       </table>
     </div>
-  </div>
+    
+    <div>
+      <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+        <div class="table">
+          
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Date</mat-label>
+              <input id="date" matInput [matDatepicker]="picker" formControlName="date">
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          
+          <div class="padding">
+            <mat-radio-group formControlName="type">
+              <mat-radio-button value="cost">Cost</mat-radio-button>
+              <mat-radio-button value="income">Income</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Value CHF (in minor unit)</mat-label>
+              <input id="value" type="number" formControlName="value" matInput>
+            </mat-form-field>
+          </div>
+          
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Description</mat-label>
+              <input id="description" type="text" formControlName="description" matInput>
+            </mat-form-field>
+          </div>
+          
+          <div class="padding">
+            <button type="submit" mat-raised-button [disabled]="formIsInvalid()">Insert new Table entry</button>
+          </div>
+        </div>
 
+      </form>
+    </div>
+  </div>
 </div>
 
 <div>
@@ -87,46 +128,6 @@
           </div>
           <div>
             <span>Cost {{totalCost}}</span>
-          </div>
-        </div>
-
-        <div class="content-container">
-          <div>
-            <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
-              <div class="table">
-                <div class="padding">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Date</mat-label>
-                    <input id="date" matInput [matDatepicker]="picker" formControlName="date">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                </div>
-
-                <div class="padding">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Cost (in minor unit)</mat-label>
-                    <input id="cost" type="number" formControlName="cost" matInput>
-                  </mat-form-field>
-                </div>
-                <div class="padding">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Income (in minor unit)</mat-label>
-                    <input id="income" type="number" formControlName="income" matInput>
-                  </mat-form-field>
-                </div>
-                <div class="padding">
-                  <mat-form-field appearance="outline">
-                    <mat-label>Description</mat-label>
-                    <input id="description" type="text" formControlName="description" matInput>
-                  </mat-form-field>
-                </div>
-                <div class="padding">
-                  <button type="submit" mat-raised-button [disabled]="formIsInvalid()">Insert</button>
-                </div>
-              </div>
-
-            </form>
           </div>
         </div>
       </div>
