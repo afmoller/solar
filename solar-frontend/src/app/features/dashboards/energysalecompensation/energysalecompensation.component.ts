@@ -12,13 +12,13 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
-import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
-import { ReturnOnInvestmentCreateentry } from 'src/app/core/models/returnoninvestmentcreateentry';
+import { EnergySaleCompensationService } from 'src/app/core/services/energy-sale-compensation.service';
+import { EnergySaleCompensationCreateentry } from 'src/app/core/models/energysalecompensationcreateentry';
 
 @Component({
-  selector: 'app-returnoninvestment',
-  templateUrl: './returnoninvestment.component.html',
-  styleUrls: ['./returnoninvestment.component.scss'],
+  selector: 'app-energysalecompensation',
+  templateUrl: './energysalecompensation.component.html',
+  styleUrls: ['./energysalecompensation.component.scss'],
   standalone: true,
 
   imports: [
@@ -37,7 +37,7 @@ import { ReturnOnInvestmentCreateentry } from 'src/app/core/models/returnoninves
   ],
 })
 
-export class ReturnOnInvestmentComponent implements OnInit {
+export class EnergySaleCompensationComponent implements OnInit {
 
   inputForm: FormGroup;
 
@@ -45,19 +45,17 @@ export class ReturnOnInvestmentComponent implements OnInit {
   totalIncome: string = '0';
 
   dataSource = new MatTableDataSource();
-  displayedColumns: string[] = ['date',
-                                'cost',
-                                'income',
-                                'description',
-                                'saldo',
-                                'deltaSinceStart',
-                                'numberOfYearsUntilPaid',
+  displayedColumns: string[] = ['compensationdate',
+                                'compensation',
+                                'productionyear',
+                                'productionfrom',
+                                'productionto',
                                 'delete'
                               ];
 
   constructor(
     private formBuilder: FormBuilder,
-    private returnOnInvestmentService: ReturnOnInvestmentService
+    private energySaleCompensationService: EnergySaleCompensationService
   ) {
     Chart.register(Annotation);
     Chart.register(Colors);
@@ -70,24 +68,22 @@ export class ReturnOnInvestmentComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let dateValue: Date = this.inputForm.get('date')?.value;
+    let compensationDateValue: Date = this.inputForm.get('compensationdate')?.value;
+    let productionfromValue: Date = this.inputForm.get('productionfrom')?.value;
+    let productionToValue: Date = this.inputForm.get('productionto')?.value;
 
-    const newEntry: ReturnOnInvestmentCreateentry =  {
-      date: dateValue.toLocaleDateString(),
-      amountInMinorUnit: this.inputForm.get('value')?.value,
-      amountIsPositive: this.inputForm.get('type')?.value === 'income' ? true : false,
-      description: this.inputForm.get('description')?.value
+    const newEntry: EnergySaleCompensationCreateentry =  {
+      compensationDate: compensationDateValue.toLocaleDateString(),
+      productionFrom: productionfromValue.toLocaleDateString(),
+      productionTo: productionToValue.toLocaleDateString(),
+      compensationInMinorUnit: this.inputForm.get('compensation')?.value,
+      productionYear: this.inputForm.get('productionyear')?.value
     }
 
-    this.returnOnInvestmentService.create(newEntry).subscribe(data => {
+    this.energySaleCompensationService.create(newEntry).subscribe(data => {
       this.inputForm.reset();
       this.loadData();
     });
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit() {
@@ -95,7 +91,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
   }
 
   loadData() {
-    this.returnOnInvestmentService.find().subscribe(data => {
+    this.energySaleCompensationService.find().subscribe(data => {
       this.dataSource.data = data.returnOnInvestmentDashboardEntryDtos;
 
       this.lineChartData.datasets[0].data = data.numberOfYearsUntilPaid;
@@ -109,22 +105,26 @@ export class ReturnOnInvestmentComponent implements OnInit {
 
   buildInputForm(formBuilder: FormBuilder): FormGroup  {
     let inputForm: FormGroup = formBuilder.group({
-      date: [
+      compensationdate: [
         new Date(),
         Validators.required
       ],
-      description: [
+      productionfrom: [
+        new Date(),
+        Validators.required
+      ],
+      productionto: [
+        new Date(),
+        Validators.required
+      ],
+      compensation: [
         '',
         Validators.required
       ],
-      value: [
+      productionyear: [
         '',
         Validators.required
       ],
-      type: [
-        'income',
-        Validators.required
-      ]
     });
 
     return inputForm;
@@ -160,7 +160,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
   }
 
   deleteRow(id: number) {
-    this.returnOnInvestmentService.delete(id).subscribe(data => {
+    this.energySaleCompensationService.delete(id).subscribe(data => {
       this.loadData();
     });
   }

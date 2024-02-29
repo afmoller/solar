@@ -7,6 +7,7 @@ import { AccumulatedAllComponent } from './features/diagrams/accumulated/accumul
 import { SummaryperdayentryComponent} from './features/tables/summaryperdayentry/summaryperdayentry.component';
 import { ReturnOnInvestmentComponent } from './features/dashboards/returnoninvestment/returnoninvestment.component';
 import { SummarypermonthentryComponent } from './features/tables/symmarypermonthentry/summarypermonthentry.component';
+import { EnergySaleCompensationComponent } from './features/dashboards/energysalecompensation/energysalecompensation.component';
 
 const routes: Routes = [
   { path: 'all', component: AllComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'summaryperdayentry', component: SummaryperdayentryComponent },
   { path: 'return-on-investment', component: ReturnOnInvestmentComponent },
   { path: 'summarypermonthentry', component: SummarypermonthentryComponent },
-  { path: 'year-over-year/:valuetype/:mode', component: YearOverYearComponent },  
+  { path: 'year-over-year/:valuetype/:mode', component: YearOverYearComponent },
+  { path: 'energy-sale-compensation', component: EnergySaleCompensationComponent },
 ];
 
 @NgModule({
