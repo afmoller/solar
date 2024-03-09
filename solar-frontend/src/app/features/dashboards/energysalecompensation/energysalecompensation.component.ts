@@ -5,7 +5,7 @@ import { MatInputModule} from '@angular/material/input';
 import { MatRadioModule} from '@angular/material/radio';
 import { MatButtonModule} from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
 import { EnergySaleCompensationService } from 'src/app/core/services/energy-sale-compensation.service';
 import { EnergySaleCompensationCreateentry } from 'src/app/core/models/energysalecompensationcreateentry';
+import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
 
 @Component({
   selector: 'app-energysalecompensation',
@@ -41,9 +42,6 @@ export class EnergySaleCompensationComponent implements OnInit {
 
   inputForm: FormGroup;
 
-  totalCost: string = '0';
-  totalIncome: string = '0';
-
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['compensationdate',
                                 'compensation',
@@ -51,7 +49,14 @@ export class EnergySaleCompensationComponent implements OnInit {
                                 'productionfrom',
                                 'productionto',
                                 'delete'
-                              ];
+                               ];
+
+  dataSourceCumulated = new MatTableDataSource();
+  displayedColumnsCumulated: string[] = ['compensationDate',
+                                         'compensation',
+                                         'productionYear',
+                                         'compensationCumulated'
+                                        ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -76,7 +81,7 @@ export class EnergySaleCompensationComponent implements OnInit {
       compensationDate: compensationDateValue.toLocaleDateString(),
       productionFrom: productionfromValue.toLocaleDateString(),
       productionTo: productionToValue.toLocaleDateString(),
-      compensationInMinorUnit: this.inputForm.get('compensation')?.value,
+      compensationAmountInMinorUnit: this.inputForm.get('compensation')?.value,
       productionYear: this.inputForm.get('productionyear')?.value
     }
 
@@ -91,15 +96,19 @@ export class EnergySaleCompensationComponent implements OnInit {
   }
 
   loadData() {
-    this.energySaleCompensationService.find().subscribe(data => {
-      this.dataSource.data = data.returnOnInvestmentDashboardEntryDtos;
+    this.energySaleCompensationService.getAll().subscribe(data => {
+      this.dataSource.data = data;
+      this.dataSourceCumulated.data = this.createDataSourceCumulated(data);
 
-      this.lineChartData.datasets[0].data = data.numberOfYearsUntilPaid;
-      this.lineChartData.labels = data.dates;
-      this.chart?.update();
+      this.lineChartData.datasets[0].data = this.createCompensationDataSet(data);
+      this.lineChartData.labels =  this.getDates(data);
 
-      this.totalCost = this.formatValue(data.totalCost);
-      this.totalIncome = this.formatValue(data.totalIncome);
+      this.lineChartDataCumulated.datasets[0].data = this.createCompensationDataSetCumulated(data);
+      this.lineChartDataCumulated.labels =  this.getDates(data);
+
+      this.charts?.forEach((child) => {
+        child.chart?.update()
+      });
     });
   }
 
@@ -169,7 +178,18 @@ export class EnergySaleCompensationComponent implements OnInit {
     datasets: [
       {
         data: [],
-        label: 'Number of years until paid',
+        label: 'Compensation in CHF',
+        fill: false,
+      },
+    ],
+    labels: [],
+  };
+
+  public lineChartDataCumulated: ChartConfiguration['data'] = {
+    datasets: [
+      {
+        data: [],
+        label: 'Compensation in CHF cumulated',
         fill: false,
       },
     ],
@@ -183,14 +203,14 @@ export class EnergySaleCompensationComponent implements OnInit {
       },
       point: {
         radius: 3,
-        
+
       }
     },
     scales: {
       // We use this empty structure as a placeholder for dynamic theming.
       y: {
         position: 'left',
-        type: 'logarithmic',
+        min: 0,
         ticks: {
           // Disabled rotation for performance
           maxRotation: 0,
@@ -205,12 +225,15 @@ export class EnergySaleCompensationComponent implements OnInit {
       }
     },
     responsive: true,
+    maintainAspectRatio: false,
     animation: false
   };
 
   public lineChartType: ChartType = 'line';
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+
+  @ViewChildren(BaseChartDirective) charts?: QueryList<BaseChartDirective>;
 
   // events
   public chartClicked({
@@ -230,5 +253,62 @@ export class EnergySaleCompensationComponent implements OnInit {
     active?: object[];
   }): void {
 
+  }
+
+  createCompensationDataSet(data: EnergySaleCompensationentry[]): number[] {
+    let dataSet: number[] = [];
+
+    data.forEach(element => {
+      dataSet.push(element.compensationAmountInMinorUnit  / 100);
+    })
+
+    return dataSet;
+  }
+
+  createCompensationDataSetCumulated(data: EnergySaleCompensationentry[]): number[] {
+    let cumulated: number = 0;
+
+    let dataSet: number[] = [];
+
+    data.forEach(element => {
+      cumulated = cumulated + element.compensationAmountInMinorUnit;
+      dataSet.push(cumulated  / 100);
+    })
+
+    return dataSet;
+  }
+
+  getDates(data: EnergySaleCompensationentry[]): unknown[] {
+    let dataSet: string[] = [];
+
+    data.forEach(element => {
+      dataSet.push( element.compensationDate);
+    })
+
+    return dataSet;
+  }
+
+  createDataSourceCumulated(data: EnergySaleCompensationentry[]): any[] {
+
+    let cumulated: number = 0;
+
+    let dataSet: any[] = [];
+
+    data.forEach(element => {
+
+      cumulated = cumulated + element.compensationAmountInMinorUnit;
+
+      let dataSetRow = {
+        compensationDate: element.compensationDate,
+        compensation: element.compensationAmountInMinorUnit,
+        productionYear: element.productionYear,
+        compensationCumulated: cumulated,
+        oddYear: element.productionYear % 2 === 0
+      }
+
+      dataSet.push(dataSetRow);
+    })
+
+    return dataSet;
   }
 }

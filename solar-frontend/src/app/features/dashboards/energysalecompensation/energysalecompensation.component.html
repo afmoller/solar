@@ -5,33 +5,81 @@
 <div class="table">
 
   <div class="content-container">
-    
-  </div>
+    <div class="content-container">
+      <canvas
+        baseChart
+        height="350"
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="lineChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+      </canvas>
 
+    </div>
+    <div class="content-container">
+        <canvas 
+          baseChart
+          height="350"
+          [data]="lineChartDataCumulated"
+          [options]="lineChartOptions"
+          [type]="lineChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)">
+        </canvas>  
+    </div>
+
+    <div class="content-container">
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSourceCumulated" class="mat-elevation-z8" >
+          <ng-container matColumnDef="compensationDate">
+            <th mat-header-cell *matHeaderCellDef>Compensation date</th>
+            <td mat-cell *matCellDef="let row"> {{row.compensationDate}} </td>
+          </ng-container>
+          <ng-container matColumnDef="compensation">
+            <th mat-header-cell *matHeaderCellDef>Compensation (CHF)</th>
+            <td mat-cell *matCellDef="let row">{{formatValue(row.compensation)}}</td>
+          </ng-container>
+          <ng-container matColumnDef="productionYear">
+            <th mat-header-cell *matHeaderCellDef>Production year</th>
+            <td mat-cell *matCellDef="let row">{{row.productionYear}}</td>
+          </ng-container>
+          <ng-container matColumnDef="compensationCumulated">
+            <th mat-header-cell *matHeaderCellDef>Compensation cumulated</th>
+            <td mat-cell *matCellDef="let row"> {{formatValue(row.compensationCumulated)}} </td>
+          </ng-container>
+          
+          <!-- Header and Row Declarations -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsCumulated sticky: true" class="header"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsCumulated"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  
   <div class="content-container">
     <div class="table-container">
       
-
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="compensationdate">
           <th mat-header-cell *matHeaderCellDef>Compensation date</th>
-          <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.compensationDate}} </td>
         </ng-container>
         <ng-container matColumnDef="compensation">
           <th mat-header-cell *matHeaderCellDef>Compensation (CHF)</th>
-          <td mat-cell *matCellDef="let row" class="cost">{{getValueIfNegative(row.amountInMinorUnit, row.amountIsPositive)}}</td>
+          <td mat-cell *matCellDef="let row">{{formatValue(row.compensationAmountInMinorUnit)}}</td>
         </ng-container>
         <ng-container matColumnDef="productionyear">
           <th mat-header-cell *matHeaderCellDef>Production year</th>
-          <td mat-cell *matCellDef="let row" class="income">{{getValueIfPositive(row.amountInMinorUnit, row.amountIsPositive)}}</td>
+          <td mat-cell *matCellDef="let row">{{row.productionYear}}</td>
         </ng-container>
         <ng-container matColumnDef="productionfrom">
           <th mat-header-cell *matHeaderCellDef>Production from</th>
-          <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.productionFromDate}} </td>
         </ng-container>
         <ng-container matColumnDef="productionto">
           <th mat-header-cell *matHeaderCellDef>Production to</th>
-          <td mat-cell *matCellDef="let row" class="align-right"> {{formatValue(row.saldo)}} </td>
+          <td mat-cell *matCellDef="let row" class="align-right"> {{row.productionToDate}} </td>
         </ng-container>
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef>Delete row</th>
@@ -43,7 +91,6 @@
         <!-- Header and Row Declarations -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
        
       </table>
     </div>

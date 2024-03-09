@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ReturnOnInvestmentDashboard } from '../models/returnoninvestmentdashboard';
 import { EnergySaleCompensationCreateentry } from '../models/energysalecompensationcreateentry';
+import { EnergySaleCompensationentry } from '../models/energysalecompensationentry';
 
 @Injectable({
   providedIn: 'root'
@@ -10,25 +11,29 @@ import { EnergySaleCompensationCreateentry } from '../models/energysalecompensat
 
 export class EnergySaleCompensationService {
   
-  private returnOnInvestmentUrl: string;
-  private returnOnInvestmentBaseUrl: string;
+  private energySaleCompensationsUrl: string;
+  private energySaleCompensationsBaseUrl: string;
   private returnOnInvestmentDashboardUrl: string;
 
   constructor(private http: HttpClient) {
-    this.returnOnInvestmentBaseUrl = 'http://localhost:8080';
-    this.returnOnInvestmentUrl = this.returnOnInvestmentBaseUrl + '/return-on-investments';
-    this.returnOnInvestmentDashboardUrl = this.returnOnInvestmentBaseUrl + '/return-on-investment-dashboard';
+    this.energySaleCompensationsBaseUrl = 'http://localhost:8080';
+    this.energySaleCompensationsUrl = this.energySaleCompensationsBaseUrl + '/energy-sale-compensations';
+    this.returnOnInvestmentDashboardUrl = this.energySaleCompensationsBaseUrl + '/return-on-investment-dashboard';
   }
 
   public find(): Observable<ReturnOnInvestmentDashboard> {
     return this.http.get<ReturnOnInvestmentDashboard>(this.returnOnInvestmentDashboardUrl);
   }
 
+  public getAll(): Observable<EnergySaleCompensationentry[]> {
+    return this.http.get<EnergySaleCompensationentry[]>(this.energySaleCompensationsUrl);
+  }
+
   public create(newEntry: EnergySaleCompensationCreateentry): Observable<Object> {
-    return this.http.post(this.returnOnInvestmentUrl, newEntry);
+    return this.http.post(this.energySaleCompensationsUrl, newEntry);
   }
 
   public delete(id: number): Observable<Object>  {
-    return this.http.delete(this.returnOnInvestmentUrl + '/' + id);
+    return this.http.delete(this.energySaleCompensationsUrl + '/' + id);
   }
 }

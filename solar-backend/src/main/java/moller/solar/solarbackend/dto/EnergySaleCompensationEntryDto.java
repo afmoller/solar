@@ -9,7 +9,7 @@ public class EnergySaleCompensationEntryDto {
     private LocalDate productionTo;
     private LocalDate compensationDate;
     private Integer productionYear;
-    private Integer compensationInMinorUnit;
+    private Integer compensationAmountInMinorUnit;
 
     public Integer getId() {
         return id;
@@ -27,12 +27,12 @@ public class EnergySaleCompensationEntryDto {
         this.productionFrom = productionFrom;
     }
 
-    public Integer getCompensationInMinorUnit() {
-        return compensationInMinorUnit;
+    public Integer getCompensationAmountInMinorUnit() {
+        return compensationAmountInMinorUnit;
     }
 
-    public void setCompensationInMinorUnit(Integer compensationInMinorUnit) {
-        this.compensationInMinorUnit = compensationInMinorUnit;
+    public void setCompensationAmountInMinorUnit(Integer compensationAmountInMinorUnit) {
+        this.compensationAmountInMinorUnit = compensationAmountInMinorUnit;
     }
 
     public Integer getProductionYear() {

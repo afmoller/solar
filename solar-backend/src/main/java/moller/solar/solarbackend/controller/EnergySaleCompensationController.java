@@ -41,7 +41,7 @@ public class EnergySaleCompensationController {
                 .setCompensationDate(energySaleCompensationEntryDto.getCompensationDate())
                 .setProductionFromDate(energySaleCompensationEntryDto.getProductionFrom())
                 .setProductionToDate(energySaleCompensationEntryDto.getProductionTo())
-                .setCompensationAmountInMinorUnit(energySaleCompensationEntryDto.getCompensationInMinorUnit())
+                .setCompensationAmountInMinorUnit(energySaleCompensationEntryDto.getCompensationAmountInMinorUnit())
                 .setProductionYear(energySaleCompensationEntryDto.getProductionYear())
                 .build();
 

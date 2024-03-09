@@ -1,8 +1,5 @@
-export interface EnergySaleCompensationentry {
+import { EnergySaleCompensationCreateentry } from "./energysalecompensationcreateentry";
+
+export interface EnergySaleCompensationentry extends EnergySaleCompensationCreateentry {
   id: number;
-  productionYear: number;
-  productionFrom: string;
-  productionTo: string;
-  compensationDate: string;
-  compensationInMinorUnit: number;
 }

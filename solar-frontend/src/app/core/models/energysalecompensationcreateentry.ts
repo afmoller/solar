@@ -3,5 +3,5 @@ export interface EnergySaleCompensationCreateentry {
   productionFrom: string;
   productionTo: string;
   compensationDate: string;
-  compensationInMinorUnit: number;
+  compensationAmountInMinorUnit: number;
 }

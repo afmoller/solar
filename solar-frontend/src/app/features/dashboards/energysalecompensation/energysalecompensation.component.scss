@@ -1,14 +1,9 @@
-.mat-column-date {
-  width: 108px;
-  border-left: 0;
-}
-
 .mat-mdc-form-field {
   width: 100%;
 }
 
 .table-container {
-  max-height: 89vh;
+  max-height: 95vh;
   overflow: auto;
 }
 
@@ -22,20 +17,10 @@
   border-style: solid;
   border-radius: 5px;
   background-color: rgb(255, 255, 255);
-  width: 100%;
-}
-
-.cost {
-  background-color: rgb(255, 199, 206);
-  text-align: right;
+  width: 99%;  
 }
 
 .align-right {
-  text-align: right;
-}
-
-.income {
-  background-color: rgb(198, 239, 206);
   text-align: right;
 }
 
@@ -56,6 +41,7 @@ th {
 
 .table {
   display: flex;
+  height: 95%;
 }
 
 .padding {
@@ -63,4 +49,3 @@ th {
   padding-left: 5px;
   padding-bottom: 5px;
 }
-
