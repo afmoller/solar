@@ -49,3 +49,9 @@ th {
   padding-left: 5px;
   padding-bottom: 5px;
 }
+
+.mat-mdc-table {
+  width: 100%;
+  max-height: 300px;
+  overflow: auto;
+}

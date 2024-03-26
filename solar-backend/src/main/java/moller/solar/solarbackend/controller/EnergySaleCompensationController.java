@@ -37,7 +37,7 @@ public class EnergySaleCompensationController {
 
     @PostMapping(value = "/energy-sale-compensations")
     public ResponseEntity<EnergySaleCompensationEntry> createEnergySaleCompensationEntry(@RequestBody EnergySaleCompensationEntryDto energySaleCompensationEntryDto) {
-        EnergySaleCompensationEntry returnOnInvestmentEntry = new EnergySaleCompensationEntry.EnergySaleCompensationEntryBuilder()
+        EnergySaleCompensationEntry energySaleCompensationEntry = new EnergySaleCompensationEntry.EnergySaleCompensationEntryBuilder()
                 .setCompensationDate(energySaleCompensationEntryDto.getCompensationDate())
                 .setProductionFromDate(energySaleCompensationEntryDto.getProductionFrom())
                 .setProductionToDate(energySaleCompensationEntryDto.getProductionTo())
@@ -45,7 +45,7 @@ public class EnergySaleCompensationController {
                 .setProductionYear(energySaleCompensationEntryDto.getProductionYear())
                 .build();
 
-        return ResponseEntity.of(Optional.of(energySaleCompensationRepository.save(returnOnInvestmentEntry)));
+        return ResponseEntity.of(Optional.of(energySaleCompensationRepository.save(energySaleCompensationEntry)));
     }
 
     @DeleteMapping(value = "/energy-sale-compensations/{id}")
