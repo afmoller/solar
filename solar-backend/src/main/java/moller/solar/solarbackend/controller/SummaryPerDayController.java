@@ -119,9 +119,8 @@ public class SummaryPerDayController {
 
         LocalDate toDateStartOfMonth = LocalDate.of(yearTo, monthTo,1);
 
-        LocalDate toDateStartOfMonthMinusOneDay = toDateStartOfMonth.minusDays(1);
-        LocalDate toDate = toDateStartOfMonthMinusOneDay.plusMonths(1);
-
+        LocalDate toDateStartOfMonthPlusOneMonth = toDateStartOfMonth.plusMonths(1);
+        LocalDate toDate = toDateStartOfMonthPlusOneMonth.minusDays(1);
 
         List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.getAllValuesForPeriod(fromDate, toDate);
         if (allEntries == null || allEntries.isEmpty()) {
