@@ -150,5 +150,119 @@
 
       </form>
     </div>
+    
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSourceEnergyCosts" class="mat-elevation-z8">
+        <ng-container matColumnDef="datefrom">
+          <th mat-header-cell *matHeaderCellDef>Date from</th>
+          <td mat-cell *matCellDef="let row">{{row.fromDate}}</td>
+        </ng-container>
+        <ng-container matColumnDef="dateto">
+          <th mat-header-cell *matHeaderCellDef>Date to</th>
+          <td mat-cell *matCellDef="let row">{{row.toDate}}</td>
+        </ng-container>
+        <ng-container matColumnDef="electricalgridcostintenthousands">
+          <th mat-header-cell *matHeaderCellDef>Netznutzung Niedertarif (CHF/KWh)</th>
+          <td mat-cell *matCellDef="let row">{{row.electricalGridCostInTenThousands}}</td>
+        </ng-container>
+        <ng-container matColumnDef="energycostperkwhintenthousands">
+          <th mat-header-cell *matHeaderCellDef>EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/KWh)</th>
+          <td mat-cell *matCellDef="let row">{{row.energyCostPerKwhInTenThousands}}</td>
+        </ng-container>
+        <ng-container matColumnDef="feeoneintenthousands">
+          <th mat-header-cell *matHeaderCellDef>Abgaben: KEV + Gewässerschutz (CHF/KWh)</th>
+          <td mat-cell *matCellDef="let row" class="align-right">{{row.feeOneInTenThousands}}</td>
+        </ng-container>
+        <ng-container matColumnDef="feetwointenthousands">
+          <th mat-header-cell *matHeaderCellDef>Konzessionsabgabe an die Gemeinde (CHF/KWh)</th>
+          <td mat-cell *matCellDef="let row" class="align-right">{{row.feeTwoInTenThousands}}</td>
+        </ng-container>
+        <ng-container matColumnDef="totalcostvatexcluded">
+          <th mat-header-cell *matHeaderCellDef>Total exklusive Mwst (CHF/KWh)</th>
+          <td mat-cell *matCellDef="let row" class="align-right">{{totalCostVatExcluded(row)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="totalcostvatincluded">
+          <th mat-header-cell *matHeaderCellDef>Total inkl. Mwst (CHF/KWh) (7,7%)</th>
+          <td mat-cell *matCellDef="let row" class="align-right">{{totalCostVatIncluded(row)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="deleteenergycost">
+          <th mat-header-cell *matHeaderCellDef>Delete row</th>
+          <td mat-cell *matCellDef="let row" class="align-right">
+            <button mat-raised-button (click)="deleteEnergyCostRow(row.id)">Delete</button>
+          </td>
+        </ng-container>
+
+        <!-- Header and Row Declarations -->
+        <tr mat-header-row *matHeaderRowDef="displayedEnergyCostColumns sticky: true" class="header"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedEnergyCostColumns"></tr>
+        
+      </table>
+    </div>
+
+    <div>
+      <form [formGroup]="inputFormEnergyCost" (ngSubmit)="onSubmitEnergyCost()">
+        <div class="table">
+          
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Date from</mat-label>
+              <input id="datefrom" matInput [matDatepicker]="pickerdatefrom" formControlName="datefrom">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerdatefrom"></mat-datepicker-toggle>
+              <mat-datepicker #pickerdatefrom></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Date to</mat-label>
+              <input id="dateto" matInput [matDatepicker]="pickerdateto" formControlName="dateto">
+              <mat-datepicker-toggle matIconSuffix [for]="pickerdateto"></mat-datepicker-toggle>
+              <mat-datepicker #pickerdateto></mat-datepicker>
+            </mat-form-field>
+          </div>
+          
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Netznutzung Niedertarif (CHF/KWh)</mat-label>
+              <input id="electricalgridcostintenthousands" type="number" formControlName="electricalgridcostintenthousands" matInput>
+            </mat-form-field>
+          </div>
+
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/KWh)</mat-label>
+              <input id="energycostperkwhintenthousands" type="number" formControlName="energycostperkwhintenthousands" matInput>
+            </mat-form-field>
+          </div>
+
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Abgaben: KEV + Gewässerschutz (CHF/KWh)</mat-label>
+              <input id="feeoneintenthousands" type="number" formControlName="feeoneintenthousands" matInput>
+            </mat-form-field>
+          </div>
+          
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Konzessionsabgabe an die Gemeinde (CHF/KWh)</mat-label>
+              <input id="feetwointenthousands" type="number" formControlName="feetwointenthousands" matInput>
+            </mat-form-field>
+          </div>
+          
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>MwstSatz (%)</mat-label>
+              <input id="valueaddedtaxpercentagerateinminorunit" type="number" formControlName="valueaddedtaxpercentagerateinminorunit" matInput>
+            </mat-form-field>
+          </div>
+          
+          <div class="padding">
+            <button type="submit" mat-raised-button [disabled]="energyCostFormIsInvalid()">Insert new table entry</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
   </div>
 </div>
