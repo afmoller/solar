@@ -2,6 +2,7 @@ spring:
   jpa:
     database: H2
     show-sql: false
+    open-in-view: false
   datasource:
     platform: h2
     url: jdbc:h2:~/solar
