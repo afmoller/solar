@@ -71,8 +71,9 @@ export class EnergySaleCompensationComponent implements OnInit {
   dataSourceCumulated = new MatTableDataSource();
   displayedColumnsCumulated: string[] = ['compensationDate',
                                          'compensation',
+                                         'compensationCumulated',
                                          'productionYear',
-                                         'compensationCumulated'
+                                         'compensationYear'
                                         ];
 
   constructor(
@@ -259,6 +260,20 @@ export class EnergySaleCompensationComponent implements OnInit {
     this.energySaleCompensationService.delete(id).subscribe(data => {
       this.loadData();
     });
+  }
+
+  extractYear(date: string): string {
+    return new Date(date).getFullYear().toString();
+  }
+
+  oddOrEven(yearAsString: string) {
+    let yearAsNumber: number = new Number(yearAsString).valueOf();
+
+    if ((yearAsNumber % 2) == 1) {
+      return 'odd';
+    } else {
+      return 'even';
+    }
   }
 
   deleteEnergyCostRow(id: number) {
