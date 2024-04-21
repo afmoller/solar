@@ -15,7 +15,7 @@
 	<description>Spring Boot backend for the Solar project</description>
 
 	<properties>
-		<java.version>20</java.version>
+		<java.version>22</java.version>
 	</properties>
 
 	<dependencies>
