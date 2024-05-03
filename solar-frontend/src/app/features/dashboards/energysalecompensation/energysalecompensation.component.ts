@@ -63,8 +63,10 @@ export class EnergySaleCompensationComponent implements OnInit {
                                           'energycostperkwhintenthousands',
                                           'feeoneintenthousands',
                                           'feetwointenthousands',
+                                          'feethreeintenthousands',
                                           'totalcostvatexcluded',
                                           'totalcostvatincluded',
+                                          'valueAddedTaxRate',
                                           'deleteenergycost'
  ];                             
 
@@ -126,6 +128,7 @@ export class EnergySaleCompensationComponent implements OnInit {
       toDate: toDateValue.toLocaleDateString(),
       feeOneInTenThousands: this.inputFormEnergyCost.get('feeoneintenthousands')?.value,
       feeTwoInTenThousands: this.inputFormEnergyCost.get('feetwointenthousands')?.value,
+      feeThreeInTenThousands: this.inputFormEnergyCost.get('feethreeintenthousands')?.value,
       electricalGridCostInTenThousands: this.inputFormEnergyCost.get('electricalgridcostintenthousands')?.value,
       energyCostPerKwhInTenThousands: this.inputFormEnergyCost.get('energycostperkwhintenthousands')?.value,
       valueAddedTaxPercentageRateInMinorUnit: this.inputFormEnergyCost.get('valueaddedtaxpercentagerateinminorunit')?.value
@@ -152,6 +155,9 @@ export class EnergySaleCompensationComponent implements OnInit {
 
       this.lineChartDataCumulated.datasets[0].data = this.createCompensationDataSetCumulated(data);
       this.lineChartDataCumulated.labels =  this.getDates(data);
+
+      this.dataSource.data = this.dataSource.data.reverse();
+      this.dataSourceCumulated.data = this.dataSourceCumulated.data.reverse();
 
       this.charts?.forEach((child) => {
         child.chart?.update()
@@ -215,6 +221,10 @@ export class EnergySaleCompensationComponent implements OnInit {
         Validators.required
       ],
       feetwointenthousands: [
+        '',
+        Validators.required
+      ],
+      feethreeintenthousands: [
         '',
         Validators.required
       ],

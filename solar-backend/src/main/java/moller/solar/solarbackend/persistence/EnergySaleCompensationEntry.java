@@ -29,6 +29,7 @@ public class EnergySaleCompensationEntry {
 
     @Column(name = PRODUCTION_TO_DATE)
     private LocalDate productionToDate;
+
     @Column(name = PRODUCTION_YEAR)
     private Integer productionYear;
 

@@ -8,10 +8,10 @@ public class EnergyCostEntryDto {
 
     private Integer id;
     private LocalDate fromDate;
-
     private LocalDate toDate;
     private Integer feeOneInTenThousands;
     private Integer feeTwoInTenThousands;
+    private Integer feeThreeInTenThousands;
     private Integer energyCostPerKwhInTenThousands;
     private Integer electricalGridCostInTenThousands;
     private Integer valueAddedTaxPercentageRateInMinorUnit;
@@ -47,6 +47,14 @@ public class EnergyCostEntryDto {
 
     public void setFeeTwoInTenThousands(Integer feeTwoInTenThousands) {
         this.feeTwoInTenThousands = feeTwoInTenThousands;
+    }
+
+    public Integer getFeeThreeInTenThousands() {
+        return feeThreeInTenThousands;
+    }
+
+    public void setFeeThreeInTenThousands(Integer feeThreeInTenThousands) {
+        this.feeThreeInTenThousands = feeThreeInTenThousands;
     }
 
     public Integer getFeeOneInTenThousands() {

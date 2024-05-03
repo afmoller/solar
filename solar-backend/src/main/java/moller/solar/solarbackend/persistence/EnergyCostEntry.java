@@ -13,6 +13,7 @@ public class EnergyCostEntry {
     public static final String TO_DATE = "TO_DATE";
     public static final String FEE_ONE_IN_TEN_THOUSANDS = "FEE_ONE_IN_TEN_THOUSANDS";
     public static final String FEE_TWO_IN_TEN_THOUSANDS = "FEE_TWO_IN_TEN_THOUSANDS";
+    public static final String FEE_THREE_IN_TEN_THOUSANDS = "FEE_THREE_IN_TEN_THOUSANDS";
     public static final String ENERGY_COST_PER_KWH_IN_TEN_THOUSANDS = "ENERGY_COST_PER_KWH_IN_TEN_THOUSANDS";
     public static final String ELECTRICAL_GRID_COST_IN_TEN_THOUSANDS = "ELECTRICAL_GRID_COST_IN_TEN_THOUSANDS";
     public static final String VALUE_ADDED_TAX_PERCENTAGE_RATE_IN_MINOR_UNIT = "VALUE_ADDED_TAX_PERCENTAGE_RATE_IN_MINOR_UNIT";
@@ -35,6 +36,9 @@ public class EnergyCostEntry {
     @Column(name = FEE_TWO_IN_TEN_THOUSANDS)
     private Integer feeTwoInTenThousands;
 
+    @Column(name = FEE_THREE_IN_TEN_THOUSANDS)
+    private Integer feeThreeInTenThousands;
+
     @Column(name = ENERGY_COST_PER_KWH_IN_TEN_THOUSANDS)
     private Integer energyCostPerKwhInTenThousands;
 
@@ -55,6 +59,7 @@ public class EnergyCostEntry {
         this.toDate = energyCostEntryBuilder.toDate;
         this.feeOneInTenThousands = energyCostEntryBuilder.feeOneInTenThousands;
         this.feeTwoInTenThousands = energyCostEntryBuilder.feeTwoInTenThousands;
+        this.feeThreeInTenThousands = energyCostEntryBuilder.feeThreeInTenThousands;
         this.energyCostPerKwhInTenThousands = energyCostEntryBuilder.energyCostPerKwhInTenThousands;
         this.electricalGridCostInTenThousands = energyCostEntryBuilder.electricalGridCostInTenThousands;
         this.valueAddedTaxPercentageRateInMinorUnit = energyCostEntryBuilder.valueAddedTaxPercentageRateInMinorUnit;
@@ -80,6 +85,10 @@ public class EnergyCostEntry {
         return feeTwoInTenThousands;
     }
 
+    public Integer getFeeThreeInTenThousands() {
+        return feeThreeInTenThousands;
+    }
+
     public Integer getEnergyCostPerKwhInTenThousands() {
         return energyCostPerKwhInTenThousands;
     }
@@ -97,6 +106,7 @@ public class EnergyCostEntry {
         private LocalDate toDate;
         private Integer feeOneInTenThousands;
         private Integer feeTwoInTenThousands;
+        private Integer feeThreeInTenThousands;
         private Integer energyCostPerKwhInTenThousands;
         private Integer electricalGridCostInTenThousands;
         private Integer valueAddedTaxPercentageRateInMinorUnit;
@@ -118,6 +128,11 @@ public class EnergyCostEntry {
 
         public EnergyCostEntryBuilder setFeeTwoInTenThousands(Integer feeTwoInTenThousands) {
             this.feeTwoInTenThousands = feeTwoInTenThousands;
+            return this;
+        }
+
+        public EnergyCostEntryBuilder setFeeThreeInTenThousands(Integer feeThreeInTenThousands) {
+            this.feeThreeInTenThousands = feeThreeInTenThousands;
             return this;
         }
 

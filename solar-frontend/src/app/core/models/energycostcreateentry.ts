@@ -3,6 +3,7 @@ export interface EnergyCostCreateentry {
   toDate: string;
   feeOneInTenThousands: number;
   feeTwoInTenThousands: number;
+  feeThreeInTenThousands: number;
   energyCostPerKwhInTenThousands: number;
   electricalGridCostInTenThousands: number;
   valueAddedTaxPercentageRateInMinorUnit: number;

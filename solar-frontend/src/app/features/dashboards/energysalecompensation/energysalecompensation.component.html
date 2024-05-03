@@ -18,7 +18,7 @@
 
     </div>
     <div class="content-container">
-        <canvas 
+        <canvas
           baseChart
           height="350"
           [data]="lineChartDataCumulated"
@@ -26,12 +26,12 @@
           [type]="lineChartType"
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)">
-        </canvas>  
+        </canvas>
     </div>
 
     <div class="content-container">
-      <div class="table-container">
-        
+      <div class="table-container-cumulated">
+
           <table mat-table [dataSource]="dataSourceCumulated" class="mat-elevation-z8" >
             <ng-container matColumnDef="compensationDate">
               <th mat-header-cell *matHeaderCellDef>Compensation date</th>
@@ -58,15 +58,15 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumnsCumulated sticky: true" class="header"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumnsCumulated"></tr>
           </table>
-        
-        
+
+
       </div>
     </div>
   </div>
-  
+
   <div class="content-container">
     <div class="table-container">
-      
+
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="compensationdate">
           <th mat-header-cell *matHeaderCellDef>Compensation date</th>
@@ -98,14 +98,14 @@
         <!-- Header and Row Declarations -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns" class="{{oddOrEven(row.productionYear)}}"></tr>
-       
+
       </table>
     </div>
-    
+
     <div>
       <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
         <div class="table">
-          
+
           <div class="padding">
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Compensation date</mat-label>
@@ -114,7 +114,7 @@
               <mat-datepicker #pickercompensationdate></mat-datepicker>
             </mat-form-field>
           </div>
-          
+
           <div class="padding">
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Compensation CHF (in minor unit)</mat-label>
@@ -146,7 +146,7 @@
               <mat-datepicker #pickerproductionto></mat-datepicker>
             </mat-form-field>
           </div>
-          
+
           <div class="padding">
             <button type="submit" mat-raised-button [disabled]="formIsInvalid()">Insert new table entry</button>
           </div>
@@ -154,7 +154,7 @@
 
       </form>
     </div>
-    
+
     <div class="table-container">
       <table mat-table [dataSource]="dataSourceEnergyCosts" class="mat-elevation-z8">
         <ng-container matColumnDef="datefrom">
@@ -166,28 +166,36 @@
           <td mat-cell *matCellDef="let row">{{row.toDate}}</td>
         </ng-container>
         <ng-container matColumnDef="electricalgridcostintenthousands">
-          <th mat-header-cell *matHeaderCellDef>Netznutzung Niedertarif (CHF/KWh)</th>
+          <th mat-header-cell *matHeaderCellDef title="Netznutzung Niedertarif (CHF/KWh)">Network cost</th>
           <td mat-cell *matCellDef="let row">{{row.electricalGridCostInTenThousands}}</td>
         </ng-container>
         <ng-container matColumnDef="energycostperkwhintenthousands">
-          <th mat-header-cell *matHeaderCellDef>EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/KWh)</th>
+          <th mat-header-cell *matHeaderCellDef title="EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/KWh)">Energy cost per KWh</th>
           <td mat-cell *matCellDef="let row">{{row.energyCostPerKwhInTenThousands}}</td>
         </ng-container>
         <ng-container matColumnDef="feeoneintenthousands">
-          <th mat-header-cell *matHeaderCellDef>Abgaben: KEV + Gewässerschutz (CHF/KWh)</th>
+          <th mat-header-cell *matHeaderCellDef title="Abgaben: KEV + Gewässerschutz (CHF/KWh)">Fee One</th>
           <td mat-cell *matCellDef="let row" class="align-right">{{row.feeOneInTenThousands}}</td>
         </ng-container>
         <ng-container matColumnDef="feetwointenthousands">
-          <th mat-header-cell *matHeaderCellDef>Konzessionsabgabe an die Gemeinde (CHF/KWh)</th>
+          <th mat-header-cell *matHeaderCellDef title="Konzessionsabgabe an die Gemeinde (CHF/KWh)">Fee Two</th>
           <td mat-cell *matCellDef="let row" class="align-right">{{row.feeTwoInTenThousands}}</td>
         </ng-container>
+        <ng-container matColumnDef="feethreeintenthousands">
+          <th mat-header-cell *matHeaderCellDef title="Stromreserve (CHF/KWh)">Fee Three</th>
+          <td mat-cell *matCellDef="let row" class="align-right">{{row.feeThreeInTenThousands}}</td>
+        </ng-container>
         <ng-container matColumnDef="totalcostvatexcluded">
-          <th mat-header-cell *matHeaderCellDef>Total exklusive Mwst (CHF/KWh)</th>
+          <th mat-header-cell *matHeaderCellDef title="Total exklusive Mwst (CHF/KWh)">Cost per KWh VAT excluded</th>
           <td mat-cell *matCellDef="let row" class="align-right">{{totalCostVatExcluded(row)}}</td>
         </ng-container>
         <ng-container matColumnDef="totalcostvatincluded">
-          <th mat-header-cell *matHeaderCellDef>Total inkl. Mwst (CHF/KWh) (7,7%)</th>
+          <th mat-header-cell *matHeaderCellDef title="Total inkl. Mwst (CHF/KWh) (7,7%)">Cost per KWh VAT included</th>
           <td mat-cell *matCellDef="let row" class="align-right">{{totalCostVatIncluded(row)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="valueAddedTaxRate">
+          <th mat-header-cell *matHeaderCellDef title="Value addd tax rate in %">VAT (%)</th>
+          <td mat-cell *matCellDef="let row" class="align-right">{{row.valueAddedTaxPercentageRateInMinorUnit}}</td>
         </ng-container>
         <ng-container matColumnDef="deleteenergycost">
           <th mat-header-cell *matHeaderCellDef>Delete row</th>
@@ -199,14 +207,14 @@
         <!-- Header and Row Declarations -->
         <tr mat-header-row *matHeaderRowDef="displayedEnergyCostColumns sticky: true" class="header"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedEnergyCostColumns"></tr>
-        
+
       </table>
     </div>
 
     <div>
       <form [formGroup]="inputFormEnergyCost" (ngSubmit)="onSubmitEnergyCost()">
         <div class="table">
-          
+
           <div class="padding">
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Date from</mat-label>
@@ -224,7 +232,7 @@
               <mat-datepicker #pickerdateto></mat-datepicker>
             </mat-form-field>
           </div>
-          
+
           <div class="padding">
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Netznutzung Niedertarif (CHF/KWh)</mat-label>
@@ -245,21 +253,28 @@
               <input id="feeoneintenthousands" type="number" formControlName="feeoneintenthousands" matInput>
             </mat-form-field>
           </div>
-          
+
           <div class="padding">
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>Konzessionsabgabe an die Gemeinde (CHF/KWh)</mat-label>
               <input id="feetwointenthousands" type="number" formControlName="feetwointenthousands" matInput>
             </mat-form-field>
           </div>
-          
+
+          <div class="padding">
+            <mat-form-field appearance="outline" subscriptSizing="dynamic">
+              <mat-label>Stromreserve (CHF/KWh)</mat-label>
+              <input id="feethreeintenthousands" type="number" formControlName="feethreeintenthousands" matInput>
+            </mat-form-field>
+          </div>
+
           <div class="padding">
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
               <mat-label>MwstSatz (%)</mat-label>
               <input id="valueaddedtaxpercentagerateinminorunit" type="number" formControlName="valueaddedtaxpercentagerateinminorunit" matInput>
             </mat-form-field>
           </div>
-          
+
           <div class="padding">
             <button type="submit" mat-raised-button [disabled]="energyCostFormIsInvalid()">Insert new table entry</button>
           </div>

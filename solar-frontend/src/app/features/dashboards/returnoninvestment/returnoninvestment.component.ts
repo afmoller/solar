@@ -96,7 +96,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
 
   loadData() {
     this.returnOnInvestmentService.find().subscribe(data => {
-      this.dataSource.data = data.returnOnInvestmentDashboardEntryDtos;
+      this.dataSource.data = data.returnOnInvestmentDashboardEntryDtos.reverse();
 
       this.lineChartData.datasets[0].data = data.numberOfYearsUntilPaid;
       this.lineChartData.labels = data.dates;

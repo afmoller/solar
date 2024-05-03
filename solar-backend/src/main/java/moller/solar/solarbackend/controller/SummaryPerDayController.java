@@ -57,7 +57,7 @@ public class SummaryPerDayController {
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<SummaryPerDayEntry>> getAll() {
-        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.findAll(Sort.by(Sort.Order.asc("date")));
+        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.findAll(Sort.by(Sort.Order.desc("date")));
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());
         }

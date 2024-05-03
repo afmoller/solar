@@ -34,6 +34,7 @@ public class EnergyCostController {
                 .setElectricalGridCostInTenThousands(energyCostEntryDto.getElectricalGridCostInTenThousands())
                 .setFeeOneInTenThousands(energyCostEntryDto.getFeeOneInTenThousands())
                 .setFeeTwoInTenThousands(energyCostEntryDto.getFeeTwoInTenThousands())
+                .setFeeThreeInTenThousands(energyCostEntryDto.getFeeThreeInTenThousands())
                 .setValueAddedTaxPercentageRateInMinorUnit(energyCostEntryDto.getValueAddedTaxPercentageRateInMinorUnit())
                 .build();
 
