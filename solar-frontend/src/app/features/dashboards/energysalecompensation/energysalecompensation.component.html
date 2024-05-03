@@ -167,27 +167,27 @@
         </ng-container>
         <ng-container matColumnDef="electricalgridcostintenthousands">
           <th mat-header-cell *matHeaderCellDef title="Netznutzung Niedertarif (CHF/KWh)">Network cost</th>
-          <td mat-cell *matCellDef="let row">{{row.electricalGridCostInTenThousands}}</td>
+          <td mat-cell *matCellDef="let row">{{divideValueByTenThousand(row.electricalGridCostInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="energycostperkwhintenthousands">
           <th mat-header-cell *matHeaderCellDef title="EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/KWh)">Energy cost per KWh</th>
-          <td mat-cell *matCellDef="let row">{{row.energyCostPerKwhInTenThousands}}</td>
+          <td mat-cell *matCellDef="let row">{{divideValueByTenThousand(row.energyCostPerKwhInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="feeoneintenthousands">
           <th mat-header-cell *matHeaderCellDef title="Abgaben: KEV + Gewässerschutz (CHF/KWh)">Fee One</th>
-          <td mat-cell *matCellDef="let row" class="align-right">{{row.feeOneInTenThousands}}</td>
+          <td mat-cell *matCellDef="let row" class="align-right">{{divideValueByTenThousand(row.feeOneInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="feetwointenthousands">
           <th mat-header-cell *matHeaderCellDef title="Konzessionsabgabe an die Gemeinde (CHF/KWh)">Fee Two</th>
-          <td mat-cell *matCellDef="let row" class="align-right">{{row.feeTwoInTenThousands}}</td>
+          <td mat-cell *matCellDef="let row" class="align-right">{{divideValueByTenThousand(row.feeTwoInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="feethreeintenthousands">
           <th mat-header-cell *matHeaderCellDef title="Stromreserve (CHF/KWh)">Fee Three</th>
-          <td mat-cell *matCellDef="let row" class="align-right">{{row.feeThreeInTenThousands}}</td>
+          <td mat-cell *matCellDef="let row" class="align-right">{{divideValueByTenThousand(row.feeThreeInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="totalcostvatexcluded">
           <th mat-header-cell *matHeaderCellDef title="Total exklusive Mwst (CHF/KWh)">Cost per KWh VAT excluded</th>
-          <td mat-cell *matCellDef="let row" class="align-right">{{totalCostVatExcluded(row)}}</td>
+          <td mat-cell *matCellDef="let row" class="align-right">{{divideValueByTenThousand(totalCostVatExcludedInTenThousands(row))}}</td>
         </ng-container>
         <ng-container matColumnDef="totalcostvatincluded">
           <th mat-header-cell *matHeaderCellDef title="Total inkl. Mwst (CHF/KWh) (7,7%)">Cost per KWh VAT included</th>
@@ -195,7 +195,7 @@
         </ng-container>
         <ng-container matColumnDef="valueAddedTaxRate">
           <th mat-header-cell *matHeaderCellDef title="Value addd tax rate in %">VAT (%)</th>
-          <td mat-cell *matCellDef="let row" class="align-right">{{row.valueAddedTaxPercentageRateInMinorUnit}}</td>
+          <td mat-cell *matCellDef="let row" class="align-right">{{divideValueByHundred(row.valueAddedTaxPercentageRateInMinorUnit)}}</td>
         </ng-container>
         <ng-container matColumnDef="deleteenergycost">
           <th mat-header-cell *matHeaderCellDef>Delete row</th>

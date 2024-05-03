@@ -291,17 +291,29 @@ export class EnergySaleCompensationComponent implements OnInit {
       this.loadEnergyCostData();
     });
   }
-  
-  
-  totalCostVatExcluded(energyCostentry: EnergyCostentry): string {
-    return '';
+   
+  totalCostVatExcludedInTenThousands(energyCostentry: EnergyCostentry): number {
+    return energyCostentry.electricalGridCostInTenThousands +
+                                      energyCostentry.energyCostPerKwhInTenThousands +
+                                      energyCostentry.feeOneInTenThousands +
+                                      energyCostentry.feeTwoInTenThousands +
+                                      energyCostentry.feeThreeInTenThousands;
   }
-
-
+  
   totalCostVatIncluded(energyCostentry: EnergyCostentry): string {
-    return '';
+    let totalCostVatExcludedInTenThousands = this.totalCostVatExcludedInTenThousands(energyCostentry);
+    let vatFactor = 10000 + energyCostentry.valueAddedTaxPercentageRateInMinorUnit;
+
+    return (totalCostVatExcludedInTenThousands * vatFactor / 10000 / 10000).toFixed(7).toString();
   }
 
+  divideValueByHundred(valueToDivideByHundred: number): string {
+    return (valueToDivideByHundred / 100).toString();
+  }
+
+  divideValueByTenThousand(valueToDivideByTenThousand: number): string {
+    return (valueToDivideByTenThousand / 10000).toString();
+  }
   
 
   public lineChartData: ChartConfiguration['data'] = {
