@@ -111,16 +111,19 @@ public class SummaryPerMonthController {
                 Integer monthValueSelfConsumption = monthValueSelfConsumptionWattHours.get(month);
                 Integer monthValueConsumption = monthValueConsumptionWattHours.get(month);
 
-                allSummaryPerMonthEntries.add(new SummaryPerMonthEntry.SummaryPerMonthEntryBuilder()
-                        .setMonthOfEntry(month)
-                        .setYearOfEntry(year)
-                        .setAutarchy((monthValueSelfConsumption.doubleValue() / monthValueConsumption.doubleValue()) * 100)
-                        .setConsumptionWattHours(monthValueConsumption)
-                        .setProductionWattHours(monthValueProductionWattHours.get(month))
-                        .setPurchaseWattHours(monthValuePurchaseWattHours.get(month))
-                        .setSaleWattHours(monthValueSaleWattHours.get(month))
-                        .setSelfConsumptionWattHours(monthValueSelfConsumption)
-                        .build());
+                // exclude months without values.
+                if (monthValueConsumption > 0) {
+                    allSummaryPerMonthEntries.add(new SummaryPerMonthEntry.SummaryPerMonthEntryBuilder()
+                            .setMonthOfEntry(month)
+                            .setYearOfEntry(year)
+                            .setAutarchy((monthValueSelfConsumption.doubleValue() / monthValueConsumption.doubleValue()) * 100)
+                            .setConsumptionWattHours(monthValueConsumption)
+                            .setProductionWattHours(monthValueProductionWattHours.get(month))
+                            .setPurchaseWattHours(monthValuePurchaseWattHours.get(month))
+                            .setSaleWattHours(monthValueSaleWattHours.get(month))
+                            .setSelfConsumptionWattHours(monthValueSelfConsumption)
+                            .build());
+                }
             }
         }
         return allSummaryPerMonthEntries;
