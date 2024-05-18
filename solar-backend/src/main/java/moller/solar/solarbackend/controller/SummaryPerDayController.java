@@ -193,19 +193,41 @@ public class SummaryPerDayController {
 
         List<Integer> years = new ArrayList<>();
         years.addAll(yearToMonthAndValue.keySet().stream().sorted().toList());
-        YearAndMonthProductionValues values = new YearAndMonthProductionValues();
-        values.setYears(years);
+
+        Map<Integer, Integer> monthAndAccumulatedValue = new TreeMap<>();
+        valueAggregator.initiateMonthToValueMap(monthAndAccumulatedValue);
 
         List<Integer> monthValues = new ArrayList<>();
         Map<Integer, Map<Integer, Integer>> finalYearToMonthAndValue = yearToMonthAndValue;
         years.forEach(year -> {
             Map<Integer, Integer> monthAndValue = finalYearToMonthAndValue.get(year);
+            collectValuesForAverageCalculation(monthAndAccumulatedValue, monthAndValue);
             monthValues.addAll(monthAndValue.values());
         });
 
+        calculateAverageValue(years.size(),monthAndAccumulatedValue);
+        monthValues.addAll(monthAndAccumulatedValue.values());
+
+        // Add -1 as place holder for average values.
+        years.add(-1);
+
+        YearAndMonthProductionValues values = new YearAndMonthProductionValues();
+        values.setYears(years);
         values.setMonthValues(monthValues);
 
         return ResponseEntity.of(Optional.of(values));
+    }
+
+    private void collectValuesForAverageCalculation(Map<Integer, Integer> monthAndAccumulatedValue, Map<Integer, Integer> monthAndValues) {
+        monthAndValues.keySet().forEach(month -> {
+            monthAndAccumulatedValue.put(month, monthAndAccumulatedValue.get(month) + monthAndValues.get(month));
+        });
+    }
+
+    private void  calculateAverageValue(int nrOfYears, Map<Integer, Integer> monthAndAccumulatedValue) {
+        monthAndAccumulatedValue.keySet().forEach(month -> {
+            monthAndAccumulatedValue.put(month, (int)((double)monthAndAccumulatedValue.get(month) / (double)3));
+        });
     }
 
     private Map<Integer, Map<Integer, Integer>> calculateAutarkyValues(Map<Integer, Map<Integer, Integer>> yearToMonthAndValueConsumption, Map<Integer, Map<Integer, Integer>> yearToMonthAndValueSelfConsumption) {

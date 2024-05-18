@@ -36,7 +36,7 @@ public class ValueAggregator {
         return function.apply(summaryPerDayEntry);
     }
 
-    private void initiateMonthToValueMap(Map<Integer, Integer> mapToInitiate) {
+    public void initiateMonthToValueMap(Map<Integer, Integer> mapToInitiate) {
         for (int i = 1; i <= 12; i++) {
             mapToInitiate.put(i, 0);
         }

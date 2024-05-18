@@ -18,7 +18,7 @@ export class YearOverYearComponent implements OnInit {
   valueType: string = '';
   menuTitle: string = '';
 
-  tableRows : number[][] = [];
+  tableRows : string[][] = [];
   private monthLabels: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   displayedColumns: string[] = ['Year'].concat(this.monthLabels);
   
@@ -67,11 +67,16 @@ export class YearOverYearComponent implements OnInit {
           this.lineChartData.datasets[index].data = twelveMonths;
           
         }
+
+        if (data.years[index] == '-1') {
+          data.years[index] = 'Average'; 
+        }
+
         this.lineChartData.datasets[index].label = data.years[index];
       
-        let tableRow: Array<number> = [];
-        tableRow.push(Number(data.years[index]));
-        tableRow = tableRow.concat(twelveMonths);
+        let tableRow: Array<string> = [];
+        tableRow.push(String(data.years[index]));
+        tableRow = tableRow.concat(twelveMonths.map(String));
 
         this.tableRows.push(tableRow);
 
@@ -148,6 +153,12 @@ export class YearOverYearComponent implements OnInit {
         data: [],
         fill: false,
         borderColor: 'rgb(255, 230, 153)',
+      },
+      {
+        data: [],
+        fill: false,
+        borderColor: 'rgb(255, 153, 153)',
+        borderDash: [10,10],
       },
     ],
     labels: [],
