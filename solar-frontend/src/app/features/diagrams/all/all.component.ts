@@ -159,7 +159,7 @@ export class AllComponent implements OnInit {
         tension: 0.1,
       },
       point: {
-        radius: 0 // default to disabled in all datasets
+        radius: 3,
       }
     },
     scales: {
