@@ -2,6 +2,7 @@ package moller.solar.solarbackend.controller;
 
 import moller.solar.solarbackend.dto.DateAndValues;
 import moller.solar.solarbackend.dto.YearAndMonthProductionValues;
+import moller.solar.solarbackend.enumerations.Values;
 import moller.solar.solarbackend.persistence.DataExportEntry;
 import moller.solar.solarbackend.persistence.DataExportRepository;
 import moller.solar.solarbackend.persistence.SummaryPerDayEntry;
@@ -194,22 +195,35 @@ public class SummaryPerDayController {
         List<Integer> years = new ArrayList<>();
         years.addAll(yearToMonthAndValue.keySet().stream().sorted().toList());
 
+        Map<Integer, Integer> monthAndLowestValue = new TreeMap<>();
+        Map<Integer, Integer> monthAndHighestValue = new TreeMap<>();
         Map<Integer, Integer> monthAndAccumulatedValue = new TreeMap<>();
+
+        valueAggregator.initiateMonthToValueMap(monthAndLowestValue, Integer.MAX_VALUE);
+        valueAggregator.initiateMonthToValueMap(monthAndHighestValue, Integer.MIN_VALUE);
         valueAggregator.initiateMonthToValueMap(monthAndAccumulatedValue);
 
         List<Integer> monthValues = new ArrayList<>();
         Map<Integer, Map<Integer, Integer>> finalYearToMonthAndValue = yearToMonthAndValue;
         years.forEach(year -> {
             Map<Integer, Integer> monthAndValue = finalYearToMonthAndValue.get(year);
-            collectValuesForAverageCalculation(monthAndAccumulatedValue, monthAndValue);
+            collectValuesForCalculation(monthAndLowestValue, monthAndValue, Values.LOWEST);
+            collectValuesForCalculation(monthAndHighestValue, monthAndValue, Values.HIGHEST);
+            collectValuesForCalculation(monthAndAccumulatedValue, monthAndValue, Values.AVERAGE);
+
             monthValues.addAll(monthAndValue.values());
         });
+
+        monthValues.addAll(monthAndLowestValue.values());
+        monthValues.addAll(monthAndHighestValue.values());
 
         calculateAverageValue(years.size(),monthAndAccumulatedValue);
         monthValues.addAll(monthAndAccumulatedValue.values());
 
-        // Add -1 as place holder for average values.
-        years.add(-1);
+
+        years.add(-1); // Add -1 as place holder for lowest values.
+        years.add(-2); // Add -2 as place holder for highest values.
+        years.add(-3); // Add -3 as place holder for average values.
 
         YearAndMonthProductionValues values = new YearAndMonthProductionValues();
         values.setYears(years);
@@ -218,9 +232,23 @@ public class SummaryPerDayController {
         return ResponseEntity.of(Optional.of(values));
     }
 
-    private void collectValuesForAverageCalculation(Map<Integer, Integer> monthAndAccumulatedValue, Map<Integer, Integer> monthAndValues) {
-        monthAndValues.keySet().forEach(month -> {
-            monthAndAccumulatedValue.put(month, monthAndAccumulatedValue.get(month) + monthAndValues.get(month));
+    private void collectValuesForCalculation(Map<Integer, Integer> resultMonthAndValue, Map<Integer, Integer> monthAndValue, Values values) {
+        monthAndValue.keySet().forEach(month -> {
+            switch (values) {
+                case HIGHEST -> {
+                    if(resultMonthAndValue.get(month) < monthAndValue.get(month)) {
+                        resultMonthAndValue.put(month, monthAndValue.get(month));
+                    }
+                }
+                case LOWEST -> {
+                    if(resultMonthAndValue.get(month) > monthAndValue.get(month)) {
+                        resultMonthAndValue.put(month, monthAndValue.get(month));
+                    }
+                }
+                case AVERAGE -> {
+                    resultMonthAndValue.put(month, resultMonthAndValue.get(month) + monthAndValue.get(month));
+                }
+            }
         });
     }
 

@@ -69,6 +69,12 @@ export class YearOverYearComponent implements OnInit {
         }
 
         if (data.years[index] == '-1') {
+          data.years[index] = 'Lowest'; 
+        }
+        if (data.years[index] == '-2') {
+          data.years[index] = 'Highest'; 
+        }
+        if (data.years[index] == '-3') {
           data.years[index] = 'Average'; 
         }
 
@@ -158,6 +164,18 @@ export class YearOverYearComponent implements OnInit {
         data: [],
         fill: false,
         borderColor: 'rgb(255, 153, 153)',
+        borderDash: [10,10],
+      },
+      {
+        data: [],
+        fill: false,
+        borderColor: 'rgb(153, 255, 153)',
+        borderDash: [10,10],
+      },
+      {
+        data: [],
+        fill: false,
+        borderColor: 'rgb(153, 153, 255)',
         borderDash: [10,10],
       },
     ],

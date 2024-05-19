@@ -37,8 +37,12 @@ public class ValueAggregator {
     }
 
     public void initiateMonthToValueMap(Map<Integer, Integer> mapToInitiate) {
+        initiateMonthToValueMap(mapToInitiate,0);
+    }
+
+    public void initiateMonthToValueMap(Map<Integer, Integer> mapToInitiate, int initialValue) {
         for (int i = 1; i <= 12; i++) {
-            mapToInitiate.put(i, 0);
+            mapToInitiate.put(i, initialValue);
         }
     }
 }
