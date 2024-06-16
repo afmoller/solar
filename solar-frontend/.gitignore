@@ -45,3 +45,5 @@ Thumbs.db
 /.vscode/tasks.json
 /.nx/cache/18.3.2-nx.win32-x64-msvc.node
 /.nx/cache/nx_files.nxt
+/src/environments/environment.production.ts
+/src/environments/environment.development.ts

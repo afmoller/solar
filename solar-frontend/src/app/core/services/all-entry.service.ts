@@ -12,8 +12,8 @@ export class AllEntryService {
   private allentriesUrlMonth: string;
 
   constructor(private http: HttpClient) {
-    this.allentriesUrlDay = 'http://localhost:8080/getAllValuesForPeriod';
-    this.allentriesUrlMonth ='http://localhost:8080/getMonthlyAccumulatedValuesForPeriod';
+    this.allentriesUrlDay = 'http://localhost:8080/api/v1/getAllValuesForPeriod';
+    this.allentriesUrlMonth ='http://localhost:8080/api/v1/getMonthlyAccumulatedValuesForPeriod';
   }
 
   public findAll(resolution: String, fromDate: string, toDate: string): Observable<Allentry> {

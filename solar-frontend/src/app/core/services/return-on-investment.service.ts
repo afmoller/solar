@@ -15,7 +15,7 @@ export class ReturnOnInvestmentService {
   private returnOnInvestmentDashboardUrl: string;
 
   constructor(private http: HttpClient) {
-    this.returnOnInvestmentBaseUrl = 'http://localhost:8080';
+    this.returnOnInvestmentBaseUrl = 'http://localhost:8080/api/v1';
     this.returnOnInvestmentUrl = this.returnOnInvestmentBaseUrl + '/return-on-investments';
     this.returnOnInvestmentDashboardUrl = this.returnOnInvestmentBaseUrl + '/return-on-investment-dashboard';
   }

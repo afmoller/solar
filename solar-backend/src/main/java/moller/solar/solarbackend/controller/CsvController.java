@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class CsvController {
+public class CsvController extends AbstractV1BaseController {
 
     private final CsvReader csvReader;
     private final CsvRecordMapper csvRecordMapper;

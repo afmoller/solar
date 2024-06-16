@@ -12,4 +12,15 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${CLIENT_ID:configure-client-id}
+            client-secret: ${CLIENT_SECRET:configure-client-secret}
+
+security:
+  allowed-email-claim: ${ALLOWED_EMAIL_CLAIM:configure-allowed-email}
+
 

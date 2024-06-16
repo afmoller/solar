@@ -11,7 +11,7 @@ export class AccumulatedAllEntryService {
   private accumulatedallentriesUrl: string;
 
   constructor(private http: HttpClient) {
-    this.accumulatedallentriesUrl = 'http://localhost:8080/getAllAccumulatedValues';
+    this.accumulatedallentriesUrl = 'http://localhost:8080/api/v1/getAllAccumulatedValues';
   }
 
   public findAll(): Observable<Allentry> {

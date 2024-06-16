@@ -19,8 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/")
-public class SummaryPerDayController {
+public class SummaryPerDayController extends AbstractV1BaseController {
 
     private final ValueAggregator valueAggregator;
     private final DataExportRepository dataExportRepository;

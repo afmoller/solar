@@ -1,0 +1,19 @@
+<div>
+  <div *ngIf="!loggedIn">
+      
+    <div class="flex items-center justify-center pt-4">
+      <asl-google-signin-button
+        type="standard"
+        size="medium"
+        theme="filled_black"
+      ></asl-google-signin-button>
+    </div>
+  </div>
+
+  <div *ngIf="loggedIn">   
+    <div>
+      <p>User: {{ user.email }}</p>
+    </div>
+    <a (click)="logOutUser()" href="#">Sign out</a>  
+  </div>
+</div>

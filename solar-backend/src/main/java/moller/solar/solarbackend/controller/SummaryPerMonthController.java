@@ -7,7 +7,6 @@ import moller.solar.solarbackend.persistence.SummaryPerDayRepository;
 import moller.solar.solarbackend.util.ValueAggregator;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +16,7 @@ import java.time.YearMonth;
 import java.util.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/")
-public class SummaryPerMonthController {
+public class SummaryPerMonthController extends AbstractV1BaseController {
 
     private final ValueAggregator valueAggregator;
     private final SummaryPerDayRepository summaryPerDayRepository;
