@@ -23,10 +23,10 @@ import { AccumulatedAllComponent } from './features/diagrams/accumulated/accumul
 import { SummaryperdayentryComponent} from './features/tables/summaryperdayentry/summaryperdayentry.component';
 import { SummarypermonthentryComponent } from './features/tables/symmarypermonthentry/summarypermonthentry.component';
 import {
+  SocialLoginModule,
   GoogleInitOptions,
   GoogleLoginProvider,
   SocialAuthServiceConfig,
-  SocialLoginModule
 } from '@abacritt/angularx-social-login';
 
 const googleInitOptions: GoogleInitOptions = {
