@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { JwtService } from './jwt.service';
-import { HttpClient } from '@angular/common/http';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Injectable({ providedIn: 'root' })
-export class UserCoreSerivce {
+export class UserCoreService {
 
   constructor(
-    private http: HttpClient,
     private jwtService: JwtService,
     private socialAuthService: SocialAuthService,
   ) {}

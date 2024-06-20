@@ -2,7 +2,7 @@ import { Subscription } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { JwtService } from '../../core/services/authentication/jwt.service';
-import { UserCoreSerivce } from '../../core/services/authentication/user-core.service';
+import { UserCoreService } from '../../core/services/authentication/user-core.service';
 import {
   OnInit,
   Component,
@@ -37,7 +37,7 @@ export class LoginLogoutComponent implements OnInit, OnDestroy {
     private authService: SocialAuthService,
     private jwtService: JwtService,
 
-    public userService: UserCoreSerivce,
+    public userService: UserCoreService,
   ) {}
 
   ngOnInit(): void {
