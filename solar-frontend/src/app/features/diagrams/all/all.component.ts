@@ -8,8 +8,6 @@ import { SummaryPerDayEntryService } from '../../../core/services/summary-per-da
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DataExportEntryService } from 'src/app/core/services/data-export-entry.service';
-import { sample } from 'rxjs';
-import { MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'app-all',
@@ -180,8 +178,7 @@ export class AllComponent implements OnInit {
       }
     },
     responsive: true,
-    maintainAspectRatio: true,
-    aspectRatio: 3,
+    maintainAspectRatio: false,
     animation: false,
   };
 
@@ -219,11 +216,11 @@ export class AllComponent implements OnInit {
 
   setSelectionScope(selectionScope:string): void {
     this.selectionScope = selectionScope;
-    this.adjustShifSelectionScope();
+    this.adjustShiftSelectionScope();
     this.loadDataAndPopulateChart(this.inputForm.get('fromDate')?.value, this.inputForm.get('toDate')?.value, selectionScope)
   }
 
-  adjustShifSelectionScope() {
+  adjustShiftSelectionScope() {
     if (this.selectionScope === 'MONTH') {
       this.shiftSelectionScope = 'year';
     } else if (this.selectionScope === 'DAY') {

@@ -88,8 +88,7 @@ export class AccumulatedAllComponent implements OnInit {
       }
     },
     responsive: true,
-    maintainAspectRatio: true,
-    aspectRatio: 3,
+    maintainAspectRatio: false,
     animation: false,
   };
 
