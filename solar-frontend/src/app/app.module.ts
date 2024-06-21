@@ -10,23 +10,32 @@ import { MatTableModule } from '@angular/material/table';
 import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatFormFieldModule} from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AllComponent } from './features/diagrams/all/all.component';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginLogoutComponent } from './common/loginlogout/loginlogout.component';
 import { httpStatusInterceptor } from './core/interceptors/http-status.interceptor';
 import { jwtTokenAuthInterceptor } from './core/interceptors/jwt-token-auth.interceptor';
-import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over-year.component';
 import { DataexportentryComponent} from './features/dataexportentry/dataexportentry.component';
+import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over-year.component';
 import { AccumulatedAllComponent } from './features/diagrams/accumulated/accumulated-all.component';
 import { SummaryperdayentryComponent} from './features/tables/summaryperdayentry/summaryperdayentry.component';
 import { SummarypermonthentryComponent } from './features/tables/symmarypermonthentry/summarypermonthentry.component';
+
+import { 
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
+
+import { 
+  withInterceptors,
+  provideHttpClient 
+} from '@angular/common/http';
+
 import {
   SocialLoginModule,
   GoogleInitOptions,
   GoogleLoginProvider,
-  SocialAuthServiceConfig,
+  SocialAuthServiceConfig
 } from '@abacritt/angularx-social-login';
 
 const googleInitOptions: GoogleInitOptions = {
