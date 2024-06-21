@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { JwtService } from '../../core/services/authentication/jwt.service';
 import { UserCoreService } from '../../core/services/authentication/user-core.service';
 import {
@@ -36,6 +36,7 @@ export class LoginLogoutComponent implements OnInit, OnDestroy {
   constructor(
     private authService: SocialAuthService,
     private jwtService: JwtService,
+    private router: Router,
 
     public userService: UserCoreService,
   ) {}
@@ -46,6 +47,7 @@ export class LoginLogoutComponent implements OnInit, OnDestroy {
       this.loggedIn = user != null;
       if (user != null) {
         this.jwtService.saveToken(user.idToken);
+        this.router.navigateByUrl('/return-on-investment');
       }
     });
   }
