@@ -14,6 +14,6 @@ import { LoginLogoutComponent } from 'src/app/common/loginlogout/loginlogout.com
   ],
 })
 
-export class GoogleLoginPage {
+export class GoogleLoginPageComponent {
 
 }

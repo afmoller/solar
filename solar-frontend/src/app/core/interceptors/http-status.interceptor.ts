@@ -13,7 +13,7 @@ export const httpStatusInterceptor: HttpInterceptorFn = (req: HttpRequest<unknow
   const router: Router = inject(Router);
 
   return next(req).pipe(
-    catchError((err: any) => {
+    catchError((err: unknown) => {
       if (err instanceof HttpErrorResponse) {
         // Handle HTTP errors
         if (err.status === 401) {
