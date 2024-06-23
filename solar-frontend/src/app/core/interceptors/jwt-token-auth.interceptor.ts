@@ -1,7 +1,7 @@
 import {
   HttpRequest,
   HttpHandlerFn,
-  HttpInterceptorFn,
+  HttpInterceptorFn
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { JwtService } from '../services/authentication/jwt.service';

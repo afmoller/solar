@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { provideRouter } from '@angular/router';
 import { NgChartsConfiguration } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,14 +20,14 @@ import { AccumulatedAllComponent } from './features/diagrams/accumulated/accumul
 import { SummaryperdayentryComponent} from './features/tables/summaryperdayentry/summaryperdayentry.component';
 import { SummarypermonthentryComponent } from './features/tables/symmarypermonthentry/summarypermonthentry.component';
 
-import { 
+import {
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
 
-import { 
+import {
   withInterceptors,
-  provideHttpClient 
+  provideHttpClient
 } from '@angular/common/http';
 
 import {
@@ -42,59 +41,48 @@ const googleInitOptions: GoogleInitOptions = {
   oneTapEnabled: false,
 };
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    AllComponent,
-    YearOverYearComponent,
-    AccumulatedAllComponent,
-    DataexportentryComponent,
-  ],
-  imports: [
-    FormsModule,
-    BrowserModule,
-    MatTableModule,
-    NgChartsModule,
-    AppRoutingModule,
-    HttpClientModule,
-    SocialLoginModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    LoginLogoutComponent,
-    BrowserAnimationsModule,
-    SummaryperdayentryComponent,
-    SummarypermonthentryComponent,
-  ],
-  providers: [
-    provideHttpClient(withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),
-    provideRouter(routes),
-    {
-      provide: NgChartsConfiguration,
-      useValue:
+@NgModule({ declarations: [
+        AppComponent,
+        AllComponent,
+        YearOverYearComponent,
+        AccumulatedAllComponent,
+        DataexportentryComponent,
+    ],
+    bootstrap: [AppComponent], imports: [FormsModule,
+        BrowserModule,
+        MatTableModule,
+        NgChartsModule,
+        AppRoutingModule,
+        SocialLoginModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        LoginLogoutComponent,
+        BrowserAnimationsModule,
+        SummaryperdayentryComponent,
+        SummarypermonthentryComponent], providers: [
+        provideHttpClient(withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),
+        provideRouter(routes),
         {
-          generateColors: false
-        }
-    },
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              environment.clientId,
-              googleInitOptions
-            ),
-          },
-        ],
-        onError: (err: any) => {
-          console.error(err);
+            provide: NgChartsConfiguration,
+            useValue: {
+                generateColors: false
+            }
         },
-      } as SocialAuthServiceConfig,
-    },
-  ],
-
-  bootstrap: [AppComponent]
-})
+        {
+            provide: 'SocialAuthServiceConfig',
+            useValue: {
+                autoLogin: false,
+                providers: [
+                    {
+                        id: GoogleLoginProvider.PROVIDER_ID,
+                        provider: new GoogleLoginProvider(environment.clientId, googleInitOptions),
+                    },
+                ],
+                onError: (err: any) => {
+                    console.error(err);
+                },
+            } as SocialAuthServiceConfig,
+        },
+        provideHttpClient(withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),
+    ] })
 export class AppModule { }
