@@ -6,13 +6,19 @@ import { Allentry } from '../../../core/models/allentry';
 import { AllEntryService } from '../../../core/services/all-entry.service';
 import { SummaryPerDayEntryService } from '../../../core/services/summary-per-day-entry.service';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataExportEntryService } from 'src/app/core/services/data-export-entry.service';
 
 @Component({
   selector: 'app-all',
   templateUrl: './all.component.html',
-  styleUrls: ['./all.component.scss']
+  styleUrls: ['./all.component.scss'],
+  standalone: true,
+
+  imports: [
+    BaseChartDirective,
+    ReactiveFormsModule
+  ]
 })
 
 export class AllComponent implements OnInit {

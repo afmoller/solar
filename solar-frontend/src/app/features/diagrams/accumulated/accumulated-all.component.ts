@@ -7,7 +7,12 @@ import { AccumulatedAllEntryService } from '../../../core/services/accumulated-a
 @Component({
   selector: 'app-accumulated-all',
   templateUrl: './accumulated-all.component.html',
-  styleUrls: ['./accumulated-all.component.scss']
+  styleUrls: ['./accumulated-all.component.scss'],
+  standalone: true,
+
+  imports: [
+    BaseChartDirective,
+  ]
 })
 
 export class AccumulatedAllComponent implements OnInit {

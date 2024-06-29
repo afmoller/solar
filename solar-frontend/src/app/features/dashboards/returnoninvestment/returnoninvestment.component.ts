@@ -1,4 +1,3 @@
-import { NgChartsModule } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
 import { BaseChartDirective } from 'ng2-charts';
 import { MatInputModule} from '@angular/material/input';
@@ -24,7 +23,7 @@ import { ReturnOnInvestmentCreateentry } from 'src/app/core/models/returnoninves
   imports: [
     MatInputModule,
     MatTableModule,
-    NgChartsModule,
+    BaseChartDirective,
     MatRadioModule,
     MatButtonModule,
     MatFormFieldModule,

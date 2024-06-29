@@ -5,11 +5,18 @@ import Annotation from 'chartjs-plugin-annotation';
 import { YearOverYearEntry } from '../../../core/models/yearoveryearentry';
 import { YearOverYearEntryService } from '../../../core/services/year-over-year.service';
 import { ActivatedRoute } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-year-over-year',
   templateUrl: './year-over-year.component.html',
-  styleUrls: ['./year-over-year.component.scss']
+  styleUrls: ['./year-over-year.component.scss'],
+  standalone: true,
+
+  imports: [
+    NgFor,
+    BaseChartDirective,
+  ]
 })
 
 export class YearOverYearComponent implements OnInit {

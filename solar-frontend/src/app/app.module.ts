@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
-import { NgChartsModule } from 'ng2-charts';
+import {
+  provideCharts,
+  withDefaultRegisterables,
+  }  from 'ng2-charts';
 import { routes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideRouter } from '@angular/router';
-import { NgChartsConfiguration } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { MatTableModule } from '@angular/material/table';
 import { environment } from '../environments/environment';
@@ -43,15 +45,12 @@ const googleInitOptions: GoogleInitOptions = {
 
 @NgModule({ declarations: [
         AppComponent,
-        AllComponent,
-        YearOverYearComponent,
-        AccumulatedAllComponent,
         DataexportentryComponent,
     ],
     bootstrap: [AppComponent], imports: [FormsModule,
         BrowserModule,
         MatTableModule,
-        NgChartsModule,
+
         AppRoutingModule,
         SocialLoginModule,
         MatFormFieldModule,
@@ -59,15 +58,11 @@ const googleInitOptions: GoogleInitOptions = {
         LoginLogoutComponent,
         BrowserAnimationsModule,
         SummaryperdayentryComponent,
-        SummarypermonthentryComponent], providers: [
+        SummarypermonthentryComponent],
+        providers: [
         provideHttpClient(withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),
+        provideCharts(withDefaultRegisterables()),
         provideRouter(routes),
-        {
-            provide: NgChartsConfiguration,
-            useValue: {
-                generateColors: false
-            }
-        },
         {
             provide: 'SocialAuthServiceConfig',
             useValue: {
