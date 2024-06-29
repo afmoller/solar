@@ -11,14 +11,10 @@ import { MatTableModule } from '@angular/material/table';
 import { environment } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatFormFieldModule} from '@angular/material/form-field';
-import { AllComponent } from './features/diagrams/all/all.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginLogoutComponent } from './common/loginlogout/loginlogout.component';
 import { httpStatusInterceptor } from './core/interceptors/http-status.interceptor';
 import { jwtTokenAuthInterceptor } from './core/interceptors/jwt-token-auth.interceptor';
-import { DataexportentryComponent} from './features/dataexportentry/dataexportentry.component';
-import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over-year.component';
-import { AccumulatedAllComponent } from './features/diagrams/accumulated/accumulated-all.component';
 import { SummaryperdayentryComponent} from './features/tables/summaryperdayentry/summaryperdayentry.component';
 import { SummarypermonthentryComponent } from './features/tables/symmarypermonthentry/summarypermonthentry.component';
 
@@ -43,41 +39,47 @@ const googleInitOptions: GoogleInitOptions = {
   oneTapEnabled: false,
 };
 
-@NgModule({ declarations: [
+@NgModule(
+  { 
+    declarations: [
         AppComponent,
-        DataexportentryComponent,
     ],
-    bootstrap: [AppComponent], imports: [FormsModule,
-        BrowserModule,
-        MatTableModule,
-
-        AppRoutingModule,
-        SocialLoginModule,
-        MatFormFieldModule,
-        ReactiveFormsModule,
-        LoginLogoutComponent,
-        BrowserAnimationsModule,
-        SummaryperdayentryComponent,
-        SummarypermonthentryComponent],
-        providers: [
-        provideHttpClient(withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),
-        provideCharts(withDefaultRegisterables()),
-        provideRouter(routes),
-        {
-            provide: 'SocialAuthServiceConfig',
-            useValue: {
-                autoLogin: false,
-                providers: [
-                    {
-                        id: GoogleLoginProvider.PROVIDER_ID,
-                        provider: new GoogleLoginProvider(environment.clientId, googleInitOptions),
-                    },
-                ],
-                onError: (err: any) => {
-                    console.error(err);
-                },
-            } as SocialAuthServiceConfig,
-        },
-        provideHttpClient(withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),
-    ] })
+    bootstrap: [
+      AppComponent
+    ],
+    imports: [
+      FormsModule,
+      BrowserModule,
+      MatTableModule,
+      AppRoutingModule,
+      SocialLoginModule,
+      MatFormFieldModule,
+      ReactiveFormsModule,
+      LoginLogoutComponent,
+      BrowserAnimationsModule,
+      SummaryperdayentryComponent,
+      SummarypermonthentryComponent
+    ],
+    providers: [
+      provideHttpClient(withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),
+      provideCharts(withDefaultRegisterables()),
+      provideRouter(routes),
+      {
+        provide: 'SocialAuthServiceConfig',
+        useValue: {
+          autoLogin: false,
+          providers: [
+            {
+              id: GoogleLoginProvider.PROVIDER_ID,
+              provider: new GoogleLoginProvider(environment.clientId, googleInitOptions),
+            },
+          ],
+          onError: (err: any) => {
+            console.error(err);
+          },
+        } as SocialAuthServiceConfig,
+      },
+    ]
+  }
+)
 export class AppModule { }
