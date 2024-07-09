@@ -21,4 +21,8 @@ export class SummaryPerDayEntryService {
   public findNewestEntry(): Observable<Summaryperdayentry> {
     return this.http.get<Summaryperdayentry>(this.summaryperdayentriesBaseUrl + 'getNewestEntry');
   }
+
+  public populateSummaryPerDayForYearAndMonth(year: number, month: number): Observable<number> {
+    return this.http.put<number>(this.summaryperdayentriesBaseUrl + 'populateSummaryPerDayForYearAndMonth?year=' + year + '&month=' + month, {});
+  }
 }

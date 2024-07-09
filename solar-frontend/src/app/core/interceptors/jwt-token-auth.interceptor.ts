@@ -13,8 +13,6 @@ interface HeadersConfig {
 export const jwtTokenAuthInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const jwtService = inject(JwtService);
   const headersConfig: HeadersConfig = {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
   };
 
   const token = jwtService.getToken();

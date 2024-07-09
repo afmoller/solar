@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AllComponent } from './features/diagrams/all/all.component';
+import { CsvImportComponent } from './features/dataimport/csvimport.component';
 import { LoginLogoutComponent } from './common/loginlogout/loginlogout.component';
 import { DataexportentryComponent } from './features/dataexportentry/dataexportentry.component';
 import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over-year.component';
@@ -16,6 +17,10 @@ export const routes: Routes = [
     component: AllComponent,
   },
   {
+    path: 'csv-import',
+    component: CsvImportComponent,
+  },
+  {
     path: 'login',
     component: LoginLogoutComponent,
   },
@@ -23,6 +28,7 @@ export const routes: Routes = [
     path: 'accumulated-all',
     component: AccumulatedAllComponent,
   },
+  
   {
     path: 'dataexportentry',
     component: DataexportentryComponent,
@@ -45,7 +51,7 @@ export const routes: Routes = [
   {
     path: 'energy-sale-compensation',
     component: EnergySaleCompensationComponent,
-  },
+  }
 ];
 
 @NgModule({

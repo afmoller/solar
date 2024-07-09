@@ -1,0 +1,117 @@
+<div>
+  <h4 class="centered">CSV data import</h4>
+</div>
+<div class="content-container">
+  
+  <div>
+    <h4>Data import procedure</h4>
+  </div>
+
+  <u>File import</u>
+
+  <input 
+    type="file"
+    class="file-input"
+    [accept]="requiredFileType"
+    (change)="onFileSelected($event)" #fileUpload>
+
+  <div class="file-upload">
+    <b>Step 1:</b> Select file to import.
+
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="folder_open"></mat-icon>
+    </button>
+  </div>
+
+  <div class="progress">
+    @if(uploadProgress) {
+      <mat-progress-bar class="progress-bar" mode="determinate" [value]="uploadProgress"></mat-progress-bar>
+    }
+  </div>
+
+  <div>
+    @if(fileName) {
+      <b>Result:</b>
+      <table>
+        <tr class="table-row">
+          <th class="table-cell">Event</th>
+          <th class="table-cell">Value</th>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">File import</td>
+          <td class="table-cell">{{fileName}}</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Number of entries imported</td>
+          <td class="table-cell">{{csvImportResult?.numberOfImportedEntries}}</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Timestamp of first entry in file</td>
+          <td class="table-cell">{{csvImportResult?.timestampOfFirstEntry}}</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Timestamp of last entry in file</td>
+          <td class="table-cell">{{csvImportResult?.timestampOfLastEntry}}</td>
+        </tr>
+      </table>
+    }
+  </div>
+  
+  <br/>
+  
+  <div>
+    <u>Data aggregation</u>
+  </div>
+  
+  <br/>  
+  
+  <div>
+    <b>Step 1:</b> Select aggregation month
+    <div></div>
+    <mat-form-field>
+      <mat-label>Year</mat-label>
+      <mat-select [(value)]="selectedYear">
+        @for (year of years; track year) {
+          <mat-option [value]="year.value">{{year.viewValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <mat-label>Month</mat-label>
+      <mat-select [(value)]="selectedMonth">
+        @for (month of months; track month) {
+          <mat-option [value]="month.value">{{month.viewValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div>
+    <b>Step 2:</b> Start aggregation
+    <button mat-mini-fab color="primary" class="upload-btn" (click)="aggregate()" [disabled]="aggregationDisabled()">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="play_circle_outline"></mat-icon>
+    </button>
+  </div>
+  
+  <div>
+    @if(aggregationResult) {
+      <b>Result:</b>
+      <table>
+        <tr class="table-row">
+          <th class="table-cell">Event</th>
+          <th class="table-cell">Value</th>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Aggregation month</td>
+          <td class="table-cell">{{selectedYear}} - {{selectedMonth}}</td>
+        </tr>
+        <tr class="table-row">
+          <td class="table-cell">Number of entries aggregated</td>
+          <td class="table-cell">{{aggregationResult}}</td>
+        </tr>
+      </table>
+    }
+  </div>
+
+</div>  
