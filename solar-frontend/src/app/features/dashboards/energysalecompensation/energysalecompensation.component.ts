@@ -67,7 +67,7 @@ export class EnergySaleCompensationComponent implements OnInit {
                                           'totalcostvatincluded',
                                           'valueAddedTaxRate',
                                           'deleteenergycost'
- ];                             
+ ];
 
   dataSourceCumulated = new MatTableDataSource();
   displayedColumnsCumulated: string[] = ['compensationDate',
@@ -118,10 +118,10 @@ export class EnergySaleCompensationComponent implements OnInit {
 
   onSubmitEnergyCost() {
     debugger;
-    
+
     let fromDateDateValue: Date = this.inputFormEnergyCost.get('datefrom')?.value;
     let toDateValue: Date = this.inputFormEnergyCost.get('dateto')?.value;
-    
+
     const newEntry: EnergyCostCreateentry =  {
       fromDate: fromDateDateValue.toLocaleDateString(),
       toDate: toDateValue.toLocaleDateString(),
@@ -290,7 +290,7 @@ export class EnergySaleCompensationComponent implements OnInit {
       this.loadEnergyCostData();
     });
   }
-   
+
   totalCostVatExcludedInTenThousands(energyCostentry: EnergyCostentry): number {
     return energyCostentry.electricalGridCostInTenThousands +
                                       energyCostentry.energyCostPerKwhInTenThousands +
@@ -298,7 +298,7 @@ export class EnergySaleCompensationComponent implements OnInit {
                                       energyCostentry.feeTwoInTenThousands +
                                       energyCostentry.feeThreeInTenThousands;
   }
-  
+
   totalCostVatIncluded(energyCostentry: EnergyCostentry): string {
     let totalCostVatExcludedInTenThousands = this.totalCostVatExcludedInTenThousands(energyCostentry);
     let vatFactor = 10000 + energyCostentry.valueAddedTaxPercentageRateInMinorUnit;
@@ -313,7 +313,7 @@ export class EnergySaleCompensationComponent implements OnInit {
   divideValueByTenThousand(valueToDivideByTenThousand: number): string {
     return (valueToDivideByTenThousand / 10000).toString();
   }
-  
+
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
