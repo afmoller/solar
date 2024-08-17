@@ -14,9 +14,6 @@ import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestm
 import { EnergySaleCompensationService } from 'src/app/core/services/energy-sale-compensation.service';
 import { EnergySaleCompensationCreateentry } from 'src/app/core/models/energysalecompensationcreateentry';
 import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
-import { EnergyCostService } from 'src/app/core/services/energy-cost.service';
-import { EnergyCostCreateentry } from 'src/app/core/models/energycostcreateentry';
-import { EnergyCostentry } from 'src/app/core/models/energycostentry';
 
 @Component({
   selector: 'app-energysalecompensation',
@@ -26,10 +23,10 @@ import { EnergyCostentry } from 'src/app/core/models/energycostentry';
 
   imports: [
     MatInputModule,
-    MatTableModule,
-    BaseChartDirective,
     MatRadioModule,
+    MatTableModule,
     MatButtonModule,
+    BaseChartDirective,
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -43,11 +40,8 @@ import { EnergyCostentry } from 'src/app/core/models/energycostentry';
 export class EnergySaleCompensationComponent implements OnInit {
 
   inputForm: FormGroup;
-  inputFormEnergyCost: FormGroup;
-
+  
   dataSource = new MatTableDataSource();
-  dataSourceEnergyCosts = new MatTableDataSource();
-
   displayedColumns: string[] = ['compensationdate',
                                 'compensation',
                                 'productionyear',
@@ -55,19 +49,6 @@ export class EnergySaleCompensationComponent implements OnInit {
                                 'productionto',
                                 'delete'
                                ];
-
-  displayedEnergyCostColumns: string[] = ['datefrom',
-                                          'dateto',
-                                          'electricalgridcostintenthousands',
-                                          'energycostperkwhintenthousands',
-                                          'feeoneintenthousands',
-                                          'feetwointenthousands',
-                                          'feethreeintenthousands',
-                                          'totalcostvatexcluded',
-                                          'totalcostvatincluded',
-                                          'valueAddedTaxRate',
-                                          'deleteenergycost'
- ];
 
   dataSourceCumulated = new MatTableDataSource();
   displayedColumnsCumulated: string[] = ['compensationDate',
@@ -79,22 +60,17 @@ export class EnergySaleCompensationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private energyCostService: EnergyCostService,
     private energySaleCompensationService: EnergySaleCompensationService
   ) {
+    
     Chart.register(Annotation);
     Chart.register(Colors);
 
     this.inputForm = this.buildInputForm(formBuilder);
-    this.inputFormEnergyCost = this.buildEnergyCostInputForm(formBuilder);
   }
 
   formIsInvalid() {
     return !this.inputForm.valid;
-  }
-
-  energyCostFormIsInvalid() {
-    return !this.inputFormEnergyCost.valid;
   }
 
   onSubmit(): void {
@@ -116,32 +92,8 @@ export class EnergySaleCompensationComponent implements OnInit {
     });
   }
 
-  onSubmitEnergyCost() {
-    debugger;
-
-    let fromDateDateValue: Date = this.inputFormEnergyCost.get('datefrom')?.value;
-    let toDateValue: Date = this.inputFormEnergyCost.get('dateto')?.value;
-
-    const newEntry: EnergyCostCreateentry =  {
-      fromDate: fromDateDateValue.toLocaleDateString(),
-      toDate: toDateValue.toLocaleDateString(),
-      feeOneInTenThousands: this.inputFormEnergyCost.get('feeoneintenthousands')?.value,
-      feeTwoInTenThousands: this.inputFormEnergyCost.get('feetwointenthousands')?.value,
-      feeThreeInTenThousands: this.inputFormEnergyCost.get('feethreeintenthousands')?.value,
-      electricalGridCostInTenThousands: this.inputFormEnergyCost.get('electricalgridcostintenthousands')?.value,
-      energyCostPerKwhInTenThousands: this.inputFormEnergyCost.get('energycostperkwhintenthousands')?.value,
-      valueAddedTaxPercentageRateInMinorUnit: this.inputFormEnergyCost.get('valueaddedtaxpercentagerateinminorunit')?.value
-    }
-
-    this.energyCostService.create(newEntry).subscribe(data => {
-      this.inputFormEnergyCost.reset();
-      this.loadEnergyCostData();
-    });
-  }
-
   ngOnInit() {
     this.loadData();
-    this.loadEnergyCostData();
   }
 
   loadData() {
@@ -164,12 +116,6 @@ export class EnergySaleCompensationComponent implements OnInit {
     });
   }
 
-  loadEnergyCostData() {
-    this.energyCostService.getAll().subscribe(data => {
-      this.dataSourceEnergyCosts.data = data;
-    })
-  }
-
   buildInputForm(formBuilder: FormBuilder): FormGroup  {
     let inputForm: FormGroup = formBuilder.group({
       compensationdate: [
@@ -189,45 +135,6 @@ export class EnergySaleCompensationComponent implements OnInit {
         Validators.required
       ],
       productionyear: [
-        '',
-        Validators.required
-      ],
-    });
-
-    return inputForm;
-  }
-
-  buildEnergyCostInputForm(formBuilder: FormBuilder): FormGroup {
-    let inputForm: FormGroup = formBuilder.group({
-      datefrom: [
-        new Date(),
-        Validators.required
-      ],
-      dateto: [
-        new Date(),
-        Validators.required
-      ],
-      electricalgridcostintenthousands: [
-        '',
-        Validators.required
-      ],
-      energycostperkwhintenthousands: [
-        '',
-        Validators.required
-      ],
-      feeoneintenthousands: [
-        '',
-        Validators.required
-      ],
-      feetwointenthousands: [
-        '',
-        Validators.required
-      ],
-      feethreeintenthousands: [
-        '',
-        Validators.required
-      ],
-      valueaddedtaxpercentagerateinminorunit: [
         '',
         Validators.required
       ],
@@ -284,28 +191,7 @@ export class EnergySaleCompensationComponent implements OnInit {
       return 'even';
     }
   }
-
-  deleteEnergyCostRow(id: number) {
-    this.energyCostService.delete(id).subscribe(data => {
-      this.loadEnergyCostData();
-    });
-  }
-
-  totalCostVatExcludedInTenThousands(energyCostentry: EnergyCostentry): number {
-    return energyCostentry.electricalGridCostInTenThousands +
-                                      energyCostentry.energyCostPerKwhInTenThousands +
-                                      energyCostentry.feeOneInTenThousands +
-                                      energyCostentry.feeTwoInTenThousands +
-                                      energyCostentry.feeThreeInTenThousands;
-  }
-
-  totalCostVatIncluded(energyCostentry: EnergyCostentry): string {
-    let totalCostVatExcludedInTenThousands = this.totalCostVatExcludedInTenThousands(energyCostentry);
-    let vatFactor = 10000 + energyCostentry.valueAddedTaxPercentageRateInMinorUnit;
-
-    return (totalCostVatExcludedInTenThousands * vatFactor / 10000 / 10000).toFixed(7).toString();
-  }
-
+  
   divideValueByHundred(valueToDivideByHundred: number): string {
     return (valueToDivideByHundred / 100).toString();
   }

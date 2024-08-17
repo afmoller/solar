@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AllComponent } from './features/diagrams/all/all.component';
 import { CsvImportComponent } from './features/dataimport/csvimport.component';
 import { LoginLogoutComponent } from './common/loginlogout/loginlogout.component';
+import { EnergyCostComponent } from './features/dashboards/energycosts/energycost.component';
 import { DataexportentryComponent } from './features/dataexportentry/dataexportentry.component';
 import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over-year.component';
 import { AccumulatedAllComponent } from './features/diagrams/accumulated/accumulated-all.component';
@@ -19,6 +20,10 @@ export const routes: Routes = [
   {
     path: 'csv-import',
     component: CsvImportComponent,
+  },
+  {
+    path: 'energy-cost',
+    component: EnergyCostComponent,
   },
   {
     path: 'login',
