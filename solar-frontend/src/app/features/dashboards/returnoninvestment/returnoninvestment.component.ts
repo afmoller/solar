@@ -204,6 +204,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
       }
     },
     responsive: true,
+    maintainAspectRatio: false,
     animation: false
   };
 
