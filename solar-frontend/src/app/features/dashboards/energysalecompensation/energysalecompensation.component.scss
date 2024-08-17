@@ -68,3 +68,7 @@ th {
 .even {
   background-color: rgb(144, 238, 144)
 }
+
+button.form-button {
+  height: var(--mat-form-field-container-height);
+}

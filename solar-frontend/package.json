@@ -26,6 +26,7 @@
     "@angular/material": "^18.0.4",
     "@angular/platform-browser": "^18.0.4",
     "@angular/platform-browser-dynamic": "^18.0.4",
+    "@angular/material-moment-adapter": "^18.0.4",
     "@angular/router": "^18.0.4",
     "chart.js": "^4.4.0",
     "chartjs-plugin-annotation": "^3.0.1",

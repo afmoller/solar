@@ -14,6 +14,26 @@ import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestm
 import { EnergySaleCompensationService } from 'src/app/core/services/energy-sale-compensation.service';
 import { EnergySaleCompensationCreateentry } from 'src/app/core/models/energysalecompensationcreateentry';
 import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
+import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
+  MAT_DATE_FORMATS
+} from "@angular/material/core";
+import { MomentDateAdapter } from "@angular/material-moment-adapter";
+import { DatePipe } from "@angular/common";
+import moment from 'moment';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: "YYYY-MM-DD"
+  },
+  display: {
+    dateInput: "YYYY-MM-DD",
+    monthYearLabel: "MMM YYYY",
+    dateA11yLabel: "YYYY-MM-DD",
+    monthYearA11yLabel: "MMMM YYYY"
+  }
+};
 
 @Component({
   selector: 'app-energysalecompensation',
@@ -34,7 +54,17 @@ import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompe
   ],
   providers: [
     MatDatepickerModule,
-  ],
+    {    
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE]
+    },
+    { 
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_FORMATS
+    },
+    DatePipe,
+  ]
 })
 
 export class EnergySaleCompensationComponent implements OnInit {
@@ -74,9 +104,9 @@ export class EnergySaleCompensationComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let compensationDateValue: Date = this.inputForm.get('compensationdate')?.value;
-    let productionfromValue: Date = this.inputForm.get('productionfrom')?.value;
-    let productionToValue: Date = this.inputForm.get('productionto')?.value;
+    let compensationDateValue: Date = this.inputForm.get('compensationdate')?.value.toDate();
+    let productionfromValue: Date = this.inputForm.get('productionfrom')?.value.toDate();
+    let productionToValue: Date = this.inputForm.get('productionto')?.value.toDate();
 
     const newEntry: EnergySaleCompensationCreateentry =  {
       compensationDate: compensationDateValue.toLocaleDateString(),
@@ -119,15 +149,15 @@ export class EnergySaleCompensationComponent implements OnInit {
   buildInputForm(formBuilder: FormBuilder): FormGroup  {
     let inputForm: FormGroup = formBuilder.group({
       compensationdate: [
-        new Date(),
+        moment(),
         Validators.required
       ],
       productionfrom: [
-        new Date(),
+        moment(),
         Validators.required
       ],
       productionto: [
-        new Date(),
+        moment(),
         Validators.required
       ],
       compensation: [

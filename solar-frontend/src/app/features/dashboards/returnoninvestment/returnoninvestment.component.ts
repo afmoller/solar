@@ -13,6 +13,26 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
 import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
 import { ReturnOnInvestmentCreateentry } from 'src/app/core/models/returnoninvestmentcreateentry';
+import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
+  MAT_DATE_FORMATS
+} from "@angular/material/core";
+import { MomentDateAdapter } from "@angular/material-moment-adapter";
+import { DatePipe } from "@angular/common";
+import moment from 'moment';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: "YYYY-MM-DD"
+  },
+  display: {
+    dateInput: "YYYY-MM-DD",
+    monthYearLabel: "MMM YYYY",
+    dateA11yLabel: "YYYY-MM-DD",
+    monthYearA11yLabel: "MMMM YYYY"
+  }
+};
 
 @Component({
   selector: 'app-returnoninvestment',
@@ -33,7 +53,17 @@ import { ReturnOnInvestmentCreateentry } from 'src/app/core/models/returnoninves
   ],
   providers: [
     MatDatepickerModule,
-  ],
+    {    
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE]
+    },
+    { 
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_FORMATS
+    },
+    DatePipe,
+  ]
 })
 
 export class ReturnOnInvestmentComponent implements OnInit {
@@ -69,7 +99,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let dateValue: Date = this.inputForm.get('date')?.value;
+    let dateValue: Date = this.inputForm.get('date')?.value.toDate();
 
     const newEntry: ReturnOnInvestmentCreateentry =  {
       date: dateValue.toLocaleDateString(),
@@ -109,7 +139,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
   buildInputForm(formBuilder: FormBuilder): FormGroup  {
     let inputForm: FormGroup = formBuilder.group({
       date: [
-        new Date(),
+        moment(),
         Validators.required
       ],
       description: [

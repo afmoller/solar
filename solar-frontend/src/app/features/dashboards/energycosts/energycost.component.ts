@@ -15,6 +15,26 @@ import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompe
 import { EnergyCostService } from 'src/app/core/services/energy-cost.service';
 import { EnergyCostCreateentry } from 'src/app/core/models/energycostcreateentry';
 import { EnergyCostentry } from 'src/app/core/models/energycostentry';
+import {
+  DateAdapter,
+  MAT_DATE_LOCALE,
+  MAT_DATE_FORMATS
+} from "@angular/material/core";
+import { MomentDateAdapter } from "@angular/material-moment-adapter";
+import { DatePipe } from "@angular/common";
+import moment from 'moment';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: "YYYY-MM-DD"
+  },
+  display: {
+    dateInput: "YYYY-MM-DD",
+    monthYearLabel: "MMM YYYY",
+    dateA11yLabel: "YYYY-MM-DD",
+    monthYearA11yLabel: "MMMM YYYY"
+  }
+};
 
 @Component({
   selector: 'app-energycost',
@@ -35,6 +55,16 @@ import { EnergyCostentry } from 'src/app/core/models/energycostentry';
   ],
   providers: [
     MatDatepickerModule,
+    {    
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE]
+    },
+    { 
+      provide: MAT_DATE_FORMATS,
+      useValue: MY_FORMATS
+    },
+    DatePipe,
   ],
 })
 
@@ -55,7 +85,7 @@ export class EnergyCostComponent implements OnInit {
                                           'totalcostvatincluded',
                                           'valueAddedTaxRate',
                                           'deleteenergycost'
-  ];
+                                         ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -72,8 +102,8 @@ export class EnergyCostComponent implements OnInit {
   }
 
   onSubmitEnergyCost() {
-    let fromDateDateValue: Date = this.inputFormEnergyCost.get('datefrom')?.value;
-    let toDateValue: Date = this.inputFormEnergyCost.get('dateto')?.value;
+    let fromDateDateValue: Date = this.inputFormEnergyCost.get('datefrom')?.value.toDate();
+    let toDateValue: Date = this.inputFormEnergyCost.get('dateto')?.value.toDate();
 
     const newEntry: EnergyCostCreateentry =  {
       fromDate: fromDateDateValue.toLocaleDateString(),
@@ -105,11 +135,11 @@ export class EnergyCostComponent implements OnInit {
   buildEnergyCostInputForm(formBuilder: FormBuilder): FormGroup {
     let inputForm: FormGroup = formBuilder.group({
       datefrom: [
-        new Date(),
+        moment(),
         Validators.required
       ],
       dateto: [
-        new Date(),
+        moment(),
         Validators.required
       ],
       electricalgridcostintenthousands: [
@@ -222,5 +252,4 @@ export class EnergyCostComponent implements OnInit {
 
     return dataSet;
   }
-
 }
