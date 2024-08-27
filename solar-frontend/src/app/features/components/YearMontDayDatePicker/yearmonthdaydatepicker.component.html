@@ -1,0 +1,10 @@
+
+<mat-form-field appearance="outline" subscriptSizing="dynamic">
+  
+  <mat-label>{{label}}</mat-label>
+  <input id="compensationdate" matInput [matDatepicker]="pickercompensationdate" formControlName="compensationdate">
+  <mat-datepicker-toggle matIconSuffix [for]="pickercompensationdate"></mat-datepicker-toggle>
+  <mat-datepicker #pickercompensationdate></mat-datepicker>
+  
+</mat-form-field>
+          
