@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CsvImportResult } from 'src/app/core/models/csvimportresult';
@@ -60,6 +61,8 @@ export class CsvImportComponent  {
     {value: 12, viewValue: 'Dec'},
   ];
 
+  private baseUrl: string = environment.backendApiHost;
+
   @Input()
   requiredFileType:string;
 
@@ -91,7 +94,7 @@ export class CsvImportComponent  {
       fileToUpload.append('csvFile', new Blob([file], { type: 'multipart/form-data;' }), file.name);
 
       const upload$ = this.http
-      .post<CsvImportResult>("http://localhost:8080/api/v1/importCsvFileToDatabase", fileToUpload,
+      .post<CsvImportResult>(this.baseUrl + "/api/v1/importCsvFileToDatabase", fileToUpload,
           {
             reportProgress: true,
             observe: 'events'

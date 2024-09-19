@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { ReturnOnInvestmentDashboard } from '../models/returnoninvestmentdashboard';
 import { ReturnOnInvestmentCreateentry } from '../models/returnoninvestmentcreateentry';
 
@@ -9,13 +10,13 @@ import { ReturnOnInvestmentCreateentry } from '../models/returnoninvestmentcreat
 })
 
 export class ReturnOnInvestmentService {
-  
+
   private returnOnInvestmentUrl: string;
   private returnOnInvestmentBaseUrl: string;
   private returnOnInvestmentDashboardUrl: string;
 
   constructor(private http: HttpClient) {
-    this.returnOnInvestmentBaseUrl = 'http://localhost:8080/api/v1';
+    this.returnOnInvestmentBaseUrl = environment.backendApiHost + '/api/v1';
     this.returnOnInvestmentUrl = this.returnOnInvestmentBaseUrl + '/return-on-investments';
     this.returnOnInvestmentDashboardUrl = this.returnOnInvestmentBaseUrl + '/return-on-investment-dashboard';
   }

@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Summaryperdayentry } from '../models/summaryperdayentry';
 
 @Injectable({
@@ -11,7 +12,7 @@ export class SummaryPerDayEntryService {
   private summaryperdayentriesBaseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.summaryperdayentriesBaseUrl = 'http://localhost:8080/api/v1/';
+    this.summaryperdayentriesBaseUrl = environment.backendApiHost + '/api/v1/';
   }
 
   public findAll(): Observable<Summaryperdayentry[]> {

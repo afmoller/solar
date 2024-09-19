@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Dataexportentry } from '../models/dataexportentry';
+import { environment } from '../../../environments/environment';
 import { DateTimeAndValuesEntry } from '../models/datetimeandvaluesentry';
 import { DateTimeAndValuesWatthoursEntry } from '../models/datetimeandvalueswatthoursentry';
 
@@ -13,7 +14,7 @@ export class DataExportEntryService {
   private dataexportentriesBaseUrl: string;
 
   constructor(private http: HttpClient) {
-    this.dataexportentriesBaseUrl = 'http://localhost:8080/api/v1/';
+    this.dataexportentriesBaseUrl = environment.backendApiHost + '/api/v1/';
   }
 
   public findByIid(iid: string | null | undefined): Observable<Dataexportentry> {

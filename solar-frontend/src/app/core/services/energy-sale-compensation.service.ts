@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { ReturnOnInvestmentDashboard } from '../models/returnoninvestmentdashboard';
 import { EnergySaleCompensationentry } from '../models/energysalecompensationentry';
 import { EnergySaleCompensationCreateentry } from '../models/energysalecompensationcreateentry';
@@ -16,7 +17,7 @@ export class EnergySaleCompensationService {
   private returnOnInvestmentDashboardUrl: string;
 
   constructor(private http: HttpClient) {
-    this.energySaleCompensationsBaseUrl = 'http://localhost:8080/api/v1';
+    this.energySaleCompensationsBaseUrl = environment.backendApiHost + '/api/v1';
     this.energySaleCompensationsUrl = this.energySaleCompensationsBaseUrl + '/energy-sale-compensations';
     this.returnOnInvestmentDashboardUrl = this.energySaleCompensationsBaseUrl + '/return-on-investment-dashboard';
   }
