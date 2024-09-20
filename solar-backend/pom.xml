@@ -14,10 +14,6 @@
 	<name>solar-backend</name>
 	<description>Spring Boot backend for the Solar project</description>
 
-	<properties>
-		<java.version>22</java.version>
-	</properties>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -84,29 +80,6 @@
 					</schemas>
 					<url>jdbc:h2:~/solar</url>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources-frontend</id>
-						<phase>validate</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes/META-INF/resources/
-							</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/../solar-frontend/dist/solar-frontend/</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
