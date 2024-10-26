@@ -1,0 +1,831 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Solar persistence REST API",
+    "description": "This API exposes APIs used by the Solar backend application and other Solar related applications.",
+    "contact": {
+      "name": "Fredrik Möller",
+      "url": "https://github.com/afmoller/solar"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "Bearer-Authentication": []
+    }
+  ],
+  "paths": {
+    "/api/v1/saveSummaryPerDayEntries": {
+      "put": {
+        "tags": [
+          "summary-per-day-controller"
+        ],
+        "operationId": "saveSummaryPerDayEntries",
+        "parameters": [
+          {
+            "name": "summaryPerDayEntries",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/SummaryPerDayEntry"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/return-on-investments": {
+      "get": {
+        "tags": [
+          "return-on-investment-controller"
+        ],
+        "operationId": "getAllReturnOnInvestmentEntries",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReturnOnInvestmentEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "return-on-investment-controller"
+        ],
+        "operationId": "createReturnOnInvestmentEntry",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReturnOnInvestmentEntry"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReturnOnInvestmentEntry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/importCsvFileToDatabase": {
+      "post": {
+        "tags": [
+          "csv-controller"
+        ],
+        "operationId": "importCsvFileToDatabase",
+        "parameters": [
+          {
+            "name": "dateExportEntries",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/DataExportEntry"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/energy-sale-compensations": {
+      "get": {
+        "tags": [
+          "energy-sale-compensation-controller"
+        ],
+        "operationId": "getAllEnergySaleCompensationEntries",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EnergySaleCompensationEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "energy-sale-compensation-controller"
+        ],
+        "operationId": "createEnergySaleCompensationEntry",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnergySaleCompensationEntry"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnergySaleCompensationEntry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/energy-costs": {
+      "get": {
+        "tags": [
+          "energy-cost-controller"
+        ],
+        "operationId": "getAllEnergyCostEntries",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EnergyCostEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "energy-cost-controller"
+        ],
+        "operationId": "createEnergyCostEntry",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnergyCostEntry"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnergyCostEntry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/return-on-investment-dashboard": {
+      "get": {
+        "tags": [
+          "return-on-investment-controller"
+        ],
+        "operationId": "getReturnOnInvestmentDashboard",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReturnOnInvestmentEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/getNewestEntry": {
+      "get": {
+        "tags": [
+          "summary-per-day-controller"
+        ],
+        "operationId": "getNewestEntry",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummaryPerDayEntry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/getDateTimeAndValuesForTimespan": {
+      "get": {
+        "tags": [
+          "data-export-controller"
+        ],
+        "operationId": "getDateTimeAndValuesForTimespan",
+        "parameters": [
+          {
+            "name": "selectedFromDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "selectedToDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataExportEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/getDataExportEntryByIID": {
+      "get": {
+        "tags": [
+          "data-export-controller"
+        ],
+        "operationId": "getDataExportEntryByIID",
+        "parameters": [
+          {
+            "name": "iid",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataExportEntry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/getAllValues": {
+      "get": {
+        "tags": [
+          "summary-per-day-controller"
+        ],
+        "operationId": "getAllValues",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SummaryPerDayEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/getAllValuesForPeriod": {
+      "get": {
+        "tags": [
+          "summary-per-day-controller"
+        ],
+        "operationId": "getAllValuesForPeriod",
+        "parameters": [
+          {
+            "name": "fromDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "toDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SummaryPerDayEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/findEntryWithHighestAccumulatedValues": {
+      "get": {
+        "tags": [
+          "summary-per-day-controller"
+        ],
+        "operationId": "getEntryWithHighestAccumulatedValues",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummaryPerDayEntry"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/return-on-investments/{id}": {
+      "delete": {
+        "tags": [
+          "return-on-investment-controller"
+        ],
+        "operationId": "deleteReturnOnInvestmentEntry",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/energy-sale-compensations/{id}": {
+      "delete": {
+        "tags": [
+          "energy-sale-compensation-controller"
+        ],
+        "operationId": "deleteEnergySaleCompensationEntry",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/energy-costs/{id}": {
+      "delete": {
+        "tags": [
+          "energy-cost-controller"
+        ],
+        "operationId": "deleteEnergyCostEntry",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SummaryPerDayEntry": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "autarchy": {
+            "type": "number",
+            "format": "double"
+          },
+          "yearOfEntry": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "monthOfEntry": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "saleWattHours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "purchaseWattHours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productionWattHours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "consumptionWattHours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "selfConsumptionWattHours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accumulatedSaleWattHours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accumulatedPurchaseWattHours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accumulatedProductionWattHours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accumulatedConsumptionWattHours": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "accumulatedSelfConsumptionWattHours": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ReturnOnInvestmentEntry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string"
+          },
+          "amountIsPositive": {
+            "type": "boolean"
+          },
+          "amountInMinorUnit": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "DataExportEntry": {
+        "type": "object",
+        "properties": {
+          "iid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "timestampYear": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timestampMonth": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timestampDay": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_1": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_2": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_3": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_4": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_5": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_6": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_7": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_8": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "importRead": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_9": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_10": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "updateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ip": {
+            "type": "string"
+          },
+          "wlan": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "di_11": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_12": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_13": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_14": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_15": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_16": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_17": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_18": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_19": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "di_20": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "multichannelSwitchOverride": {
+            "type": "string"
+          }
+        }
+      },
+      "EnergySaleCompensationEntry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "compensationDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "productionFromDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "productionToDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "productionYear": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "compensationAmountInMinorUnit": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "EnergyCostEntry": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fromDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "toDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "feeOneInTenThousands": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "feeTwoInTenThousands": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "feeThreeInTenThousands": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "energyCostPerKwhInTenThousands": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "electricalGridCostInTenThousands": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valueAddedTaxPercentageRateInMinorUnit": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer-Authentication": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
