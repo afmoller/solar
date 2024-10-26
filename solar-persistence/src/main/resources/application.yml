@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    show-sql: false
+    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/solar
+    username: solar
+    password: solar
+    jpa:
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+
+security:
+  allowed-email-claim: ${ALLOWED_EMAIL_CLAIM:configure-allowed-email}
+
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:configure-cors-allowed-origins}
+
+server:
+  port: 8081
