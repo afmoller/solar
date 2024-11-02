@@ -1,6 +1,6 @@
 package moller.solar.solarbackend.util;
 
-import moller.solar.solarbackend.persistence.SummaryPerDayEntry;
+import moller.solarpersistence.openapi.client.model.SummaryPerDayEntry;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

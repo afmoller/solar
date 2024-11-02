@@ -1,13 +1,4 @@
 spring:
-  jpa:
-    show-sql: false
-    open-in-view: false
-  datasource:
-    platform: h2
-    url: jdbc:h2:~/solar
-    username: myUser
-    password: mySecretPwd
-    driverClassName: org.h2.Driver
   servlet:
     multipart:
       max-file-size: 100MB

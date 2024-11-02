@@ -1,7 +1,7 @@
 package moller.solar.solarbackend.summary;
 
-import moller.solar.solarbackend.persistence.DataExportEntry;
-import moller.solar.solarbackend.persistence.SummaryPerDayEntry;
+import moller.solarpersistence.openapi.client.model.DataExportEntry;
+import moller.solarpersistence.openapi.client.model.SummaryPerDayEntry;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -31,11 +31,11 @@ public class SummaryEntryValues extends HashMap<String, AtomicInteger> {
     }
 
     public void addNonCumulatedValues(DataExportEntry dataExportEntry) {
-        this.get(KEY_SALE_WATT_HOURS).addAndGet(dataExportEntry.getDi_3());
-        this.get(KEY_PURCHASE_WATT_HOURS).addAndGet(dataExportEntry.getDi_4());
-        this.get(KEY_PRODUCTION_WATT_HOURS).addAndGet(dataExportEntry.getDi_1());
-        this.get(KEY_CONSUMPTION_WATT_HOURS).addAndGet(dataExportEntry.getDi_2());
-        this.get(KEY_SELF_CONSUMPTION_WATT_HOURS).addAndGet(dataExportEntry.getDi_5());
+        this.get(KEY_SALE_WATT_HOURS).addAndGet(dataExportEntry.getDi3());
+        this.get(KEY_PURCHASE_WATT_HOURS).addAndGet(dataExportEntry.getDi4());
+        this.get(KEY_PRODUCTION_WATT_HOURS).addAndGet(dataExportEntry.getDi1());
+        this.get(KEY_CONSUMPTION_WATT_HOURS).addAndGet(dataExportEntry.getDi2());
+        this.get(KEY_SELF_CONSUMPTION_WATT_HOURS).addAndGet(dataExportEntry.getDi5());
     }
 
     public int getSaleWattHours() {
@@ -98,22 +98,22 @@ public class SummaryEntryValues extends HashMap<String, AtomicInteger> {
         return setAccumulatedValueForKey(KEY_SELF_CONSUMPTION_WATT_HOURS, delta);
     }
 
-    public SummaryPerDayEntry mapToSummaryPerDayEntry(LocalDate date) {
-        return new SummaryPerDayEntry.SummaryPerDayEntryBuilder()
-                .setDate(date)
-                .setAutarchy((((double) getSelfConsumptionWattHours()) / ((double) getConsumptionWattHours())) * 100)
-                .setYearOfEntry(date.getYear())
-                .setMonthOfEntry(date.getMonthValue())
-                .setSaleWattHours(getSaleWattHours())
-                .setPurchaseWattHours(getPurchaseWattHours())
-                .setProductionWattHours(getProductionWattHours())
-                .setConsumptionWattHours(getConsumptionWattHours())
-                .setSelfConsumptionWattHours(getSelfConsumptionWattHours())
-                .setAccumulatedSaleWattHours(getAccumulatedSaleWattHours())
-                .setAccumulatedPurchaseWattHours(getAccumulatedPurchaseWattHours())
-                .setAccumulatedProductionWattHours(getAccumulatedProductionWattHours())
-                .setAccumulatedConsumptionWattHours(getAccumulatedConsumptionWattHours())
-                .setAccumulatedSelfConsumptionWattHours(getAccumulatedSelfConsumptionWattHours())
+    public moller.solarpersistence.openapi.client.model.SummaryPerDayEntry mapToSummaryPerDayEntry(LocalDate date) {
+        return new SummaryPerDayEntry.Builder()
+                .date(date)
+                .autarchy((((double) getSelfConsumptionWattHours()) / ((double) getConsumptionWattHours())) * 100)
+                .yearOfEntry(date.getYear())
+                .monthOfEntry(date.getMonthValue())
+                .saleWattHours(getSaleWattHours())
+                .purchaseWattHours(getPurchaseWattHours())
+                .productionWattHours(getProductionWattHours())
+                .consumptionWattHours(getConsumptionWattHours())
+                .selfConsumptionWattHours(getSelfConsumptionWattHours())
+                .accumulatedSaleWattHours(getAccumulatedSaleWattHours())
+                .accumulatedPurchaseWattHours(getAccumulatedPurchaseWattHours())
+                .accumulatedProductionWattHours(getAccumulatedProductionWattHours())
+                .accumulatedConsumptionWattHours(getAccumulatedConsumptionWattHours())
+                .accumulatedSelfConsumptionWattHours(getAccumulatedSelfConsumptionWattHours())
                 .build();
     }
 

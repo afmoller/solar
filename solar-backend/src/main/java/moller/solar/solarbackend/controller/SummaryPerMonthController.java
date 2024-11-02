@@ -2,10 +2,9 @@ package moller.solar.solarbackend.controller;
 
 import moller.solar.solarbackend.dto.DateAndValues;
 import moller.solar.solarbackend.dto.SummaryPerMonthEntry;
-import moller.solar.solarbackend.persistence.SummaryPerDayEntry;
-import moller.solar.solarbackend.persistence.SummaryPerDayRepository;
 import moller.solar.solarbackend.util.ValueAggregator;
-import org.springframework.data.domain.Sort;
+import moller.solarpersistence.openapi.client.api.SummaryPerDayControllerApi;
+import moller.solarpersistence.openapi.client.model.SummaryPerDayEntry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,21 +18,19 @@ import java.util.*;
 public class SummaryPerMonthController extends AbstractV1BaseController {
 
     private final ValueAggregator valueAggregator;
-    private final SummaryPerDayRepository summaryPerDayRepository;
-
+    private final SummaryPerDayControllerApi summaryPerDayControllerApi;
 
     public SummaryPerMonthController(
-            SummaryPerDayRepository summaryPerDayRepository,
-            ValueAggregator valueAggregator) {
+            ValueAggregator valueAggregator, SummaryPerDayControllerApi summaryPerDayControllerApi) {
 
         this.valueAggregator = valueAggregator;
-        this.summaryPerDayRepository = summaryPerDayRepository;
+        this.summaryPerDayControllerApi = summaryPerDayControllerApi;
     }
 
     @GetMapping(value = "/getMonthlyAccumulatedValues")
     public ResponseEntity<List<SummaryPerMonthEntry>> getMonthlyAccumulatedValues() {
 
-        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.findAll(Sort.by(Sort.Order.asc("date")));
+        List<SummaryPerDayEntry> allEntries = summaryPerDayControllerApi.getAllValues();
 
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());
@@ -49,8 +46,7 @@ public class SummaryPerMonthController extends AbstractV1BaseController {
         LocalDate fromDateAdjustedToStartOfMonth = selectedFromDate.withDayOfMonth(1);
         LocalDate toDateAdjustedToEndOfMonth =  YearMonth.of(selectedToDate.getYear(), selectedToDate.getMonthValue()).atEndOfMonth();
 
-
-        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.getAllValuesForPeriod(fromDateAdjustedToStartOfMonth, toDateAdjustedToEndOfMonth);
+        List<SummaryPerDayEntry> allEntries = summaryPerDayControllerApi.getAllValuesForPeriod(fromDateAdjustedToStartOfMonth, toDateAdjustedToEndOfMonth);
 
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());

@@ -3,15 +3,17 @@ package moller.solar.solarbackend.controller;
 import moller.solar.solarbackend.dto.DateAndValues;
 import moller.solar.solarbackend.dto.YearAndMonthProductionValues;
 import moller.solar.solarbackend.enumerations.Values;
-import moller.solar.solarbackend.persistence.DataExportEntry;
-import moller.solar.solarbackend.persistence.DataExportRepository;
-import moller.solar.solarbackend.persistence.SummaryPerDayEntry;
-import moller.solar.solarbackend.persistence.SummaryPerDayRepository;
 import moller.solar.solarbackend.summary.SummaryEntryValues;
 import moller.solar.solarbackend.util.ValueAggregator;
-import org.springframework.data.domain.Sort;
+import moller.solarpersistence.openapi.client.api.DataExportControllerApi;
+import moller.solarpersistence.openapi.client.api.SummaryPerDayControllerApi;
+import moller.solarpersistence.openapi.client.model.DataExportEntry;
+import moller.solarpersistence.openapi.client.model.SummaryPerDayEntry;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -22,24 +24,23 @@ import java.util.stream.Collectors;
 public class SummaryPerDayController extends AbstractV1BaseController {
 
     private final ValueAggregator valueAggregator;
-    private final DataExportRepository dataExportRepository;
-    private final SummaryPerDayRepository summaryPerDayRepository;
+
+    private final DataExportControllerApi dataExportControllerApi;
+    private final SummaryPerDayControllerApi summaryPerDayControllerApi;
 
     public SummaryPerDayController(
             ValueAggregator valueAggregator,
-            DataExportRepository dataExportRepository,
-            SummaryPerDayRepository summaryPerDayRepository) {
+            DataExportControllerApi dataExportControllerApi, SummaryPerDayControllerApi summaryPerDayControllerApi) {
 
         this.valueAggregator = valueAggregator;
-        this.dataExportRepository = dataExportRepository;
-        this.summaryPerDayRepository = summaryPerDayRepository;
+        this.dataExportControllerApi = dataExportControllerApi;
+        this.summaryPerDayControllerApi = summaryPerDayControllerApi;
     }
 
     @PutMapping(value = "/populateSummaryPerDayForYearAndMonth")
     public ResponseEntity<Integer> populateSummaryPerDayForYearAndMonth(@RequestParam("year") Integer year, @RequestParam("month") Integer month) {
 
-        List<DataExportEntry> dataExportEntries = dataExportRepository.findByYearAndMonth(year, month);
-
+        List<DataExportEntry> dataExportEntries = dataExportControllerApi.findByYearAndMonth(year, month);
         Map<LocalDate, SummaryEntryValues> dateToSummaryEntryValues = new HashMap<>();
 
         dataExportEntries.forEach(dataExportEntry -> {
@@ -50,14 +51,14 @@ public class SummaryPerDayController extends AbstractV1BaseController {
         calculateAccumulatedSummaryEntryValues(dateToSummaryEntryValues);
 
         List<SummaryPerDayEntry> summaryPerDayEntries = createSummaryPerDayEntries(dateToSummaryEntryValues);
-        summaryPerDayRepository.saveAll(summaryPerDayEntries);
+        summaryPerDayControllerApi.saveSummaryPerDayEntries(summaryPerDayEntries);
 
         return ResponseEntity.of(Optional.of(summaryPerDayEntries.size()));
     }
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<List<SummaryPerDayEntry>> getAll() {
-        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.findAll(Sort.by(Sort.Order.desc("date")));
+        List<SummaryPerDayEntry> allEntries = summaryPerDayControllerApi.getAllValues();
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());
         }
@@ -66,14 +67,14 @@ public class SummaryPerDayController extends AbstractV1BaseController {
 
     @GetMapping(value = "/getNewestEntry")
     public ResponseEntity<SummaryPerDayEntry> getNewestEntry() {
-        SummaryPerDayEntry newestEntry = summaryPerDayRepository.getNewestEntry();
+        SummaryPerDayEntry newestEntry = summaryPerDayControllerApi.getNewestEntry();
 
         return ResponseEntity.of(Optional.of(newestEntry));
     }
 
     @GetMapping(value = "/getAllAccumulatedValues")
     public ResponseEntity<DateAndValues> getAllAccumulatedValues() {
-        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.findAll(Sort.by(Sort.Order.asc("date")));
+        List<SummaryPerDayEntry> allEntries = summaryPerDayControllerApi.getAllValues();
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());
         }
@@ -122,7 +123,7 @@ public class SummaryPerDayController extends AbstractV1BaseController {
         LocalDate toDateStartOfMonthPlusOneMonth = toDateStartOfMonth.plusMonths(1);
         LocalDate toDate = toDateStartOfMonthPlusOneMonth.minusDays(1);
 
-        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.getAllValuesForPeriod(fromDate, toDate);
+        List<SummaryPerDayEntry> allEntries = summaryPerDayControllerApi.getAllValuesForPeriod(fromDate, toDate);
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());
         }
@@ -154,10 +155,9 @@ public class SummaryPerDayController extends AbstractV1BaseController {
         return ResponseEntity.of(Optional.of(dateAndValues));
     }
 
-
     @GetMapping(value = "/getAggregatedMonthValues")
     public ResponseEntity<YearAndMonthProductionValues> getAggregatedMonthValues(@RequestParam String valueType) {
-        List<SummaryPerDayEntry> allEntries = summaryPerDayRepository.findAll(Sort.by(Sort.Order.asc("date")));
+        List<SummaryPerDayEntry> allEntries = summaryPerDayControllerApi.getAllValues();
         if (allEntries == null || allEntries.isEmpty()) {
             return ResponseEntity.of(Optional.empty());
         }
@@ -218,7 +218,6 @@ public class SummaryPerDayController extends AbstractV1BaseController {
 
         calculateAverageValue(years.size(),monthAndAccumulatedValue);
         monthValues.addAll(monthAndAccumulatedValue.values());
-
 
         years.add(-1); // Add -1 as place holder for lowest values.
         years.add(-2); // Add -2 as place holder for highest values.
@@ -282,7 +281,7 @@ public class SummaryPerDayController extends AbstractV1BaseController {
 
     @GetMapping(value = "/findEntryWithHighestAccumulatedValues")
     public ResponseEntity<SummaryPerDayEntry> getEntryWithHighestAccumulatedValues() {
-        SummaryPerDayEntry entryWithHighestAccumulatedValues = summaryPerDayRepository.findEntryWithHighestAccumulatedValues();
+        SummaryPerDayEntry entryWithHighestAccumulatedValues = summaryPerDayControllerApi.getEntryWithHighestAccumulatedValues();
         if (entryWithHighestAccumulatedValues == null) {
             return ResponseEntity.of(Optional.empty());
         }
@@ -290,7 +289,7 @@ public class SummaryPerDayController extends AbstractV1BaseController {
     }
 
     private void calculateAccumulatedSummaryEntryValues(Map<LocalDate, SummaryEntryValues> dateToSummaryEntryValues) {
-        SummaryPerDayEntry entryWithHighestAccumulatedValues = summaryPerDayRepository.findEntryWithHighestAccumulatedValues();
+        SummaryPerDayEntry entryWithHighestAccumulatedValues = summaryPerDayControllerApi.getEntryWithHighestAccumulatedValues();
 
         AtomicInteger currentValueAccumulatedSaleWattHours = new AtomicInteger(entryWithHighestAccumulatedValues == null ? 0 : entryWithHighestAccumulatedValues.getAccumulatedSaleWattHours());
         AtomicInteger currentValueAccumulatedPurchaseWattHours = new AtomicInteger(entryWithHighestAccumulatedValues == null ? 0 : entryWithHighestAccumulatedValues.getAccumulatedPurchaseWattHours());

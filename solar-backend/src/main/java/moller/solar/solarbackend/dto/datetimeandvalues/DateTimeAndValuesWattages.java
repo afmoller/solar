@@ -1,6 +1,6 @@
 package moller.solar.solarbackend.dto.datetimeandvalues;
 
-import moller.solar.solarbackend.persistence.DataExportEntry;
+import moller.solarpersistence.openapi.client.model.DataExportEntry;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -50,11 +50,11 @@ public class DateTimeAndValuesWattages extends DateTimeAndValues {
 
         dataExportEntries.forEach(dataExportEntry -> {
             dateTimes.add(dataExportEntry.getTimestamp());
-            saleWattages.add(convertImpulsesToWattage(dataExportEntry.getDi_3()));
-            purchaseWattages.add(convertImpulsesToWattage(dataExportEntry.getDi_4()));
-            productionWattages.add(convertImpulsesToWattage(dataExportEntry.getDi_1()));
-            consumptionWattages.add(convertImpulsesToWattage(dataExportEntry.getDi_2()));
-            selfConsumptionWattages.add(convertImpulsesToWattage(dataExportEntry.getDi_5()));
+            saleWattages.add(convertImpulsesToWattage(dataExportEntry.getDi3()));
+            purchaseWattages.add(convertImpulsesToWattage(dataExportEntry.getDi4()));
+            productionWattages.add(convertImpulsesToWattage(dataExportEntry.getDi1()));
+            consumptionWattages.add(convertImpulsesToWattage(dataExportEntry.getDi2()));
+            selfConsumptionWattages.add(convertImpulsesToWattage(dataExportEntry.getDi5()));
         });
 
         return new DateTimeAndValuesWattages(

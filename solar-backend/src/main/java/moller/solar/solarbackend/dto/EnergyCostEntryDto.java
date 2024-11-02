@@ -1,7 +1,5 @@
 package moller.solar.solarbackend.dto;
 
-import jakarta.persistence.Column;
-
 import java.time.LocalDate;
 
 public class EnergyCostEntryDto {

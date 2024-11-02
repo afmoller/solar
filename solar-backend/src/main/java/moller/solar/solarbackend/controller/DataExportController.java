@@ -4,8 +4,8 @@ import moller.solar.solarbackend.dto.datetimeandvalues.DateTimeAndValues;
 import moller.solar.solarbackend.dto.datetimeandvalues.DateTimeAndValuesWattages;
 import moller.solar.solarbackend.dto.datetimeandvalues.DateTimeAndValuesWatthours;
 import moller.solar.solarbackend.enumerations.Resolution;
-import moller.solar.solarbackend.persistence.DataExportEntry;
-import moller.solar.solarbackend.persistence.DataExportRepository;
+import moller.solarpersistence.openapi.client.api.DataExportControllerApi;
+import moller.solarpersistence.openapi.client.model.DataExportEntry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,22 +20,20 @@ import java.util.Optional;
 @RestController
 public class DataExportController extends AbstractV1BaseController {
 
-    private final DataExportRepository dataExportRepository;
+    private final DataExportControllerApi dataExportControllerApi;
 
-    public DataExportController(DataExportRepository dataExportRepository) {
-        this.dataExportRepository = dataExportRepository;
+    public DataExportController(DataExportControllerApi dataExportControllerApi) {
+        this.dataExportControllerApi = dataExportControllerApi;
     }
 
     @GetMapping(value = "/getDataExportEntryByIID")
     public ResponseEntity<DataExportEntry> getDataExportEntryByIID(@RequestParam("iid") Integer iid) {
-        return ResponseEntity.of(dataExportRepository.findById(iid));
+        return ResponseEntity.of(Optional.of(dataExportControllerApi.getDataExportEntryByIID(iid)));
     }
 
     @GetMapping(value = "/getDateTimeAndValuesForTimespan")
     public ResponseEntity<DateTimeAndValues> getDateTimeAndValuesForTimespan(@RequestParam Resolution resolution, @RequestParam LocalDate selectedFromDate, @RequestParam LocalDate selectedToDate) {
-        LocalDateTime localDateTimeFrom = LocalDateTime.of(selectedFromDate, LocalTime.MIDNIGHT);
-        LocalDateTime localDateTimeTo = LocalDateTime.of(selectedToDate.plusDays(1), LocalTime.MIDNIGHT).minusSeconds(1);
-        List<DataExportEntry> dataExportEntries = dataExportRepository.findByTimespanOrderedByTimestamp(localDateTimeFrom, localDateTimeTo);
+        List<DataExportEntry> dataExportEntries = dataExportControllerApi.getDateTimeAndValuesForTimespan(selectedFromDate, selectedToDate);
 
         switch (resolution) {
             case MINUTE -> {
@@ -76,13 +73,13 @@ public class DataExportController extends AbstractV1BaseController {
             if (hour != currentHour || index == numberOfEntries - 1) {
                 if (hour != -1) {
 
-                    DataExportEntry currentAggregatedDataExportEntry = new DataExportEntry.DateExportEntryBuilder()
-                            .setTimestamp(dateTime)
-                            .setDi_3(saleImpulses)
-                            .setDi_4(purchaseImpulses)
-                            .setDi_1(productionImpulses)
-                            .setDi_2(consumptionImpulses)
-                            .setDi_5(selfConsumptionImpulses)
+                    DataExportEntry currentAggregatedDataExportEntry = new DataExportEntry.Builder()
+                            .timestamp(dateTime)
+                            .di3(saleImpulses)
+                            .di4(purchaseImpulses)
+                            .di1(productionImpulses)
+                            .di2(consumptionImpulses)
+                            .di5(selfConsumptionImpulses)
                             .build();
 
                     dataExportEntriesAggregatedOnHour.add(currentAggregatedDataExportEntry);
@@ -96,11 +93,11 @@ public class DataExportController extends AbstractV1BaseController {
             }
 
             dateTime =  dataExportEntry.getTimestamp().withMinute(0).withSecond(0);
-            saleImpulses += dataExportEntry.getDi_3();
-            purchaseImpulses += dataExportEntry.getDi_4();
-            productionImpulses += dataExportEntry.getDi_1();
-            consumptionImpulses += dataExportEntry.getDi_2();
-            selfConsumptionImpulses += dataExportEntry.getDi_5();
+            saleImpulses += dataExportEntry.getDi3();
+            purchaseImpulses += dataExportEntry.getDi4();
+            productionImpulses += dataExportEntry.getDi1();
+            consumptionImpulses += dataExportEntry.getDi2();
+            selfConsumptionImpulses += dataExportEntry.getDi5();
 
             hour = currentHour;
         }

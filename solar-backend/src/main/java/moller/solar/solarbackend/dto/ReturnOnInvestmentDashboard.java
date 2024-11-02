@@ -1,6 +1,6 @@
 package moller.solar.solarbackend.dto;
 
-import moller.solar.solarbackend.persistence.ReturnOnInvestmentEntry;
+import moller.solarpersistence.openapi.client.model.ReturnOnInvestmentEntry;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

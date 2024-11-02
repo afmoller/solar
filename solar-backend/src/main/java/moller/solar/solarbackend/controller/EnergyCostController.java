@@ -1,9 +1,8 @@
 package moller.solar.solarbackend.controller;
 
 import moller.solar.solarbackend.dto.EnergyCostEntryDto;
-import moller.solar.solarbackend.persistence.EnergyCostEntry;
-import moller.solar.solarbackend.persistence.EnergyCostRepository;
-import org.springframework.data.domain.Sort;
+import moller.solarpersistence.openapi.client.api.EnergyCostControllerApi;
+import moller.solarpersistence.openapi.client.model.EnergyCostEntry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,37 +12,37 @@ import java.util.Optional;
 @RestController
 public class EnergyCostController extends AbstractV1BaseController {
 
-    private final EnergyCostRepository energyCostRepository;
+    private final EnergyCostControllerApi energyCostControllerApi;
 
-    public EnergyCostController(EnergyCostRepository energyCostRepository) {
-        this.energyCostRepository = energyCostRepository;
+    public EnergyCostController(EnergyCostControllerApi energyCostControllerApi) {
+        this.energyCostControllerApi = energyCostControllerApi;
     }
 
     @GetMapping(value = "/energy-costs")
     public ResponseEntity<List<EnergyCostEntry>> getAllEnergyCostEntries() {
-        return ResponseEntity.of(Optional.of(energyCostRepository.findAll(Sort.by("fromDate", "id").ascending())));
+        return ResponseEntity.of(Optional.of(energyCostControllerApi.getAllEnergyCostEntries()));
     }
 
     @PostMapping(value = "/energy-costs")
     public ResponseEntity<EnergyCostEntry> createEnergyCostEntry(@RequestBody EnergyCostEntryDto energyCostEntryDto) {
-        EnergyCostEntry energyCostEntry = new EnergyCostEntry.EnergyCostEntryBuilder()
-                .setFromDate(energyCostEntryDto.getFromDate())
-                .setToDate(energyCostEntryDto.getToDate())
-                .setEnergyCostPerKwhInTenThousands(energyCostEntryDto.getEnergyCostPerKwhInTenThousands())
-                .setElectricalGridCostInTenThousands(energyCostEntryDto.getElectricalGridCostInTenThousands())
-                .setFeeOneInTenThousands(energyCostEntryDto.getFeeOneInTenThousands())
-                .setFeeTwoInTenThousands(energyCostEntryDto.getFeeTwoInTenThousands())
-                .setFeeThreeInTenThousands(energyCostEntryDto.getFeeThreeInTenThousands())
-                .setValueAddedTaxPercentageRateInMinorUnit(energyCostEntryDto.getValueAddedTaxPercentageRateInMinorUnit())
+        EnergyCostEntry energyCostEntry = new EnergyCostEntry.Builder()
+                .fromDate(energyCostEntryDto.getFromDate())
+                .toDate(energyCostEntryDto.getToDate())
+                .energyCostPerKwhInTenThousands(energyCostEntryDto.getEnergyCostPerKwhInTenThousands())
+                .electricalGridCostInTenThousands(energyCostEntryDto.getElectricalGridCostInTenThousands())
+                .feeOneInTenThousands(energyCostEntryDto.getFeeOneInTenThousands())
+                .feeTwoInTenThousands(energyCostEntryDto.getFeeTwoInTenThousands())
+                .feeThreeInTenThousands(energyCostEntryDto.getFeeThreeInTenThousands())
+                .valueAddedTaxPercentageRateInMinorUnit(energyCostEntryDto.getValueAddedTaxPercentageRateInMinorUnit())
                 .build();
 
-        return ResponseEntity.of(Optional.of(energyCostRepository.save(energyCostEntry)));
+        return ResponseEntity.of(Optional.of(energyCostControllerApi.createEnergyCostEntry(energyCostEntry)));
+
     }
 
     @DeleteMapping(value = "/energy-costs/{id}")
     public ResponseEntity<Integer> deleteEnergyCostEntry(@PathVariable Integer id) {
-
-        energyCostRepository.deleteById(id);
+        energyCostControllerApi.deleteEnergyCostEntry(id);
 
         return ResponseEntity.of(Optional.of(id));
     }

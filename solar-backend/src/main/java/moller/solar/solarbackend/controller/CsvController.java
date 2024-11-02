@@ -7,8 +7,8 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import moller.solar.solarbackend.csv.CsvReader;
 import moller.solar.solarbackend.dto.CsvImportResultDto;
 import moller.solar.solarbackend.mapper.CsvRecordMapper;
-import moller.solar.solarbackend.persistence.DataExportEntry;
-import moller.solar.solarbackend.persistence.DataExportRepository;
+import moller.solarpersistence.openapi.client.api.CsvControllerApi;
+import moller.solarpersistence.openapi.client.model.DataExportEntry;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,16 +29,16 @@ public class CsvController extends AbstractV1BaseController {
 
     private final CsvReader csvReader;
     private final CsvRecordMapper csvRecordMapper;
-    private final DataExportRepository dataExportRepository;
+    private final CsvControllerApi csvControllerApi;
 
     public CsvController(
             CsvReader csvReader,
             CsvRecordMapper csvRecordMapper,
-            DataExportRepository dataExportRepository) {
+            CsvControllerApi csvControllerApi) {
 
         this.csvReader = csvReader;
         this.csvRecordMapper = csvRecordMapper;
-        this.dataExportRepository = dataExportRepository;
+        this.csvControllerApi = csvControllerApi;
     }
 
     @PostMapping(value = "/importCsvFileToDatabase", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -47,7 +47,7 @@ public class CsvController extends AbstractV1BaseController {
 
         Iterable<CSVRecord> csvRecords = csvReader.parseFile(new InputStreamReader(csvFile.getInputStream()));
 
-        List<DataExportEntry> dateExportEntries = new ArrayList<>();
+        List< moller.solarpersistence.openapi.client.model.DataExportEntry> dateExportEntries = new ArrayList<>();
 
         CsvImportResultDto csvImportResultDto = new CsvImportResultDto();
 
@@ -62,7 +62,7 @@ public class CsvController extends AbstractV1BaseController {
 
         csvImportResultDto.setNumberOfImportedEntries(dateExportEntries.size());
 
-        dataExportRepository.saveAll(dateExportEntries);
+        csvControllerApi.importCsvFileToDatabase(dateExportEntries);
 
         return ResponseEntity.of(Optional.of(csvImportResultDto));
     }
