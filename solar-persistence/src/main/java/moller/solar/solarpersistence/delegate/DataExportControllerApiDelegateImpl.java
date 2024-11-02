@@ -38,4 +38,11 @@ public class DataExportControllerApiDelegateImpl implements DataExportController
 
         return ResponseEntity.of(Optional.of(byTimespanOrderedByTimestamp));
     }
+
+    @Override
+    public ResponseEntity<List<DataExportEntry>> findByYearAndMonth(Integer year, Integer month) {
+        List<DataExportEntry> byYearAndMonth = dataExportService.findByYearAndMonth(year, month);
+
+        return ResponseEntity.of(Optional.ofNullable(byYearAndMonth));
+    }
 }
