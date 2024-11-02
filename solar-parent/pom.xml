@@ -24,9 +24,9 @@
         <springdoc-openapi-starter-webmvc-ui.version>2.6.0</springdoc-openapi-starter-webmvc-ui.version>
         <commons-csv.version>1.11.0</commons-csv.version>
         <org.springframework.boot.version>3.3.5</org.springframework.boot.version>
-        <swagger-codegen-maven-plugin.version>2.4.43</swagger-codegen-maven-plugin.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <mapstruct.version>1.6.2</mapstruct.version>
+        <openapi-generator-maven-plugin.version>7.8.0</openapi-generator-maven-plugin.version>
 
         <solar.persistence.api.artifact.id>solar-persistence-api</solar.persistence.api.artifact.id>
         <solar.persistence.api.version>1.0.0-SNAPSHOT</solar.persistence.api.version>
@@ -94,12 +94,6 @@
                 <scope>runtime</scope>
             </dependency>
             <dependency>
-                <groupId>com.h2database</groupId>
-                <artifactId>h2</artifactId>
-                <version>${h2.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
@@ -113,11 +107,6 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>2.4.43</version>
             </dependency>
             <dependency>
                 <groupId>org.openapitools</groupId>
