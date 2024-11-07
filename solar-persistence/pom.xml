@@ -121,9 +121,8 @@
 							<configOptions>
 								<useTags>true</useTags>
 								<useJakartaEe>true</useJakartaEe>
-								<delegatePattern>true</delegatePattern>
+								<interfaceOnly>true</interfaceOnly>
 								<dateLibrary>java8-localdatetime</dateLibrary>
-								<annotationLibrary>swagger2</annotationLibrary>
 							</configOptions>
 						</configuration>
 					</execution>
