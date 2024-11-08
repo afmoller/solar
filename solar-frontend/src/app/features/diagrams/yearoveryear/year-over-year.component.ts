@@ -86,7 +86,7 @@ export class YearOverYearComponent implements OnInit {
         }
 
         this.lineChartData.datasets[index].label = data.years[index];
-      
+              
         let tableRow: Array<string> = [];
         tableRow.push(String(data.years[index]));
         tableRow = tableRow.concat(twelveMonths.map(String));
@@ -96,8 +96,19 @@ export class YearOverYearComponent implements OnInit {
         index++;
       }
 
+      if (this.chart) {
+        if(this.chart.options) {
+          if (this.chart.options.plugins) {
+            if(this.chart.options.plugins.title) {
+              this.chart.options.plugins.title.text = this.menuTitle;
+            }
+          }
+        }
+      }
+
       this.lineChartData.labels = this.monthLabels;  
       this.chart?.update();
+      this.chart?.render();
 
     }); 
   }
@@ -213,6 +224,10 @@ export class YearOverYearComponent implements OnInit {
       legend: { 
         display: true,
         position: 'bottom'
+      },
+      title: {
+        display: true,
+        text: ''
       }
     },
     responsive: true,

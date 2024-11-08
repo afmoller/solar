@@ -90,6 +90,10 @@ export class AccumulatedAllComponent implements OnInit {
       legend: { 
         display: true,
         position: 'bottom'
+      },
+      title: {
+        display: true,
+        text: 'All values in watt hours accumulated'
       }
     },
     responsive: true,

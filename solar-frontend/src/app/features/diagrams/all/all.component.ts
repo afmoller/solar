@@ -28,10 +28,10 @@ export class AllComponent implements OnInit {
   menuTitlePrefix: string = '';
   selectionScope: string = 'DAY';
   shiftSelectionScope: string = 'month'
-  
+
   static readonly menuTitlePrefixWatts: string = 'watts';
   static readonly menuTitlePrefixWattHours: string = 'watt hours';
-      
+
   constructor(
     private formBuilder: FormBuilder,
     private allEntryService: AllEntryService,
@@ -86,7 +86,7 @@ export class AllComponent implements OnInit {
   }
 
   private loadDataAndPopulateChart(dateFrom: string, dateTo: string, selectionType: string): void {
-    
+
     if (selectionType === 'MONTH' || selectionType === 'DAY') {
       this.menuTitlePrefix = AllComponent.menuTitlePrefixWattHours;
       this.allEntryService.findAll(selectionType, dateFrom, dateTo).subscribe(data => {
@@ -129,6 +129,18 @@ export class AllComponent implements OnInit {
     this.lineChartData.datasets[3].label = 'Consumption (' + this.menuTitlePrefix +')';
     this.lineChartData.datasets[4].label = 'Self Consumption (' + this.menuTitlePrefix +')';
 
+    if (this.chart) {
+      if(this.chart.options) {
+        if (this.chart.options.plugins) {
+          if(this.chart.options.plugins.title) {
+            this.chart.options.plugins.title.text = 'All values in ' + this.menuTitlePrefix + ' (' + this.menuTitle + ')';
+          }
+        }
+      }
+    }
+
+    this.chart?.update();
+    this.chart?.render();
   }
 
   public lineChartData: ChartConfiguration['data'] = {
@@ -181,6 +193,10 @@ export class AllComponent implements OnInit {
       legend: {
         display: true,
         position: 'bottom'
+      },
+      title: {
+        display: true,
+        text: ''
       }
     },
     responsive: true,
@@ -233,7 +249,7 @@ export class AllComponent implements OnInit {
       this.shiftSelectionScope = 'month';
     } else if (this.selectionScope === 'HOUR' || this.selectionScope === 'MINUTE') {
       this.shiftSelectionScope = 'day';
-    }    
+    }
   }
 
   decreaseMonth(dateField: string): void {
@@ -276,13 +292,13 @@ export class AllComponent implements OnInit {
       let dateValue: string = this.inputForm.get(dateField)?.value;
       let dateValueAsDate: Date = new Date(dateValue);
       dateValueAsDate.setMonth(dateValueAsDate.getMonth() + shiftValue);
-  
+
       this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));
     } else if (this.selectionScope === 'HOUR' || this.selectionScope === 'MINUTE') {
       let dateValue: string = this.inputForm.get(dateField)?.value;
       let dateValueAsDate: Date = new Date(dateValue);
       dateValueAsDate.setDate(dateValueAsDate.getDate() + shiftValue);
-  
+
       this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));
     }
   }

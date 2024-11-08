@@ -37,9 +37,6 @@
 
 .diagram-container {
   margin: 2px;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 5px;
   background-color: rgb(255, 255, 255);
   max-height: 80vh;
   min-height: 80vh;
@@ -48,10 +45,6 @@
 .table-container {
   margin: 1px;
   padding: 0;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(0, 0, 0);
-  border-radius: 5px;
   max-height: 15vh;
   overflow: auto;
 }

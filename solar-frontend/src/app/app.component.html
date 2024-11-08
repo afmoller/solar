@@ -1,87 +1,99 @@
-<div class="left">
-  <nav>
-  
-    <h4 class="centered">Menu</h4>
-    
-    <div class="menu-section">
-      <h4>Dashboards</h4>
-      <h5 class="underline">Dashboards</h5>
-      <p>
-        <a routerLink="/return-on-investment" routerLinkActive="active" ariaCurrentWhenActive="page">Return on investment</a>
-        <br>  
-        <a routerLink="/energy-sale-compensation" routerLinkActive="active" ariaCurrentWhenActive="page">Compensation energy sales</a>
-        <br>  
-        <a routerLink="/energy-cost" routerLinkActive="active" ariaCurrentWhenActive="page">Energy cost</a>
-      </p>
-      <br>
-    </div>
-    
-    <div class="menu-section">
-      <h4>Diagrams</h4>
-      <h5 class="underline">Year over year</h5>
-      <p>
-        <a [routerLink]="['/year-over-year', 'sale', 'normal']" >Sale</a>
-        <br>
-        <a [routerLink]="['/year-over-year', 'purchase', 'normal']" >Purchase</a>
-        <br>
-        <a [routerLink]="['/year-over-year', 'production', 'normal']" >Production</a>
-        <br>
-        <a [routerLink]="['/year-over-year', 'consumption', 'normal']" >Consumption</a>
-        <br>
-        <a [routerLink]="['/year-over-year', 'selfconsumption', 'normal']" >Selfconsumption</a>
-        <br>
-        <a [routerLink]="['/year-over-year', 'autarky', 'normal']" >Autarky</a>
-      </p>
-      <br>
-  
-      <h5 class="underline">Accumulated</h5>
-      <p>
-        <a [routerLink]="['/year-over-year', 'sale', 'accumulated']" >Sale</a>
-        <br>
-        <a [routerLink]="['/year-over-year', 'purchase', 'accumulated']" >Purchase</a>
-        <br>
-        <a [routerLink]="['/year-over-year', 'production', 'accumulated']" >Production</a>
-        <br>
-        <a [routerLink]="['/year-over-year', 'consumption', 'accumulated']" >Consumption</a>
-        <br>
-        <a [routerLink]="['/year-over-year', 'selfconsumption', 'accumulated']">Selfconsumption</a>      
-      </p>
-      <br>
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>{{pageTitle}}</span>
+</mat-toolbar>
 
-      <h5 class="underline">All values</h5>
-      <p>
-        <a routerLink="/all">Date selection</a>
-        <br>
-        <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page">All time accumulated</a>
-      </p>
-      <br>
-    </div>
-    
-    <div class="menu-section">
-      <h4>Data</h4>
-      <h5 class="underline">Data aggregations</h5>
-      <p>
-        <a routerLink="/summaryperdayentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per day</a>
-        <br>
-        <a routerLink="/summarypermonthentry" routerLinkActive="active" ariaCurrentWhenActive="page">Per month</a>
-      </p>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="border">
 
-      <h5 class="underline">Data import</h5>
-      <p>
-        <a routerLink="/csv-import" routerLinkActive="active" ariaCurrentWhenActive="page">CSV import</a>
-      </p>
-      
-      <h5 class="underline">Debug</h5>
-      <p>
-        <a routerLink="/dataexportentry" routerLinkActive="active" ariaCurrentWhenActive="page">Data export entry</a>
-      </p>
-    </div>
-    
-  </nav>
-  <div class="flex items-center justify-center pt-4">
-    <app-google-login-logout></app-google-login-logout>
-  </div>
-</div>
-<div class="right">
-  <router-outlet></router-outlet>
-</div>
+    <mat-accordion multi="true">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Dashboards</mat-panel-title>
+        </mat-expansion-panel-header>
+        <h5 class="underline">Dashboards</h5>
+
+          <a routerLink="/return-on-investment" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Dashboards - Return on investment')">Return on investment</a>
+          <br>
+          <a routerLink="/energy-sale-compensation" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Dashboards - Compensation energy sales')">Compensation energy sales</a>
+          <br>
+          <a routerLink="/energy-cost" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Dashboards - Energy cost')">Energy cost</a>
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Diagrams</mat-panel-title>
+        </mat-expansion-panel-header>
+        <h5 class="underline">Year over year</h5>
+          <p>
+            <a [routerLink]="['/year-over-year', 'sale', 'normal']" (click)="setPageTitle('Year over year - Sale')">Sale</a>
+            <br>
+            <a [routerLink]="['/year-over-year', 'purchase', 'normal']" (click)="setPageTitle('Year over year - Purchase')">Purchase</a>
+            <br>
+            <a [routerLink]="['/year-over-year', 'production', 'normal']" (click)="setPageTitle('Year over year - Production')">Production</a>
+            <br>
+            <a [routerLink]="['/year-over-year', 'consumption', 'normal']" (click)="setPageTitle('Year over year - Consumption')">Consumption</a>
+            <br>
+            <a [routerLink]="['/year-over-year', 'selfconsumption', 'normal']" (click)="setPageTitle('Year over year - Selfconsumption')">Selfconsumption</a>
+            <br>
+            <a [routerLink]="['/year-over-year', 'autarky', 'normal']" (click)="setPageTitle('Year over year - Autarky')">Autarky</a>
+          </p>
+          <br>
+
+          <h5 class="underline">Accumulated</h5>
+          <p>
+            <a [routerLink]="['/year-over-year', 'sale', 'accumulated']" (click)="setPageTitle('Accumulated - Sale')">Sale</a>
+            <br>
+            <a [routerLink]="['/year-over-year', 'purchase', 'accumulated']" (click)="setPageTitle('Accumulated - Purchase')">Purchase</a>
+            <br>
+            <a [routerLink]="['/year-over-year', 'production', 'accumulated']" (click)="setPageTitle('Accumulated - Production')">Production</a>
+            <br>
+            <a [routerLink]="['/year-over-year', 'consumption', 'accumulated']" (click)="setPageTitle('Accumulated - Consumption')">Consumption</a>
+            <br>
+            <a [routerLink]="['/year-over-year', 'selfconsumption', 'accumulated']" (click)="setPageTitle('Accumulated - Selfconsumption')">Selfconsumption</a>
+          </p>
+          <br>
+
+          <h5 class="underline">All values</h5>
+          <p>
+            <a routerLink="/all" (click)="setPageTitle('All values - Date selection')">Date selection</a>
+            <br>
+            <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('All values - All time accumulated')">All time accumulated</a>
+          </p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>Data</mat-panel-title>
+        </mat-expansion-panel-header>
+        <h5 class="underline">Data aggregations</h5>
+          <p>
+            <a routerLink="/summaryperdayentry" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Data aggregations - Per day')">Per day</a>
+            <br>
+            <a routerLink="/summarypermonthentry" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Data aggregations - Per month')">Per month</a>
+          </p>
+
+          <h5 class="underline">Data import</h5>
+          <p>
+            <a routerLink="/csv-import" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Data import - CSV import')">CSV import</a>
+          </p>
+
+          <h5 class="underline">Debug</h5>
+          <p>
+            <a routerLink="/dataexportentry" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Debug - Data export entry')">Data export entry</a>
+          </p>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+      <div class="flex items-center justify-center pt-4">
+        <app-google-login-logout></app-google-login-logout>
+      </div>
+
+  </mat-sidenav>
+  <mat-sidenav-content class="border">
+      <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
