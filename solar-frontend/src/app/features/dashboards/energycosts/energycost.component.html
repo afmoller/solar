@@ -13,31 +13,31 @@
           <td mat-cell *matCellDef="let row">{{row.toDate}}</td>
         </ng-container>
         <ng-container matColumnDef="electricalgridcostintenthousands">
-          <th mat-header-cell *matHeaderCellDef title="Netznutzung Niedertarif (CHF/KWh)">Network cost</th>
+          <th mat-header-cell *matHeaderCellDef title="Netznutzung Niedertarif (CHF/kWh)">Network cost</th>
           <td mat-cell *matCellDef="let row">{{divideValueByTenThousand(row.electricalGridCostInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="energycostperkwhintenthousands">
-          <th mat-header-cell *matHeaderCellDef title="EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/KWh)">Energy cost per KWh</th>
+          <th mat-header-cell *matHeaderCellDef title="EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/kWh)">Energy cost per kWh</th>
           <td mat-cell *matCellDef="let row">{{divideValueByTenThousand(row.energyCostPerKwhInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="feeoneintenthousands">
-          <th mat-header-cell *matHeaderCellDef title="Abgaben: KEV + Gewässerschutz (CHF/KWh)">Fee One</th>
+          <th mat-header-cell *matHeaderCellDef title="Abgaben: KEV + Gewässerschutz (CHF/kWh)">Fee One</th>
           <td mat-cell *matCellDef="let row" class="align-right">{{divideValueByTenThousand(row.feeOneInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="feetwointenthousands">
-          <th mat-header-cell *matHeaderCellDef title="Konzessionsabgabe an die Gemeinde (CHF/KWh)">Fee Two</th>
+          <th mat-header-cell *matHeaderCellDef title="Konzessionsabgabe an die Gemeinde (CHF/kWh)">Fee Two</th>
           <td mat-cell *matCellDef="let row" class="align-right">{{divideValueByTenThousand(row.feeTwoInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="feethreeintenthousands">
-          <th mat-header-cell *matHeaderCellDef title="Stromreserve (CHF/KWh)">Fee Three</th>
+          <th mat-header-cell *matHeaderCellDef title="Stromreserve (CHF/kWh)">Fee Three</th>
           <td mat-cell *matCellDef="let row" class="align-right">{{divideValueByTenThousand(row.feeThreeInTenThousands)}}</td>
         </ng-container>
         <ng-container matColumnDef="totalcostvatexcluded">
-          <th mat-header-cell *matHeaderCellDef title="Total exklusive Mwst (CHF/KWh)">Cost per KWh VAT excluded</th>
+          <th mat-header-cell *matHeaderCellDef title="Total exklusive Mwst (CHF/kWh)">Cost per kWh VAT excluded</th>
           <td mat-cell *matCellDef="let row" class="align-right">{{divideValueByTenThousand(totalCostVatExcludedInTenThousands(row))}}</td>
         </ng-container>
         <ng-container matColumnDef="totalcostvatincluded">
-          <th mat-header-cell *matHeaderCellDef title="Total inkl. Mwst (CHF/KWh) (7,7%)">Cost per KWh VAT included</th>
+          <th mat-header-cell *matHeaderCellDef title="Total inkl. Mwst (CHF/kWh)">Cost per kWh VAT included</th>
           <td mat-cell *matCellDef="let row" class="align-right">{{totalCostVatIncluded(row)}}</td>
         </ng-container>
         <ng-container matColumnDef="valueAddedTaxRate">
@@ -83,7 +83,7 @@
           <div class="padding tooltip">
             <span class="tooltiptext">An input value of 510 will be displayed as CHF 0.051</span>
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Netznutzung Niedertarif (CHF/KWh)</mat-label>
+              <mat-label>Netznutzung Niedertarif (CHF/kWh)</mat-label>
               <input id="electricalgridcostintenthousands" type="number" formControlName="electricalgridcostintenthousands" matInput>
             </mat-form-field>
           </div>
@@ -91,7 +91,7 @@
           <div class="padding tooltip" >
             <span class="tooltiptext">An input value of 860 will be displayed as CHF 0.086</span>
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/KWh)</mat-label>
+              <mat-label>EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/kWh)</mat-label>
               <input id="energycostperkwhintenthousands" type="number" formControlName="energycostperkwhintenthousands" matInput>
             </mat-form-field>
           </div>
@@ -99,7 +99,7 @@
           <div class="padding tooltip">
             <span class="tooltiptext">An input value of 230 will be displayed as CHF 0.023</span>
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Abgaben: KEV + Gewässerschutz (CHF/KWh)</mat-label>
+              <mat-label>Abgaben: KEV + Gewässerschutz (CHF/kWh)</mat-label>
               <input id="feeoneintenthousands" type="number" formControlName="feeoneintenthousands" matInput>
             </mat-form-field>
           </div>
@@ -107,7 +107,7 @@
           <div class="padding tooltip">
             <span class="tooltiptext">An input value of 75 will be displayed as CHF 0.0075</span>
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Konzessionsabgabe an die Gemeinde (CHF/KWh)</mat-label>
+              <mat-label>Konzessionsabgabe an die Gemeinde (CHF/kWh)</mat-label>
               <input id="feetwointenthousands" type="number" formControlName="feetwointenthousands" matInput>
             </mat-form-field>
           </div>
@@ -115,7 +115,7 @@
           <div class="padding tooltip">
             <span class="tooltiptext">An input value of 12 will be displayed as CHF 0.0012</span>
             <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Stromreserve (CHF/KWh)</mat-label>
+              <mat-label>Stromreserve (CHF/kWh)</mat-label>
               <input id="feethreeintenthousands" type="number" formControlName="feethreeintenthousands" matInput>
             </mat-form-field>
           </div>

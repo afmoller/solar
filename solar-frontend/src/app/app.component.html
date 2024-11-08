@@ -13,11 +13,9 @@
         <mat-expansion-panel-header>
           <mat-panel-title>Dashboards</mat-panel-title>
         </mat-expansion-panel-header>
-        <h5 class="underline">Dashboards</h5>
-
           <a routerLink="/return-on-investment" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Dashboards - Return on investment')">Return on investment</a>
           <br>
-          <a routerLink="/energy-sale-compensation" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Dashboards - Compensation energy sales')">Compensation energy sales</a>
+          <a routerLink="/energy-sale-compensation" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Dashboards - Compensation energy sales')">Energy sales</a>
           <br>
           <a routerLink="/energy-cost" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('Dashboards - Energy cost')">Energy cost</a>
 
@@ -43,17 +41,17 @@
           </p>
           <br>
 
-          <h5 class="underline">Accumulated</h5>
+          <h5 class="underline">Cumulated</h5>
           <p>
-            <a [routerLink]="['/year-over-year', 'sale', 'accumulated']" (click)="setPageTitle('Accumulated - Sale')">Sale</a>
+            <a [routerLink]="['/year-over-year', 'sale', 'accumulated']" (click)="setPageTitle('Cumulated - Sale')">Sale</a>
             <br>
-            <a [routerLink]="['/year-over-year', 'purchase', 'accumulated']" (click)="setPageTitle('Accumulated - Purchase')">Purchase</a>
+            <a [routerLink]="['/year-over-year', 'purchase', 'accumulated']" (click)="setPageTitle('Cumulated - Purchase')">Purchase</a>
             <br>
-            <a [routerLink]="['/year-over-year', 'production', 'accumulated']" (click)="setPageTitle('Accumulated - Production')">Production</a>
+            <a [routerLink]="['/year-over-year', 'production', 'accumulated']" (click)="setPageTitle('Cumulated - Production')">Production</a>
             <br>
-            <a [routerLink]="['/year-over-year', 'consumption', 'accumulated']" (click)="setPageTitle('Accumulated - Consumption')">Consumption</a>
+            <a [routerLink]="['/year-over-year', 'consumption', 'accumulated']" (click)="setPageTitle('Cumulated - Consumption')">Consumption</a>
             <br>
-            <a [routerLink]="['/year-over-year', 'selfconsumption', 'accumulated']" (click)="setPageTitle('Accumulated - Selfconsumption')">Selfconsumption</a>
+            <a [routerLink]="['/year-over-year', 'selfconsumption', 'accumulated']" (click)="setPageTitle('Cumulated - Selfconsumption')">Selfconsumption</a>
           </p>
           <br>
 
@@ -61,7 +59,7 @@
           <p>
             <a routerLink="/all" (click)="setPageTitle('All values - Date selection')">Date selection</a>
             <br>
-            <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('All values - All time accumulated')">All time accumulated</a>
+            <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('All values - All time cumulated')">All time cumulated</a>
           </p>
       </mat-expansion-panel>
 

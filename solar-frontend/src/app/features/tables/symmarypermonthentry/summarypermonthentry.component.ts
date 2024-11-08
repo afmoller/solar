@@ -3,6 +3,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { SummaryPerMonthEntryService } from 'src/app/core/services/summary-per-month-entry.service';
+import { Summarypermonthentry } from 'src/app/core/models/summarypermonthentry';
 
 @Component({
   selector: 'app-summarypermonthentry',
@@ -34,7 +35,20 @@ export class SummarypermonthentryComponent implements OnInit {
 
   ngOnInit() {
     this.summaryPerMonthEntryService.findAll().subscribe(data => {
-      this.dataSource.data = data;
+
+      let summaryPerMonthEntries: Summarypermonthentry[] = data;
+
+      summaryPerMonthEntries.forEach(entry => {
+        entry.saleWattHours = entry.saleWattHours / 1000;
+        entry.purchaseWattHours = entry.purchaseWattHours / 1000;
+        entry.productionWattHours = entry.productionWattHours / 1000;
+        entry.consumptionWattHours = entry.consumptionWattHours / 1000;
+        entry.selfConsumptionWattHours = entry.selfConsumptionWattHours / 1000;
+
+        entry.autarchy = Math.round((entry.autarchy + Number.EPSILON) * 100) / 100;
+      });
+
+      this.dataSource.data = summaryPerMonthEntries;
     });
   }
 }

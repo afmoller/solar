@@ -24,42 +24,46 @@ export class AccumulatedAllComponent implements OnInit {
 
   ngOnInit() {
     this.accumulatedAllEntryService.findAll().subscribe(data => {
-      this.lineChartData.datasets[0].data = data.saleWattHours;
-      this.lineChartData.datasets[1].data = data.purchaseWattHours
-      this.lineChartData.datasets[2].data = data.productionWattHours;
-      this.lineChartData.datasets[3].data = data.consumptionWattHours;
-      this.lineChartData.datasets[4].data = data.selfConsumptionWattHours;
+      this.lineChartData.datasets[0].data = this.divideByThousand(data.saleWattHours);
+      this.lineChartData.datasets[1].data = this.divideByThousand(data.purchaseWattHours);
+      this.lineChartData.datasets[2].data = this.divideByThousand(data.productionWattHours);
+      this.lineChartData.datasets[3].data = this.divideByThousand(data.consumptionWattHours);
+      this.lineChartData.datasets[4].data = this.divideByThousand(data.selfConsumptionWattHours);
       this.lineChartData.labels = data.date;
 
       this.chart?.update();
     });
   }
 
+  private divideByThousand(values: number[]) : number[] {
+    return values.map(value => value/1000);
+  }
+
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
         data: [],
-        label: 'Accumulated Sale (watt hours)',
+        label: 'Sale',
         fill: false,
       },
       {
         data: [],
-        label: 'Accumulated Purchase (watt hours)',
+        label: 'Purchase',
         fill: false,
       },
       {
         data: [],
-        label: 'Accumulated Production (watt hours)',
+        label: 'Production',
         fill: false,
       },
       {
         data: [],
-        label: 'Accumulated Consumption (watt hours)',
+        label: 'Consumption',
         fill: false,
       },
       {
         data: [],
-        label: 'Accumulated Self Consumption (watt hours)',
+        label: 'Self Consumption',
         fill: false,
       },
     ],
@@ -93,7 +97,7 @@ export class AccumulatedAllComponent implements OnInit {
       },
       title: {
         display: true,
-        text: 'All values in watt hours accumulated'
+        text: 'All values in kilowatt-hours cumulated'
       }
     },
     responsive: true,

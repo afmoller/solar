@@ -52,6 +52,10 @@ export class YearOverYearComponent implements OnInit {
     });
   }
 
+  private divideByThousand(values: number[]) : number[] {
+    return values.map(value => value/1000);
+  }
+
   private loadDataAndUpdateDiagram() {
     this.yearOverYearEntryService.findAll(this.valueType).subscribe(data => {
 
@@ -64,14 +68,14 @@ export class YearOverYearComponent implements OnInit {
         const twelveMonths = monthValues.slice(i, i + nrOfMonthsPerYear);
 
         if(this.mode === 'normal') {
-          this.lineChartData.datasets[index].data = twelveMonths;
+          this.lineChartData.datasets[index].data = this.divideByThousand(twelveMonths);
         } else {
           for(let i = 0; i < 12; i++) {
             if (i > 0) {
               twelveMonths[i] = twelveMonths[i] + twelveMonths[i-1];     
             } 
           }
-          this.lineChartData.datasets[index].data = twelveMonths;
+          this.lineChartData.datasets[index].data = this.divideByThousand(twelveMonths);
           
         }
 
@@ -89,7 +93,7 @@ export class YearOverYearComponent implements OnInit {
               
         let tableRow: Array<string> = [];
         tableRow.push(String(data.years[index]));
-        tableRow = tableRow.concat(twelveMonths.map(String));
+        tableRow = tableRow.concat(this.divideByThousand(twelveMonths).map(String));
 
         this.tableRows.push(tableRow);
 
@@ -122,10 +126,10 @@ export class YearOverYearComponent implements OnInit {
       if (mode) {
         switch (mode) {
           case 'normal':
-            suffix = 'in watt hours per month';
+            suffix = 'in kilowatt-hours per month';
             break;
           case 'accumulated':
-            suffix = 'in watt hours per month accumulated';
+            suffix = 'in kilowatt-hours per month cumulated';
             break;
         }
       }

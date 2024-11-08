@@ -29,8 +29,8 @@ export class AllComponent implements OnInit {
   selectionScope: string = 'DAY';
   shiftSelectionScope: string = 'month'
 
-  static readonly menuTitlePrefixWatts: string = 'watts';
-  static readonly menuTitlePrefixWattHours: string = 'watt hours';
+  static readonly menuTitlePrefixWatts: string = 'kilowatts';
+  static readonly menuTitlePrefixWattHours: string = 'kilowatt-hours';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -90,44 +90,44 @@ export class AllComponent implements OnInit {
     if (selectionType === 'MONTH' || selectionType === 'DAY') {
       this.menuTitlePrefix = AllComponent.menuTitlePrefixWattHours;
       this.allEntryService.findAll(selectionType, dateFrom, dateTo).subscribe(data => {
-        this.lineChartData.datasets[0].data = data.saleWattHours;
-        this.lineChartData.datasets[1].data = data.purchaseWattHours
-        this.lineChartData.datasets[2].data = data.productionWattHours;
-        this.lineChartData.datasets[3].data = data.consumptionWattHours;
-        this.lineChartData.datasets[4].data = data.selfConsumptionWattHours;
+        this.lineChartData.datasets[0].data = this.divideByThousand(data.saleWattHours);
+        this.lineChartData.datasets[1].data = this.divideByThousand(data.purchaseWattHours);
+        this.lineChartData.datasets[2].data = this.divideByThousand(data.productionWattHours);
+        this.lineChartData.datasets[3].data = this.divideByThousand(data.consumptionWattHours);
+        this.lineChartData.datasets[4].data = this.divideByThousand(data.selfConsumptionWattHours);
         this.lineChartData.labels = data.date;
         this.chart?.update();
       });
     } else if (selectionType === 'HOUR') {
       this.menuTitlePrefix = AllComponent.menuTitlePrefixWattHours;
       this.dataExportEntryService.getDateTimeAndValuesForTimespanWatthours(selectionType, dateFrom, dateTo).subscribe(data => {
-        this.lineChartData.datasets[0].data = data.saleWatthours;
-        this.lineChartData.datasets[1].data = data.purchaseWatthours;
-        this.lineChartData.datasets[2].data = data.productionWatthours;
-        this.lineChartData.datasets[3].data = data.consumptionWatthours;
-        this.lineChartData.datasets[4].data = data.selfConsumptionWatthours;
+        this.lineChartData.datasets[0].data = this.divideByThousand(data.saleWatthours);
+        this.lineChartData.datasets[1].data = this.divideByThousand(data.purchaseWatthours);
+        this.lineChartData.datasets[2].data = this.divideByThousand(data.productionWatthours);
+        this.lineChartData.datasets[3].data = this.divideByThousand(data.consumptionWatthours);
+        this.lineChartData.datasets[4].data = this.divideByThousand(data.selfConsumptionWatthours);
         this.lineChartData.labels = data.dateTimes;
         this.chart?.update();
       });
     } else if (selectionType === 'MINUTE') {
       this.menuTitlePrefix = AllComponent.menuTitlePrefixWatts;
       this.dataExportEntryService.getDateTimeAndValuesForTimespan(selectionType, dateFrom, dateTo).subscribe(data => {
-        this.lineChartData.datasets[0].data = data.saleWattages;
-        this.lineChartData.datasets[1].data = data.purchaseWattages;
-        this.lineChartData.datasets[2].data = data.productionWattages;
-        this.lineChartData.datasets[3].data = data.consumptionWattages;
-        this.lineChartData.datasets[4].data = data.selfConsumptionWattages;
+        this.lineChartData.datasets[0].data = this.divideByThousand(data.saleWattages);
+        this.lineChartData.datasets[1].data = this.divideByThousand(data.purchaseWattages);
+        this.lineChartData.datasets[2].data = this.divideByThousand(data.productionWattages);
+        this.lineChartData.datasets[3].data = this.divideByThousand(data.consumptionWattages);
+        this.lineChartData.datasets[4].data = this.divideByThousand(data.selfConsumptionWattages);
         this.lineChartData.labels = data.dateTimes;
         this.chart?.update();
       });
     }
     this.menuTitle = dateFrom + ' - ' + dateTo;
 
-    this.lineChartData.datasets[0].label = 'Sale (' + this.menuTitlePrefix +')';
-    this.lineChartData.datasets[1].label = 'Purchase (' + this.menuTitlePrefix +')';
-    this.lineChartData.datasets[2].label = 'Production (' + this.menuTitlePrefix +')';
-    this.lineChartData.datasets[3].label = 'Consumption (' + this.menuTitlePrefix +')';
-    this.lineChartData.datasets[4].label = 'Self Consumption (' + this.menuTitlePrefix +')';
+    this.lineChartData.datasets[0].label = 'Sale';
+    this.lineChartData.datasets[1].label = 'Purchase';
+    this.lineChartData.datasets[2].label = 'Production';
+    this.lineChartData.datasets[3].label = 'Consumption';
+    this.lineChartData.datasets[4].label = 'Self Consumption';
 
     if (this.chart) {
       if(this.chart.options) {
@@ -141,6 +141,10 @@ export class AllComponent implements OnInit {
 
     this.chart?.update();
     this.chart?.render();
+  }
+
+  private divideByThousand(values: number[]) : number[] {
+    return values.map(value => value/1000);
   }
 
   public lineChartData: ChartConfiguration['data'] = {
