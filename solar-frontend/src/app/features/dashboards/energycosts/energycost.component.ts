@@ -1,28 +1,35 @@
-import Annotation from 'chartjs-plugin-annotation';
-import { BaseChartDirective } from 'ng2-charts';
+import moment from 'moment';
+import { DatePipe } from "@angular/common";
 import { MatInputModule} from '@angular/material/input';
 import { MatRadioModule} from '@angular/material/radio';
 import { MatButtonModule} from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatFormFieldModule} from '@angular/material/form-field';
 import { MatDatepickerModule} from '@angular/material/datepicker';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'
-import { Chart, Colors } from 'chart.js';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
-import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { EnergyCostentry } from 'src/app/core/models/energycostentry';
 import { EnergyCostService } from 'src/app/core/services/energy-cost.service';
 import { EnergyCostCreateentry } from 'src/app/core/models/energycostcreateentry';
-import { EnergyCostentry } from 'src/app/core/models/energycostentry';
+import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
+import { 
+  Component,
+  OnInit
+} from '@angular/core';
+import { 
+  MatTableDataSource,
+  MatTableModule
+} from '@angular/material/table'
+import { 
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS
-} from "@angular/material/core";
-import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import { DatePipe } from "@angular/common";
-import moment from 'moment';
+} from '@angular/material/core';
 
 export const MY_FORMATS = {
   parse: {
@@ -44,9 +51,8 @@ export const MY_FORMATS = {
 
   imports: [
     MatInputModule,
-    MatTableModule,
-    BaseChartDirective,
     MatRadioModule,
+    MatTableModule,
     MatButtonModule,
     MatFormFieldModule,
     MatDatepickerModule,
@@ -91,9 +97,6 @@ export class EnergyCostComponent implements OnInit {
     private formBuilder: FormBuilder,
     private energyCostService: EnergyCostService
   ) {
-    Chart.register(Annotation);
-    Chart.register(Colors);
-
     this.inputFormEnergyCost = this.buildEnergyCostInputForm(formBuilder);
   }
 
