@@ -2,7 +2,11 @@
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>{{pageTitle}}</span>
+  <span class="margin-left">{{pageTitle}}</span>
+  <span class="push-to-right-spacer"></span>
+  <div class="flex items-center justify-center pt-4">
+    <app-google-login-logout></app-google-login-logout>
+  </div>
 </mat-toolbar>
 
 <mat-sidenav-container>
@@ -85,11 +89,6 @@
           </p>
       </mat-expansion-panel>
     </mat-accordion>
-
-      <div class="flex items-center justify-center pt-4">
-        <app-google-login-logout></app-google-login-logout>
-      </div>
-
   </mat-sidenav>
   <mat-sidenav-content class="border">
       <router-outlet></router-outlet>

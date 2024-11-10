@@ -12,8 +12,7 @@
 
   <div *ngIf="loggedIn">   
     <div>
-      <p>User: {{ user.email }}</p>
+      {{ user.email }} <a (click)="logOutUser()" href="#"><mat-icon>exit_to_app</mat-icon></a>  
     </div>
-    <a (click)="logOutUser()" href="#">Sign out</a>  
   </div>
 </div>

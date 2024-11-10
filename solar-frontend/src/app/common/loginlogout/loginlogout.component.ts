@@ -3,6 +3,7 @@ import { NgIf } from '@angular/common';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { JwtService } from '../../core/services/authentication/jwt.service';
 import { UserCoreService } from '../../core/services/authentication/user-core.service';
+import { MatIconModule } from '@angular/material/icon';
 import {
   OnInit,
   Component,
@@ -22,6 +23,7 @@ import {
     RouterOutlet,
     RouterModule,
     GoogleSigninButtonModule,
+    MatIconModule
   ],
   templateUrl: './loginlogout.component.html',
   styleUrl: './loginlogout.component.scss',
