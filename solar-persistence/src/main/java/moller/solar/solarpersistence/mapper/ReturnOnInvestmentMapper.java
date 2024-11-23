@@ -6,12 +6,12 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
-public interface ReturnOnInvestementMapper {
+@Mapper(componentModel = "spring", config = MapstructConfig.class)
+public interface ReturnOnInvestmentMapper {
 
     List<ReturnOnInvestmentEntry> map(List<ReturnOnInvestmentEntryEntity> allSortedByDate);
 
-    ReturnOnInvestmentEntryEntity map(ReturnOnInvestmentEntry returnOnInvestmentEntryEntity);
+    ReturnOnInvestmentEntryEntity map(ReturnOnInvestmentEntry returnOnInvestmentEntry);
 
-    ReturnOnInvestmentEntry map(ReturnOnInvestmentEntryEntity savedReturnOnInvestmentEntryEntity);
+    ReturnOnInvestmentEntry map(ReturnOnInvestmentEntryEntity returnOnInvestmentEntryEntity);
 }
