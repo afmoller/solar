@@ -8,6 +8,10 @@ import { SummaryPerDayEntryService } from '../../../core/services/summary-per-da
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DataExportEntryService } from 'src/app/core/services/data-export-entry.service';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @Component({
   selector: 'app-all',
@@ -17,7 +21,11 @@ import { DataExportEntryService } from 'src/app/core/services/data-export-entry.
 
   imports: [
     BaseChartDirective,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSidenavModule,
+MatToolbarModule,
+MatIconModule,
+MatExpansionModule
   ]
 })
 
@@ -28,6 +36,8 @@ export class AllComponent implements OnInit {
   menuTitlePrefix: string = '';
   selectionScope: string = 'DAY';
   shiftSelectionScope: string = 'month'
+  events: string[] = [];
+  opened: boolean = true;
 
   static readonly menuTitlePrefixWatts: string = 'kilowatts';
   static readonly menuTitlePrefixWattHours: string = 'kilowatt-hours';
@@ -220,6 +230,8 @@ export class AllComponent implements OnInit {
     event?: ChartEvent;
     active?: object[];
   }): void {
+    console.log('chartClicked');
+    
   }
 
   public chartHovered({

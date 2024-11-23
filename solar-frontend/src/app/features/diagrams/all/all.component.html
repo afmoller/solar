@@ -1,55 +1,70 @@
-<div class="content-container">
-  <canvas
-    baseChart
-    class="chart"
-    [data]="lineChartData"
-    [options]="lineChartOptions"
-    [type]="lineChartType"
-    (chartHover)="chartHovered($event)"
-    (chartClick)="chartClicked($event)">
-  </canvas>
-</div>
-
-<div>
-  <form [formGroup]="inputForm">
-    <div> 
-      <div class="table">
-        <div class="content-container-filter padding">
-          <div>
-            <span>Data resolution</span>
-          </div>
+<mat-sidenav-container>
+  <mat-sidenav-content class="border">
+    <div class="content-container">
+      <canvas
+        baseChart
+        class="chart"
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="lineChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="sidenav.toggle()">
+      </canvas>
+    </div>
+    
+</mat-sidenav-content>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="border" position="end">
+    
+    <form [formGroup]="inputForm">
+        
+      <mat-accordion multi="true">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Data resolution</mat-panel-title>
+          </mat-expansion-panel-header>
+            
           <div>
             <label>
               <input type="radio" name="selectionScope" value="month" (change)="setSelectionScope('MONTH')">Month
             </label>
+            <br>
             <label>
               <input type="radio" name="selectionScope" value="day" checked="checked" (change)="setSelectionScope('DAY')">Day
             </label>
+            <br>
             <label>
               <input type="radio" name="selectionScope" value="hour" (change)="setSelectionScope('HOUR')">Hour
             </label>
+            <br>
             <label>
               <input type="radio" name="selectionScope" value="minute" (change)="setSelectionScope('MINUTE')">Minute
             </label>
           </div>
-        </div>
-        <div class="content-container-filter padding">
-          <div>
-            <span>Diagram type</span>
-          </div>
+            
+        </mat-expansion-panel>
+        
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Diagram type</mat-panel-title>
+          </mat-expansion-panel-header>
+                
           <div>
             <label>
               <input type="radio" name="diagramType" value="line" checked="checked" (change)="setChartType('line')">Line
             </label>
+            <br>
             <label>
               <input type="radio" name="diagramType" value="bar" (change)="setChartType('bar')">Bar
             </label>
           </div>
-        </div>
-        <div class="content-container-filter padding">
-          <div>
-            <span>Date selection</span>
-          </div>
+              
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Date selection</mat-panel-title>
+          </mat-expansion-panel-header>
+                
           <div class="table">   
             <div>
               <div class="table">
@@ -76,18 +91,23 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="content-container-filter padding">
-          <div>
-            <span>Shift date selection 1 {{shiftSelectionScope}} </span>
-          </div>
+          
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Shift 1 {{shiftSelectionScope}}</mat-panel-title>
+          </mat-expansion-panel-header>
+                
           <div>
             <button class="button" type="button" (click)="decreaseMonths()">-</button>
             <button class="button" type="button" (click)="increaseMonths()">+</button>
           </div>   
-        </div>
         
-      </div>
-    </div>
-  </form>
-</div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      
+    </form>
+          
+  </mat-sidenav>  
+</mat-sidenav-container>

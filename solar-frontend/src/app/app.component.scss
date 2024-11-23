@@ -16,7 +16,7 @@ a:hover {
 }
 
 mat-sidenav-container {
-  height: calc(100vh - 64px);
+  height: calc(100vh - var(--toolbar-height));
 }
 
 .border {
@@ -29,5 +29,10 @@ mat-sidenav-container {
 }
 
 .margin-left {
-  margin-left: 5px;;
+  margin-left: 5px;
 }
+
+.padding {
+  padding: 0 5px;
+}
+

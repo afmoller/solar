@@ -15,7 +15,6 @@
 }
 
 .content-container {
-  margin: 2px;
   background-color: rgb(255, 255, 255);
   width: 100%;
 }
@@ -29,14 +28,13 @@
 }
 
 td {
-  border-left: 1px solid;
+  border-right: 1px solid;
   border-bottom: 1px solid;
 }
 
 th {
-  border-left: 1px solid;
+  border-right: 1px solid;
   border-bottom: 1px solid;
-  border-top: 1px solid;
 }
 
 .table {

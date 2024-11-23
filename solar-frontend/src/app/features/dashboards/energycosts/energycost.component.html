@@ -47,7 +47,9 @@
         <ng-container matColumnDef="deleteenergycost">
           <th mat-header-cell *matHeaderCellDef>Delete row</th>
           <td mat-cell *matCellDef="let row" class="align-right">
-            <button mat-raised-button (click)="deleteEnergyCostRow(row.id)">Delete</button>
+            <button mat-raised-button (click)="deleteEnergyCostRow(row.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </td>
         </ng-container>
 
@@ -129,7 +131,9 @@
           </div>
 
           <div class="padding">
-            <button type="submit" class="form-button" mat-raised-button [disabled]="energyCostFormIsInvalid()">Insert new table entry</button>
+            <button type="submit" class="form-button" mat-raised-button [disabled]="energyCostFormIsInvalid()">
+              <mat-icon>save</mat-icon>
+            </button>
           </div>
         </div>
 

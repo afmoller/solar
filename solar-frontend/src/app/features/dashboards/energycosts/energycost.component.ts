@@ -1,11 +1,12 @@
 import moment from 'moment';
 import { DatePipe } from "@angular/common";
-import { MatInputModule} from '@angular/material/input';
-import { MatRadioModule} from '@angular/material/radio';
-import { MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatFormFieldModule} from '@angular/material/form-field';
-import { MatDatepickerModule} from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { EnergyCostentry } from 'src/app/core/models/energycostentry';
 import { EnergyCostService } from 'src/app/core/services/energy-cost.service';
@@ -50,6 +51,7 @@ export const MY_FORMATS = {
   standalone: true,
 
   imports: [
+    MatIconModule,
     MatInputModule,
     MatRadioModule,
     MatTableModule,

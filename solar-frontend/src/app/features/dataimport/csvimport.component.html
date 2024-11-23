@@ -15,8 +15,8 @@
   <div class="file-upload">
     <b>Step 1:</b> Select file to import.
 
-    <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="folder_open"></mat-icon>
+    <button (click)="fileUpload.click()">
+      <mat-icon>folder_open</mat-icon>
     </button>
   </div>
 
@@ -86,8 +86,8 @@
   
   <div>
     <b>Step 2:</b> Start aggregation
-    <button mat-mini-fab color="primary" class="upload-btn" (click)="aggregate()" [disabled]="aggregationDisabled()">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="play_circle_outline"></mat-icon>
+    <button (click)="aggregate()" [disabled]="aggregationDisabled()">
+      <mat-icon><mat-icon>play_arrow</mat-icon></mat-icon>
     </button>
   </div>
   
