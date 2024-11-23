@@ -46,10 +46,31 @@ public class ReturnOnInvestmentController extends AbstractV1BaseController {
         return ResponseEntity.of(Optional.of(returnOnInvestmentControllerApi.createReturnOnInvestmentEntry(returnOnInvestmentEntry)));
     }
 
+    @PutMapping(value = "/return-on-investments")
+    public ResponseEntity<ReturnOnInvestmentEntry> updateReturnOnInvestmentEntry(@RequestBody ReturnOnInvestmentEntryDto returnOnInvestmentEntryDto) {
+        ReturnOnInvestmentEntry returnOnInvestmentEntry = new ReturnOnInvestmentEntry.Builder()
+                .id(returnOnInvestmentEntryDto.getId())
+                .date(returnOnInvestmentEntryDto.getDate())
+                .description(returnOnInvestmentEntryDto.getDescription())
+                .amountIsPositive(returnOnInvestmentEntryDto.getAmountIsPositive())
+                .amountInMinorUnit(returnOnInvestmentEntryDto.getAmountInMinorUnit())
+                .build();
+
+        return ResponseEntity.of(Optional.of(returnOnInvestmentControllerApi.updateReturnOnInvestmentEntry(returnOnInvestmentEntry)));
+    }
+
+
     @DeleteMapping(value = "/return-on-investments/{id}")
     public ResponseEntity<Integer> deleteReturnOnInvestmentEntry(@PathVariable Integer id) {
         returnOnInvestmentControllerApi.deleteReturnOnInvestmentEntry(id);
 
         return ResponseEntity.of(Optional.of(id));
+    }
+
+    @GetMapping(value = "/return-on-investments/{id}")
+    public ResponseEntity<ReturnOnInvestmentEntry> getReturnOnInvestmentEntry(@PathVariable Integer id) {
+        ReturnOnInvestmentEntry returnOnInvestmentEntry = returnOnInvestmentControllerApi.getReturnOnInvestmentEntry(id);
+
+        return ResponseEntity.of(Optional.of(returnOnInvestmentEntry));
     }
 }

@@ -28,6 +28,13 @@ public class ReturnOnInvestmentController implements ReturnOnInvestmentControlle
     }
 
     @Override
+    public ResponseEntity<ReturnOnInvestmentEntry> updateReturnOnInvestmentEntry(ReturnOnInvestmentEntry returnOnInvestmentEntry) {
+        ReturnOnInvestmentEntry updatedReturnOnInvestmentEntry = returnOnInvestmentService.updateReturnOnInvestmentEntry(returnOnInvestmentEntry);
+
+        return ResponseEntity.of(Optional.of(updatedReturnOnInvestmentEntry));
+    }
+
+    @Override
     public ResponseEntity<Integer> deleteReturnOnInvestmentEntry(Integer id) {
         return ResponseEntity.of(Optional.of(returnOnInvestmentService.deleteReturnOnInvestmentEntry(id)));
     }
@@ -50,5 +57,11 @@ public class ReturnOnInvestmentController implements ReturnOnInvestmentControlle
             return ResponseEntity.of(Optional.empty());
         }
         return ResponseEntity.of(Optional.of(returnOnInvestmentDashboard));
+    }
+
+    @Override
+    public ResponseEntity<ReturnOnInvestmentEntry> getReturnOnInvestmentEntry(Integer id) {
+        ReturnOnInvestmentEntry returnOnInvestmentEntry = returnOnInvestmentService.getReturnOnInvestmentEntry(id);
+        return ResponseEntity.of(Optional.of(returnOnInvestmentEntry));
     }
 }

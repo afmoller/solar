@@ -1,6 +1,6 @@
 package moller.solar.solarpersistence.service;
 
-import moller.solar.solarpersistence.mapper.ReturnOnInvestementMapper;
+import moller.solar.solarpersistence.mapper.ReturnOnInvestmentMapper;
 import moller.solar.solarpersistence.persistence.entity.ReturnOnInvestmentEntryEntity;
 import moller.solar.solarpersistence.persistence.repository.ReturnOnInvestmentRepository;
 import moller.solarpersistence.openapi.model.ReturnOnInvestmentEntry;
@@ -13,14 +13,14 @@ import java.util.List;
 @Service
 public class ReturnOnInvestmentService {
 
-    private final ReturnOnInvestementMapper returnOnInvestementMapper;
+    private final ReturnOnInvestmentMapper returnOnInvestmentMapper;
     private final ReturnOnInvestmentRepository returnOnInvestmentRepository;
 
     public ReturnOnInvestmentService(
-            ReturnOnInvestementMapper returnOnInvestementMapper,
+            ReturnOnInvestmentMapper returnOnInvestmentMapper,
             ReturnOnInvestmentRepository returnOnInvestmentRepository) {
 
-        this.returnOnInvestementMapper = returnOnInvestementMapper;
+        this.returnOnInvestmentMapper = returnOnInvestmentMapper;
         this.returnOnInvestmentRepository = returnOnInvestmentRepository;
     }
 
@@ -28,7 +28,7 @@ public class ReturnOnInvestmentService {
     public List<ReturnOnInvestmentEntry> getAllReturnOnInvestmentEntries() {
         List<ReturnOnInvestmentEntryEntity> allSortedByDate = returnOnInvestmentRepository.findAll(Sort.by("date", "id").ascending());
 
-        return returnOnInvestementMapper.map(allSortedByDate);
+        return returnOnInvestmentMapper.map(allSortedByDate);
     }
 
     @Transactional
@@ -37,10 +37,13 @@ public class ReturnOnInvestmentService {
     }
 
     @Transactional
-    public ReturnOnInvestmentEntry createReturnOnInvestmentEntry(ReturnOnInvestmentEntry returnOnInvestmentEntryEntity) {
-        ReturnOnInvestmentEntryEntity savedReturnOnInvestmentEntryEntity = returnOnInvestmentRepository.save(returnOnInvestementMapper.map(returnOnInvestmentEntryEntity));
+    public ReturnOnInvestmentEntry createReturnOnInvestmentEntry(ReturnOnInvestmentEntry returnOnInvestmentEntry) {
+        return saveReturnOnInvestmentEntry(returnOnInvestmentEntry);
+    }
 
-        return returnOnInvestementMapper.map(savedReturnOnInvestmentEntryEntity);
+    @Transactional
+    public ReturnOnInvestmentEntry updateReturnOnInvestmentEntry(ReturnOnInvestmentEntry returnOnInvestmentEntry) {
+        return saveReturnOnInvestmentEntry(returnOnInvestmentEntry);
     }
 
     @Transactional
@@ -48,5 +51,17 @@ public class ReturnOnInvestmentService {
         returnOnInvestmentRepository.deleteById(id);
 
         return id;
+    }
+
+    @Transactional
+    public ReturnOnInvestmentEntry getReturnOnInvestmentEntry(Integer id) {
+        ReturnOnInvestmentEntryEntity referenceById = returnOnInvestmentRepository.getReferenceById(id);
+        return returnOnInvestmentMapper.map(referenceById);
+    }
+
+    private ReturnOnInvestmentEntry saveReturnOnInvestmentEntry(ReturnOnInvestmentEntry returnOnInvestmentEntryEntityToSave) {
+        ReturnOnInvestmentEntryEntity savedReturnOnInvestmentEntryEntity = returnOnInvestmentRepository.save(returnOnInvestmentMapper.map(returnOnInvestmentEntryEntityToSave));
+
+        return returnOnInvestmentMapper.map(savedReturnOnInvestmentEntryEntity);
     }
 }

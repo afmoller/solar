@@ -31,70 +31,49 @@ public class ReturnOnInvestmentEntryEntity {
     @Column(name = AMOUNT_IN_MINOR_UNIT)
     private Integer amountInMinorUnit;
 
-
     /**
      * Needed for Hibernate
      */
     public ReturnOnInvestmentEntryEntity() {
     }
 
-    private ReturnOnInvestmentEntryEntity(ReturnOnInvestmentEntryBuilder returnOnInvestmentEntryBuilder) {
-        this.date = returnOnInvestmentEntryBuilder.date;
-        this.description = returnOnInvestmentEntryBuilder.description;
-        this.amountIsPositive = returnOnInvestmentEntryBuilder.amountIsPositive;
-        this.amountInMinorUnit = returnOnInvestmentEntryBuilder.amountInMinorUnit;
-    }
-
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Boolean getAmountIsPositive() {
         return amountIsPositive;
     }
 
+    public void setAmountIsPositive(Boolean amountIsPositive) {
+        this.amountIsPositive = amountIsPositive;
+    }
+
     public Integer getAmountInMinorUnit() {
         return amountInMinorUnit;
     }
 
-    public static class ReturnOnInvestmentEntryBuilder {
-        private LocalDate date;
-        private String description;
-        private Boolean amountIsPositive;
-        private Integer amountInMinorUnit;
-
-
-
-        public ReturnOnInvestmentEntryBuilder setDate(LocalDate date) {
-            this.date = date;
-            return this;
-        }
-
-        public ReturnOnInvestmentEntryBuilder setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public ReturnOnInvestmentEntryBuilder setAmountIsPositive(Boolean amountIsPositive) {
-            this.amountIsPositive = amountIsPositive;
-            return this;
-        }
-
-        public ReturnOnInvestmentEntryBuilder setAmountInMinorUnit(Integer amountInMinorUnit) {
-            this.amountInMinorUnit = amountInMinorUnit;
-            return this;
-        }
-
-        public ReturnOnInvestmentEntryEntity build() {
-            return new ReturnOnInvestmentEntryEntity(this);
-        }
+    public void setAmountInMinorUnit(Integer amountInMinorUnit) {
+        this.amountInMinorUnit = amountInMinorUnit;
     }
 }
