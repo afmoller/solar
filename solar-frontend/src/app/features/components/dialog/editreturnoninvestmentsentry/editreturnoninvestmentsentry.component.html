@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>Edit Return on Investment entry</h2>
+<mat-dialog-content>
+  
+  <form #returnOnInvestmentForm="ngForm">
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Date</mat-label>
+        <input
+          [ngModel]="date()"
+          matInput
+          [matDatepicker]="picker"
+          required
+          name="date"
+        >
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    
+    <div class="padding">
+      <mat-radio-group>
+        <mat-radio-button value="cost" [checked]="!amountIsPositive()">Cost</mat-radio-button>
+        <mat-radio-button value="income" [checked]="amountIsPositive()">Income</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Value CHF (in minor unit)</mat-label>
+        <input
+          [ngModel]="amountInMinorUnit()"
+          type="number"
+          matInput
+          required
+          name="amountInMinorUnit"
+        >
+      </mat-form-field>
+    </div>
+    
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Description</mat-label>
+        <input
+          [ngModel]="description()"
+          (ngModelChange)="description.set($event)"
+          type="text"
+          matInput
+          required
+          name="description"
+        >
+      </mat-form-field>
+    </div>
+  </form>
+  
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <button mat-button [disabled]="!returnOnInvestmentForm.form.valid" [mat-dialog-close]="exportDialogData()">
+    <mat-icon>save</mat-icon>
+  </button>
+</mat-dialog-actions>
