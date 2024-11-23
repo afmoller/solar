@@ -104,6 +104,34 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "return-on-investment-controller"
+        ],
+        "operationId": "updateReturnOnInvestmentEntry",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReturnOnInvestmentEntry"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReturnOnInvestmentEntry"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/importCsvFileToDatabase": {
@@ -481,6 +509,35 @@
       }
     },
     "/api/v1/return-on-investments/{id}": {
+      "get": {
+        "tags": [
+          "return-on-investment-controller"
+        ],
+        "operationId": "getReturnOnInvestmentEntry",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReturnOnInvestmentEntry"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "return-on-investment-controller"
