@@ -1,10 +1,7 @@
-export interface ReturnOnInvestmententry {
-  id: number;
-  date: Date;
+export interface ReturnOnInvestmentEntry {
+  id?: number;
+  date: string;
   description: string;
   amountIsPositive: boolean;
   amountInMinorUnit: number;
-  saldo: number;
-  deltaSinceBegin: number;
-  numberOfYearsUntilPaid: number;
 }

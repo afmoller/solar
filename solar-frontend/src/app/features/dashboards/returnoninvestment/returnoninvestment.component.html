@@ -1,136 +1,105 @@
-<div>
-  <h4 class="centered">Return on Investment</h4>
-</div>
+<mat-sidenav-container autosize>
+  <mat-sidenav-content class="border">
 
-<div class="table">
-
-  <div class="content-container">
-    <canvas
-      baseChart
-      class="chart"
-      [data]="lineChartData"
-      [options]="lineChartOptions"
-      [type]="lineChartType"
-      (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-
-  <div class="content-container">
-    <div class="table-container">
-      <mat-form-field>
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-      </mat-form-field>
-
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="date">
-          <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let row"> {{row.date}} </td>
-        </ng-container>
-        <ng-container matColumnDef="cost">
-          <th mat-header-cell *matHeaderCellDef>Cost (CHF)</th>
-          <td mat-cell *matCellDef="let row" class="cost">{{getValueIfNegative(row.amountInMinorUnit, row.amountIsPositive)}}</td>
-        </ng-container>
-        <ng-container matColumnDef="income">
-          <th mat-header-cell *matHeaderCellDef>Income (CHF)</th>
-          <td mat-cell *matCellDef="let row" class="income">{{getValueIfPositive(row.amountInMinorUnit, row.amountIsPositive)}}</td>
-        </ng-container>
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef>Description</th>
-          <td mat-cell *matCellDef="let row"> {{row.description}} </td>
-        </ng-container>
-        <ng-container matColumnDef="saldo">
-          <th mat-header-cell *matHeaderCellDef>Saldo</th>
-          <td mat-cell *matCellDef="let row" class="align-right"> {{formatValue(row.saldo)}} </td>
-        </ng-container>
-        <ng-container matColumnDef="deltaSinceStart">
-          <th mat-header-cell *matHeaderCellDef>Delta since beginning (CHF)</th>
-          <td mat-cell *matCellDef="let row" class="align-right"> {{formatValue(row.deltaSinceBegin)}} </td>
-        </ng-container>
-        <ng-container matColumnDef="numberOfYearsUntilPaid">
-          <th mat-header-cell *matHeaderCellDef>Number of years until paid</th>
-          <td mat-cell *matCellDef="let row" class="align-right"> {{row.numberOfYearsUntilPaid}} </td>
-        </ng-container>
-        <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef>Delete row</th>
-          <td mat-cell *matCellDef="let row" class="align-right">
-            <button mat-raised-button (click)="deleteRow(row.id)">Delete</button>
-          </td>
-        </ng-container>
-
-        <!-- Header and Row Declarations -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-        <!-- Row shown when there is no matching data. -->
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-        </tr>
-      </table>
+    <div class="content-container">
+      <canvas
+        baseChart
+        class="chart"
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="lineChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="sidenav.toggle()">
+      </canvas>
     </div>
-    
-    <div>
-      <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
-        <div class="table">
-          
-          <div class="padding">
-            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Date</mat-label>
-              <input id="date" matInput [matDatepicker]="picker" formControlName="date">
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-          </div>
-          
-          <div class="padding">
-            <mat-radio-group formControlName="type">
-              <mat-radio-button value="cost">Cost</mat-radio-button>
-              <mat-radio-button value="income">Income</mat-radio-button>
-            </mat-radio-group>
-          </div>
-          
-          <div class="padding">
-            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Value CHF (in minor unit)</mat-label>
-              <input id="value" type="number" formControlName="value" matInput>
-            </mat-form-field>
-          </div>
-          
-          <div class="padding">
-            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Description</mat-label>
-              <input id="description" type="text" formControlName="description" matInput>
-            </mat-form-field>
-          </div>
-          
-          <div class="padding">
-            <button class="form-button" type="submit" mat-raised-button [disabled]="formIsInvalid()">Insert new table entry</button>
-          </div>
-        </div>
 
-      </form>
-    </div>
-  </div>
-</div>
+  </mat-sidenav-content>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="border" position="end">
+  
+    <div class="content-container">
 
-<div>
-  <div>
-    <div class="table">
-      <div class="content-container table">
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSourceTotals" class="mat-elevation-z8">
+          <ng-container matColumnDef="totals">
+            <th mat-header-cell *matHeaderCellDef>Totals</th>
+            <td mat-cell *matCellDef="let row"></td>
+          </ng-container>
+          <ng-container matColumnDef="cost">
+            <th mat-header-cell *matHeaderCellDef>Cost (CHF)</th>
+            <td mat-cell *matCellDef="let row" class="cost">{{row.cost}}</td>
+          </ng-container>
+          <ng-container matColumnDef="income">
+            <th mat-header-cell *matHeaderCellDef>Income (CHF)</th>
+            <td mat-cell *matCellDef="let row" class="income">{{row.income}}</td>
+          </ng-container>
+  
+          <!-- Header and Row Declarations -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsTotals sticky: true" class="header"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsTotals"></tr>
+        </table>
+      </div>
+     
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+          </ng-container>
+          <ng-container matColumnDef="cost">
+            <th mat-header-cell *matHeaderCellDef>Cost (CHF)</th>
+            <td mat-cell *matCellDef="let row" class="cost">{{getValueIfNegative(row.amountInMinorUnit, row.amountIsPositive)}}</td>
+          </ng-container>
+          <ng-container matColumnDef="income">
+            <th mat-header-cell *matHeaderCellDef>Income (CHF)</th>
+            <td mat-cell *matCellDef="let row" class="income">{{getValueIfPositive(row.amountInMinorUnit, row.amountIsPositive)}}</td>
+          </ng-container>
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+          </ng-container>
+          <ng-container matColumnDef="saldo">
+            <th mat-header-cell *matHeaderCellDef>Saldo</th>
+            <td mat-cell *matCellDef="let row" class="align-right"> {{formatValue(row.saldo)}} </td>
+          </ng-container>
+          <ng-container matColumnDef="deltaSinceStart">
+            <th mat-header-cell *matHeaderCellDef>Delta since beginning (CHF)</th>
+            <td mat-cell *matCellDef="let row" class="align-right"> {{formatValue(row.deltaSinceBegin)}} </td>
+          </ng-container>
+          <ng-container matColumnDef="numberOfYearsUntilPaid">
+            <th mat-header-cell *matHeaderCellDef>Number of years until paid</th>
+            <td mat-cell *matCellDef="let row" class="align-right"> {{row.numberOfYearsUntilPaid}} </td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let row" class="align-right">
+              <button mat-raised-button (click)="openEditDialog(row.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-raised-button (click)="deleteRow(row.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          
+          <!-- Header and Row Declarations -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
-        <div class="content-container">
-          <div>
-            <span>Totals</span>
-          </div>
-          <div>
-            <span>Income {{totalIncome}}</span>
-          </div>
-          <div>
-            <span>Cost {{totalCost}}</span>
-          </div>
-        </div>
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+        <mat-form-field>
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+        </mat-form-field>
+      </div>
+      
+      <div>
+        <button mat-raised-button (click)="openCreateDialog()">New entry</button>
       </div>
     </div>
-  </div>
-</div>
+
+  </mat-sidenav>
+</mat-sidenav-container>

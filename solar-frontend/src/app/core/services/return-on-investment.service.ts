@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { ReturnOnInvestmentDashboard } from '../models/returnoninvestmentdashboard';
-import { ReturnOnInvestmentCreateentry } from '../models/returnoninvestmentcreateentry';
+import { ReturnOnInvestmentEntry } from '../models/returnoninvestmententry';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +25,19 @@ export class ReturnOnInvestmentService {
     return this.http.get<ReturnOnInvestmentDashboard>(this.returnOnInvestmentDashboardUrl);
   }
 
-  public create(newEntry: ReturnOnInvestmentCreateentry): Observable<Object> {
+  public create(newEntry: ReturnOnInvestmentEntry): Observable<Object> {
     return this.http.post(this.returnOnInvestmentUrl, newEntry);
+  }
+
+  public update(existingEntry: ReturnOnInvestmentEntry): Observable<Object> {
+    return this.http.put(this.returnOnInvestmentUrl, existingEntry);
   }
 
   public delete(id: number): Observable<Object>  {
     return this.http.delete(this.returnOnInvestmentUrl + '/' + id);
+  }
+
+  public get(id: number): Observable<ReturnOnInvestmentEntry> {
+    return this.http.get<ReturnOnInvestmentEntry>(this.returnOnInvestmentUrl + '/' + id)
   }
 }

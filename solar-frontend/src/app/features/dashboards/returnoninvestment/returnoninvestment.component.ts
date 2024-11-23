@@ -1,18 +1,20 @@
 import Annotation from 'chartjs-plugin-annotation';
 import { BaseChartDirective } from 'ng2-charts';
-import { MatInputModule} from '@angular/material/input';
-import { MatRadioModule} from '@angular/material/radio';
-import { MatButtonModule} from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatFormFieldModule} from '@angular/material/form-field';
-import { MatDatepickerModule} from '@angular/material/datepicker';
+import { Component, inject, model, OnInit, signal, ViewChild } from '@angular/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
 import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
-import { ReturnOnInvestmentCreateentry } from 'src/app/core/models/returnoninvestmentcreateentry';
+import { ReturnOnInvestmentEntry } from 'src/app/core/models/returnoninvestmententry';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
@@ -20,7 +22,8 @@ import {
 } from "@angular/material/core";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { DatePipe } from "@angular/common";
-import moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
+import { ReturnOnInvestmentEntryDialog } from '../../components/dialog/editreturnoninvestmentsentry/editreturnoninvestmentsentry.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -41,11 +44,13 @@ export const MY_FORMATS = {
   standalone: true,
 
   imports: [
+    MatSidenavModule,
+    MatIconModule,
     MatInputModule,
     MatTableModule,
-    BaseChartDirective,
     MatRadioModule,
     MatButtonModule,
+    BaseChartDirective,
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -68,10 +73,17 @@ export const MY_FORMATS = {
 
 export class ReturnOnInvestmentComponent implements OnInit {
 
-  inputForm: FormGroup;
+  readonly name = model('');
+  readonly dialog = inject(MatDialog);
 
   totalCost: string = '0';
   totalIncome: string = '0';
+
+  dataSourceTotals = new MatTableDataSource();
+  displayedColumnsTotals: string[] = ['totals',
+                                      'cost',
+                                      'income'
+                                    ];
 
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['date',
@@ -81,37 +93,52 @@ export class ReturnOnInvestmentComponent implements OnInit {
                                 'saldo',
                                 'deltaSinceStart',
                                 'numberOfYearsUntilPaid',
-                                'delete'
+                                'actions'
                               ];
 
+  events: string[] = [];
+  opened: boolean = true;
+
   constructor(
-    private formBuilder: FormBuilder,
     private returnOnInvestmentService: ReturnOnInvestmentService
   ) {
     Chart.register(Annotation);
     Chart.register(Colors);
-
-    this.inputForm = this.buildInputForm(formBuilder);
   }
-
-  formIsInvalid() {
-    return !this.inputForm.valid;
-  }
-
-  onSubmit(): void {
-    let dateValue: Date = this.inputForm.get('date')?.value.toDate();
-
-    const newEntry: ReturnOnInvestmentCreateentry =  {
-      date: dateValue.toLocaleDateString(),
-      amountInMinorUnit: this.inputForm.get('value')?.value,
-      amountIsPositive: this.inputForm.get('type')?.value === 'income' ? true : false,
-      description: this.inputForm.get('description')?.value
-    }
-
-    this.returnOnInvestmentService.create(newEntry).subscribe(data => {
-      this.inputForm.reset();
-      this.loadData();
+  
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(ReturnOnInvestmentEntryDialog);
+        
+    dialogRef.afterClosed().subscribe(result => {
+      
+      if (result !== undefined) {
+        let returnOnInvestmentToCreate = dialogRef.componentInstance.exportDialogData();
+        
+        this.returnOnInvestmentService.create(returnOnInvestmentToCreate).subscribe(createdReturnOnInvestment => {
+          this.loadData();
+        })
+      }
     });
+  }
+  
+  openEditDialog(id?: number): void {
+    if (id) {
+      this.returnOnInvestmentService.get(id).subscribe(data => {
+        const dialogRef = this.dialog.open(ReturnOnInvestmentEntryDialog);
+        dialogRef.componentInstance.initiateDialog(id);
+    
+        dialogRef.afterClosed().subscribe(result => {
+          
+          if (result !== undefined) {
+            let returnOnInvestmentToUpdate = dialogRef.componentInstance.exportDialogData();
+            
+            this.returnOnInvestmentService.update(returnOnInvestmentToUpdate).subscribe(updatedReturnOnInvestment => {
+              this.loadData();
+            })
+          }
+        });
+      });
+    }
   }
 
   applyFilter(event: Event) {
@@ -127,36 +154,16 @@ export class ReturnOnInvestmentComponent implements OnInit {
     this.returnOnInvestmentService.find().subscribe(data => {
       this.dataSource.data = data.returnOnInvestmentDashboardEntryDtos.reverse();
 
+      this.totalCost = this.formatValue(data.totalCost);
+      this.totalIncome = this.formatValue(data.totalIncome);
+
+      this.dataSourceTotals.data = [{income: this.totalIncome, cost: this.totalCost}];
+      
       this.lineChartData.datasets[0].data = data.numberOfYearsUntilPaid;
       this.lineChartData.labels = data.dates;
       this.chart?.update();
-
-      this.totalCost = this.formatValue(data.totalCost);
-      this.totalIncome = this.formatValue(data.totalIncome);
+      this.chart?.render();
     });
-  }
-
-  buildInputForm(formBuilder: FormBuilder): FormGroup  {
-    let inputForm: FormGroup = formBuilder.group({
-      date: [
-        moment(),
-        Validators.required
-      ],
-      description: [
-        '',
-        Validators.required
-      ],
-      value: [
-        '',
-        Validators.required
-      ],
-      type: [
-        'income',
-        Validators.required
-      ]
-    });
-
-    return inputForm;
   }
 
   getValueIfPositive(amount: number, isPositive: boolean): string {

@@ -1,7 +1,7 @@
-import { ReturnOnInvestmententry } from "./returnoninvestmententry";
+import { ReturnOnInvestmentTableEntry } from "./returnoninvestmenttableentry";
 
 export interface ReturnOnInvestmentDashboard {
-  returnOnInvestmentDashboardEntryDtos: ReturnOnInvestmententry[];
+  returnOnInvestmentDashboardEntryDtos: ReturnOnInvestmentTableEntry[];
   totalIncome: number;
   totalCost: number;
   dates: Date[];
