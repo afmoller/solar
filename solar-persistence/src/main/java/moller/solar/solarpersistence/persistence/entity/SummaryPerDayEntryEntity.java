@@ -49,6 +49,7 @@ public class SummaryPerDayEntryEntity {
 
     @Column(name = PRODUCTION_WATT_HOURS)
     private Integer productionWattHours;
+
     @Column(name = CONSUMPTION_WATT_HOURS)
     private Integer consumptionWattHours;
 
@@ -74,23 +75,6 @@ public class SummaryPerDayEntryEntity {
      * Needed for Hibernate
      */
     public SummaryPerDayEntryEntity() {
-    }
-
-    private SummaryPerDayEntryEntity(SummaryPerDayEntryBuilder dateExportEntryBuilder) {
-        this.date = dateExportEntryBuilder.date;
-        this.autarchy = dateExportEntryBuilder.autarchy;
-        this.yearOfEntry = dateExportEntryBuilder.yearOfEntry;
-        this.monthOfEntry = dateExportEntryBuilder.monthOfEntry;
-        this.saleWattHours = dateExportEntryBuilder.saleWattHours;
-        this.purchaseWattHours = dateExportEntryBuilder.purchaseWattHours;
-        this.productionWattHours = dateExportEntryBuilder.productionWattHours;
-        this.consumptionWattHours = dateExportEntryBuilder.consumptionWattHours;
-        this.selfConsumptionWattHours = dateExportEntryBuilder.selfConsumptionWattHours;
-        this.accumulatedSaleWattHours = dateExportEntryBuilder.accumulatedSaleWattHours;
-        this.accumulatedPurchaseWattHours = dateExportEntryBuilder.accumulatedPurchaseWattHours;
-        this.accumulatedProductionWattHours = dateExportEntryBuilder.accumulatedProductionWattHours;
-        this.accumulatedConsumptionWattHours = dateExportEntryBuilder.accumulatedConsumptionWattHours;
-        this.accumulatedSelfConsumptionWattHours = dateExportEntryBuilder.accumulatedSelfConsumptionWattHours;
     }
 
     public LocalDate getDate() {
@@ -147,96 +131,5 @@ public class SummaryPerDayEntryEntity {
 
     public Integer getMonthOfEntry() {
         return monthOfEntry;
-    }
-
-    public static class SummaryPerDayEntryBuilder {
-        private Double autarchy;
-        private LocalDate date;
-        private Integer yearOfEntry;
-        private Integer monthOfEntry;
-        private Integer saleWattHours;
-        private Integer purchaseWattHours;
-        private Integer productionWattHours;
-        private Integer consumptionWattHours;
-        private Integer selfConsumptionWattHours;
-        private Integer accumulatedSaleWattHours;
-        private Integer accumulatedPurchaseWattHours;
-        private Integer accumulatedProductionWattHours;
-        private Integer accumulatedConsumptionWattHours;
-        private Integer accumulatedSelfConsumptionWattHours;
-
-        public SummaryPerDayEntryBuilder setDate(LocalDate date) {
-            this.date = date;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setProductionWattHours(Integer productionWattHours) {
-            this.productionWattHours = productionWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setSaleWattHours(Integer saleWattHours) {
-            this.saleWattHours = saleWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setSelfConsumptionWattHours(Integer selfConsumptionWattHours) {
-            this.selfConsumptionWattHours = selfConsumptionWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setPurchaseWattHours(Integer purchaseWattHours) {
-            this.purchaseWattHours = purchaseWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setConsumptionWattHours(Integer consumptionWattHours) {
-            this.consumptionWattHours = consumptionWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setAutarchy(Double autarchy) {
-            this.autarchy = autarchy;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setAccumulatedProductionWattHours(Integer accumulatedProductionWattHours) {
-            this.accumulatedProductionWattHours = accumulatedProductionWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setAccumulatedSaleWattHours(Integer accumulatedSaleWattHours) {
-            this.accumulatedSaleWattHours = accumulatedSaleWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setAccumulatedSelfConsumptionWattHours(Integer accumulatedSelfConsumptionWattHours) {
-            this.accumulatedSelfConsumptionWattHours = accumulatedSelfConsumptionWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setAccumulatedPurchaseWattHours(Integer accumulatedPurchaseWattHours) {
-            this.accumulatedPurchaseWattHours = accumulatedPurchaseWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setAccumulatedConsumptionWattHours(Integer accumulatedConsumptionWattHours) {
-            this.accumulatedConsumptionWattHours = accumulatedConsumptionWattHours;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setYearOfEntry(Integer yearOfEntry) {
-            this.yearOfEntry = yearOfEntry;
-            return this;
-        }
-
-        public SummaryPerDayEntryBuilder setMonthOfEntry(Integer monthOfEntry) {
-            this.monthOfEntry = monthOfEntry;
-            return this;
-        }
-
-        public SummaryPerDayEntryEntity build() {
-            return new SummaryPerDayEntryEntity(this);
-        }
     }
 }

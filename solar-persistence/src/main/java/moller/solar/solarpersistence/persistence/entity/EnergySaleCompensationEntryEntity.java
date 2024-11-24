@@ -42,14 +42,6 @@ public class EnergySaleCompensationEntryEntity {
     public EnergySaleCompensationEntryEntity() {
     }
 
-    private EnergySaleCompensationEntryEntity(EnergySaleCompensationEntryBuilder returnOnInvestmentEntryBuilder) {
-        this.productionYear = returnOnInvestmentEntryBuilder.productionYear;
-        this.compensationDate = returnOnInvestmentEntryBuilder.compensationDate;
-        this.productionFromDate = returnOnInvestmentEntryBuilder.productionFromDate;
-        this.productionToDate = returnOnInvestmentEntryBuilder.productionToDate;
-        this.compensationAmountInMinorUnit = returnOnInvestmentEntryBuilder.compensationAmountInMinorUnit;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -72,41 +64,5 @@ public class EnergySaleCompensationEntryEntity {
 
     public Integer getCompensationAmountInMinorUnit() {
         return compensationAmountInMinorUnit;
-    }
-
-    public static class EnergySaleCompensationEntryBuilder {
-        private LocalDate compensationDate;
-        private LocalDate productionFromDate;
-        private LocalDate productionToDate;
-        private Integer compensationAmountInMinorUnit;
-        private Integer productionYear;
-
-        public EnergySaleCompensationEntryBuilder setCompensationDate(LocalDate compensationDate) {
-            this.compensationDate = compensationDate;
-            return this;
-        }
-
-        public EnergySaleCompensationEntryBuilder setProductionFromDate(LocalDate productionFromDate) {
-            this.productionFromDate = productionFromDate;
-            return this;
-        }
-
-        public EnergySaleCompensationEntryBuilder setProductionToDate(LocalDate productionToDate) {
-            this.productionToDate = productionToDate;
-            return this;
-        }
-
-        public EnergySaleCompensationEntryBuilder setCompensationAmountInMinorUnit(Integer compensationAmountInMinorUnit) {
-            this.compensationAmountInMinorUnit = compensationAmountInMinorUnit;
-            return this;
-        }
-
-        public EnergySaleCompensationEntryBuilder setProductionYear(Integer productionYear) {
-            this.productionYear = productionYear;
-            return this;
-        }
-        public EnergySaleCompensationEntryEntity build() {
-            return new EnergySaleCompensationEntryEntity(this);
-        }
     }
 }

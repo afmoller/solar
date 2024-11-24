@@ -54,17 +54,6 @@ public class EnergyCostEntryEntity {
     public EnergyCostEntryEntity() {
     }
 
-    private EnergyCostEntryEntity(EnergyCostEntryBuilder energyCostEntryBuilder) {
-        this.fromDate = energyCostEntryBuilder.fromDate;
-        this.toDate = energyCostEntryBuilder.toDate;
-        this.feeOneInTenThousands = energyCostEntryBuilder.feeOneInTenThousands;
-        this.feeTwoInTenThousands = energyCostEntryBuilder.feeTwoInTenThousands;
-        this.feeThreeInTenThousands = energyCostEntryBuilder.feeThreeInTenThousands;
-        this.energyCostPerKwhInTenThousands = energyCostEntryBuilder.energyCostPerKwhInTenThousands;
-        this.electricalGridCostInTenThousands = energyCostEntryBuilder.electricalGridCostInTenThousands;
-        this.valueAddedTaxPercentageRateInMinorUnit = energyCostEntryBuilder.valueAddedTaxPercentageRateInMinorUnit;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -99,59 +88,5 @@ public class EnergyCostEntryEntity {
 
     public Integer getValueAddedTaxPercentageRateInMinorUnit() {
         return valueAddedTaxPercentageRateInMinorUnit;
-    }
-
-    public static class EnergyCostEntryBuilder {
-        private LocalDate fromDate;
-        private LocalDate toDate;
-        private Integer feeOneInTenThousands;
-        private Integer feeTwoInTenThousands;
-        private Integer feeThreeInTenThousands;
-        private Integer energyCostPerKwhInTenThousands;
-        private Integer electricalGridCostInTenThousands;
-        private Integer valueAddedTaxPercentageRateInMinorUnit;
-
-        public EnergyCostEntryBuilder setFromDate(LocalDate fromDate) {
-            this.fromDate = fromDate;
-            return this;
-        }
-
-        public EnergyCostEntryBuilder setToDate(LocalDate toDate) {
-            this.toDate = toDate;
-            return this;
-        }
-
-        public EnergyCostEntryBuilder setFeeOneInTenThousands(Integer feeOneInTenThousands) {
-            this.feeOneInTenThousands = feeOneInTenThousands;
-            return this;
-        }
-
-        public EnergyCostEntryBuilder setFeeTwoInTenThousands(Integer feeTwoInTenThousands) {
-            this.feeTwoInTenThousands = feeTwoInTenThousands;
-            return this;
-        }
-
-        public EnergyCostEntryBuilder setFeeThreeInTenThousands(Integer feeThreeInTenThousands) {
-            this.feeThreeInTenThousands = feeThreeInTenThousands;
-            return this;
-        }
-
-        public EnergyCostEntryBuilder setEnergyCostPerKwhInTenThousands(Integer energyCostPerKwhInTenThousands) {
-            this.energyCostPerKwhInTenThousands = energyCostPerKwhInTenThousands;
-            return this;
-        }
-
-        public EnergyCostEntryBuilder setElectricalGridCostInTenThousands(Integer electricalGridCostInTenThousands) {
-            this.electricalGridCostInTenThousands = electricalGridCostInTenThousands;
-            return this;
-        }
-
-        public EnergyCostEntryBuilder setValueAddedTaxPercentageRateInMinorUnit(Integer valueAddedTaxPercentageRateInMinorUnit) {
-            this.valueAddedTaxPercentageRateInMinorUnit = valueAddedTaxPercentageRateInMinorUnit;
-            return this;
-        }
-        public EnergyCostEntryEntity build() {
-            return new EnergyCostEntryEntity(this);
-        }
     }
 }
