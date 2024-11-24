@@ -19,13 +19,18 @@ export class UserCoreService {
     return;
   }
 
+  isSignedIn(): boolean {
+    return this.jwtService.getToken() !== undefined;
+  }
+
   /**
-   * Destroy the JWT from local storage. Update currentUserSubject to unauthenticated BackEndAuthenticatedUserProjection
+   * remove the JWT and email address from local storage.
    *
    * @returns
    */
   private purgeUser(): void {
     this.jwtService.destroyToken();
+    this.jwtService.removeEmail();
     return;
   }
 }

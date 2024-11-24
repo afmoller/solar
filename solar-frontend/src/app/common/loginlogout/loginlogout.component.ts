@@ -1,14 +1,19 @@
-import { Subscription } from 'rxjs';
 import { NgIf } from '@angular/common';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { JwtService } from '../../core/services/authentication/jwt.service';
-import { UserCoreService } from '../../core/services/authentication/user-core.service';
+import { Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
+import { UserCoreService } from '../../core/services/authentication/user-core.service';
+import { 
+  Router,
+  RouterModule
+} from '@angular/router';
+
 import {
   OnInit,
   Component,
   OnDestroy,
 } from '@angular/core';
+
 import {
   SocialUser,
   SocialAuthService,
@@ -17,38 +22,36 @@ import {
 
 @Component({
   selector: 'app-google-login-logout',
+  templateUrl: './loginlogout.component.html',
+  styleUrl: './loginlogout.component.scss',
   standalone: true,
   imports: [
     NgIf,
-    RouterOutlet,
     RouterModule,
-    GoogleSigninButtonModule,
-    MatIconModule
+    MatIconModule,
+    GoogleSigninButtonModule
   ],
-  templateUrl: './loginlogout.component.html',
-  styleUrl: './loginlogout.component.scss',
 })
+
 export class LoginLogoutComponent implements OnInit, OnDestroy {
+  
   accountDeletedSubscription: Subscription = new Subscription();
   createGoogleUserSubscription: Subscription = new Subscription();
-
-  loggedIn: boolean = false;
-  user: SocialUser = {} as SocialUser;
 
   constructor(
     private authService: SocialAuthService,
     private jwtService: JwtService,
     private router: Router,
-
-    public userService: UserCoreService,
-  ) {}
+    private userService: UserCoreService)
+  {}
 
   ngOnInit(): void {
+    debugger;
     this.authService.authState.subscribe((user) => {
-      this.user = user;
-      this.loggedIn = user != null;
       if (user != null) {
         this.jwtService.saveToken(user.idToken);
+        this.jwtService.saveEmail(user.email);
+
         this.router.navigateByUrl('/return-on-investment');
       }
     });
@@ -57,6 +60,14 @@ export class LoginLogoutComponent implements OnInit, OnDestroy {
   logOutUser(): void {
     this.userService.signOut();
     return;
+  }
+
+  isSignedIn(): boolean {
+    return this.userService.isSignedIn();
+  }
+
+  getEmailAddress(): string {
+    return this.jwtService.getEmail();
   }
 
   ngOnDestroy(): void {
