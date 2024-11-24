@@ -16,3 +16,4 @@
 /solar-frontend/.vscode/tasks.json
 /.idea/uiDesigner.xml
 /.idea/vcs.xml
+/solar-persistence-api/target/
