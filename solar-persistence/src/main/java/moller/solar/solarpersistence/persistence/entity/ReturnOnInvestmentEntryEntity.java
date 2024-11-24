@@ -28,6 +28,7 @@ public class ReturnOnInvestmentEntryEntity {
 
     @Column(name = AMOUNT_IS_POSITIVE)
     private Boolean amountIsPositive;
+
     @Column(name = AMOUNT_IN_MINOR_UNIT)
     private Integer amountInMinorUnit;
 
