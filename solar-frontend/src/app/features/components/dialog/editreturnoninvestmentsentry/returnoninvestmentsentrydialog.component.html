@@ -1,4 +1,3 @@
-<h2 mat-dialog-title>Edit Return on Investment entry</h2>
 <mat-dialog-content>
   
   <form #returnOnInvestmentForm="ngForm">
@@ -6,7 +5,8 @@
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>Date</mat-label>
         <input
-          [ngModel]="date()"
+          [ngModel]="dateAsMoment()"
+          (ngModelChange)="dateAsMoment.set($event)"
           matInput
           [matDatepicker]="picker"
           required
@@ -19,8 +19,8 @@
     
     <div class="padding">
       <mat-radio-group>
-        <mat-radio-button value="cost" [checked]="!amountIsPositive()">Cost</mat-radio-button>
-        <mat-radio-button value="income" [checked]="amountIsPositive()">Income</mat-radio-button>
+        <mat-radio-button value="cost" [checked]="!amountIsPositive()" (change)="setAmountIsPositive(false)">Cost</mat-radio-button>
+        <mat-radio-button value="income" [checked]="amountIsPositive()" (change)="setAmountIsPositive(true)">Income</mat-radio-button>
       </mat-radio-group>
     </div>
     
@@ -29,6 +29,7 @@
         <mat-label>Value CHF (in minor unit)</mat-label>
         <input
           [ngModel]="amountInMinorUnit()"
+          (ngModelChange)="amountInMinorUnit.set($event)"
           type="number"
           matInput
           required

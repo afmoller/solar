@@ -23,7 +23,7 @@ import {
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { DatePipe } from "@angular/common";
 import { MatDialog } from '@angular/material/dialog';
-import { ReturnOnInvestmentEntryDialog } from '../../components/dialog/editreturnoninvestmentsentry/editreturnoninvestmentsentry.component';
+import { ReturnOnInvestmentEntryDialogComponent } from '../../components/dialog/editreturnoninvestmentsentry/returnoninvestmentsentrydialog.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -107,38 +107,48 @@ export class ReturnOnInvestmentComponent implements OnInit {
   }
   
   openCreateDialog(): void {
-    const dialogRef = this.dialog.open(ReturnOnInvestmentEntryDialog);
+    const dialogRef = this.dialog.open(ReturnOnInvestmentEntryDialogComponent);
         
     dialogRef.afterClosed().subscribe(result => {
       
       if (result !== undefined) {
         let returnOnInvestmentToCreate = dialogRef.componentInstance.exportDialogData();
-        
-        this.returnOnInvestmentService.create(returnOnInvestmentToCreate).subscribe(createdReturnOnInvestment => {
-          this.loadData();
-        })
+        this.createReturnOnInvestmentEntry(returnOnInvestmentToCreate);
       }
     });
   }
   
   openEditDialog(id?: number): void {
     if (id) {
-      this.returnOnInvestmentService.get(id).subscribe(data => {
-        const dialogRef = this.dialog.open(ReturnOnInvestmentEntryDialog);
-        dialogRef.componentInstance.initiateDialog(id);
-    
-        dialogRef.afterClosed().subscribe(result => {
-          
-          if (result !== undefined) {
-            let returnOnInvestmentToUpdate = dialogRef.componentInstance.exportDialogData();
-            
-            this.returnOnInvestmentService.update(returnOnInvestmentToUpdate).subscribe(updatedReturnOnInvestment => {
-              this.loadData();
-            })
-          }
-        });
+      this.returnOnInvestmentService.get(id).subscribe(returnOnInvestmentEntry => {
+        this.openAndInitialEditDialog(returnOnInvestmentEntry);
       });
     }
+  }
+
+  private createReturnOnInvestmentEntry(returnOnInvestmentToCreate: ReturnOnInvestmentEntry) {
+    this.returnOnInvestmentService.create(returnOnInvestmentToCreate).subscribe(createdReturnOnInvestment => {
+      this.loadData();
+    });
+  }
+
+  private updateReturnOnInvestmentEntry(returnOnInvestmentToUpdate: ReturnOnInvestmentEntry) {
+    this.returnOnInvestmentService.update(returnOnInvestmentToUpdate).subscribe(updatedReturnOnInvestment => {
+      this.loadData();
+    })
+  }
+
+  private openAndInitialEditDialog(returnOnInvestmentEntry: ReturnOnInvestmentEntry) {
+    const dialogRef = this.dialog.open(ReturnOnInvestmentEntryDialogComponent);
+    dialogRef.componentInstance.initiateDialog(returnOnInvestmentEntry);
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+      if (result !== undefined) {
+        let returnOnInvestmentToUpdate = dialogRef.componentInstance.exportDialogData();
+        this.updateReturnOnInvestmentEntry(returnOnInvestmentToUpdate);
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -152,7 +162,14 @@ export class ReturnOnInvestmentComponent implements OnInit {
 
   loadData() {
     this.returnOnInvestmentService.find().subscribe(data => {
-      this.dataSource.data = data.returnOnInvestmentDashboardEntryDtos.reverse();
+      
+      let returnOnInvestmentEntries = data.returnOnInvestmentDashboardEntryDtos.reverse();
+      
+      returnOnInvestmentEntries.forEach(entry => {
+        entry.numberOfYearsUntilPaid = Math.round((entry.numberOfYearsUntilPaid + Number.EPSILON) * 100) / 100;
+      });
+      
+      this.dataSource.data = returnOnInvestmentEntries;
 
       this.totalCost = this.formatValue(data.totalCost);
       this.totalIncome = this.formatValue(data.totalIncome);
