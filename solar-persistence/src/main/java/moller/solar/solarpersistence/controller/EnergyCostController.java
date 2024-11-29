@@ -28,6 +28,13 @@ public class EnergyCostController implements EnergyCostControllerApi {
     }
 
     @Override
+    public ResponseEntity<EnergyCostEntry> updateEnergyCostEntry(EnergyCostEntry energyCostEntry) {
+        EnergyCostEntry updatedEnergyCostEntry = energyCostService.updateEnergyCostEntry(energyCostEntry);
+
+        return ResponseEntity.of(Optional.of(updatedEnergyCostEntry));
+    }
+
+    @Override
     public ResponseEntity<Integer> deleteEnergyCostEntry(Integer id) {
         return ResponseEntity.of(Optional.of(energyCostService.deleteEnergyCostEntry(id)));
     }
@@ -41,4 +48,12 @@ public class EnergyCostController implements EnergyCostControllerApi {
         }
         return ResponseEntity.of(Optional.of(allEnergyCostEntries));
     }
+
+    @Override
+    public ResponseEntity<EnergyCostEntry> getEnergyCostEntry(Integer id) {
+        EnergyCostEntry energyCostEntry = energyCostService.getEnergyCostEntry(id);
+        return ResponseEntity.of(Optional.of(energyCostEntry));
+    }
+
+
 }

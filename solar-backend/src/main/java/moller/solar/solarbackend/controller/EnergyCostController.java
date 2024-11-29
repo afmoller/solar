@@ -37,7 +37,23 @@ public class EnergyCostController extends AbstractV1BaseController {
                 .build();
 
         return ResponseEntity.of(Optional.of(energyCostControllerApi.createEnergyCostEntry(energyCostEntry)));
+    }
 
+    @PutMapping(value = "/energy-costs")
+    public ResponseEntity<EnergyCostEntry> updateEnergyCostEntry(@RequestBody EnergyCostEntryDto energyCostEntryDto) {
+        EnergyCostEntry energyCostEntry = new EnergyCostEntry.Builder()
+                .id(energyCostEntryDto.getId())
+                .fromDate(energyCostEntryDto.getFromDate())
+                .toDate(energyCostEntryDto.getToDate())
+                .energyCostPerKwhInTenThousands(energyCostEntryDto.getEnergyCostPerKwhInTenThousands())
+                .electricalGridCostInTenThousands(energyCostEntryDto.getElectricalGridCostInTenThousands())
+                .feeOneInTenThousands(energyCostEntryDto.getFeeOneInTenThousands())
+                .feeTwoInTenThousands(energyCostEntryDto.getFeeTwoInTenThousands())
+                .feeThreeInTenThousands(energyCostEntryDto.getFeeThreeInTenThousands())
+                .valueAddedTaxPercentageRateInMinorUnit(energyCostEntryDto.getValueAddedTaxPercentageRateInMinorUnit())
+                .build();
+
+        return ResponseEntity.of(Optional.of(energyCostControllerApi.updateEnergyCostEntry(energyCostEntry)));
     }
 
     @DeleteMapping(value = "/energy-costs/{id}")
@@ -45,5 +61,12 @@ public class EnergyCostController extends AbstractV1BaseController {
         energyCostControllerApi.deleteEnergyCostEntry(id);
 
         return ResponseEntity.of(Optional.of(id));
+    }
+
+    @GetMapping(value = "/energy-costs/{id}")
+    public ResponseEntity<EnergyCostEntry> getReturnOnInvestmentEntry(@PathVariable Integer id) {
+        EnergyCostEntry energyCostEntry = energyCostControllerApi.getEnergyCostEntry(id);
+
+        return ResponseEntity.of(Optional.of(energyCostEntry));
     }
 }
