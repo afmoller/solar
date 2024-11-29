@@ -59,8 +59,8 @@ public class ReturnOnInvestmentService {
         return returnOnInvestmentMapper.map(referenceById);
     }
 
-    private ReturnOnInvestmentEntry saveReturnOnInvestmentEntry(ReturnOnInvestmentEntry returnOnInvestmentEntryEntityToSave) {
-        ReturnOnInvestmentEntryEntity savedReturnOnInvestmentEntryEntity = returnOnInvestmentRepository.save(returnOnInvestmentMapper.map(returnOnInvestmentEntryEntityToSave));
+    private ReturnOnInvestmentEntry saveReturnOnInvestmentEntry(ReturnOnInvestmentEntry returnOnInvestmentEntryToSave) {
+        ReturnOnInvestmentEntryEntity savedReturnOnInvestmentEntryEntity = returnOnInvestmentRepository.save(returnOnInvestmentMapper.map(returnOnInvestmentEntryToSave));
 
         return returnOnInvestmentMapper.map(savedReturnOnInvestmentEntryEntity);
     }
