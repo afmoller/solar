@@ -260,6 +260,34 @@
             }
           }
         }
+      },
+      "put": {
+        "tags": [
+          "energy-cost-controller"
+        ],
+        "operationId": "updateEnergyCostEntry",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnergyCostEntry"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnergyCostEntry"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/return-on-investment-dashboard": {
@@ -602,6 +630,35 @@
       }
     },
     "/api/v1/energy-costs/{id}": {
+      "get": {
+        "tags": [
+          "energy-cost-controller"
+        ],
+        "operationId": "getEnergyCostEntry",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EnergyCostEntry"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "energy-cost-controller"
