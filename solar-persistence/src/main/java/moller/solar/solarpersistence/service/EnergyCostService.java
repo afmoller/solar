@@ -36,6 +36,7 @@ public class EnergyCostService {
         return saveReturnOnInvestmentEntry(energyCostEntry);
     }
 
+    @Transactional
     public EnergyCostEntry updateEnergyCostEntry(EnergyCostEntry energyCostEntry) {
         return saveReturnOnInvestmentEntry(energyCostEntry);
     }
@@ -47,6 +48,7 @@ public class EnergyCostService {
         return id;
     }
 
+    @Transactional
     public EnergyCostEntry getEnergyCostEntry(Integer id) {
         EnergyCostEntryEntity referenceById = energyCostRepository.getReferenceById(id);
         return energyCostMapper.map(referenceById);
