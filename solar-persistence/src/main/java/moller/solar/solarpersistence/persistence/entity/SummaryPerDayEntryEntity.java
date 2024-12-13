@@ -132,4 +132,60 @@ public class SummaryPerDayEntryEntity {
     public Integer getMonthOfEntry() {
         return monthOfEntry;
     }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setAutarchy(Double autarchy) {
+        this.autarchy = autarchy;
+    }
+
+    public void setYearOfEntry(Integer yearOfEntry) {
+        this.yearOfEntry = yearOfEntry;
+    }
+
+    public void setMonthOfEntry(Integer monthOfEntry) {
+        this.monthOfEntry = monthOfEntry;
+    }
+
+    public void setSaleWattHours(Integer saleWattHours) {
+        this.saleWattHours = saleWattHours;
+    }
+
+    public void setPurchaseWattHours(Integer purchaseWattHours) {
+        this.purchaseWattHours = purchaseWattHours;
+    }
+
+    public void setProductionWattHours(Integer productionWattHours) {
+        this.productionWattHours = productionWattHours;
+    }
+
+    public void setConsumptionWattHours(Integer consumptionWattHours) {
+        this.consumptionWattHours = consumptionWattHours;
+    }
+
+    public void setSelfConsumptionWattHours(Integer selfConsumptionWattHours) {
+        this.selfConsumptionWattHours = selfConsumptionWattHours;
+    }
+
+    public void setAccumulatedSaleWattHours(Integer accumulatedSaleWattHours) {
+        this.accumulatedSaleWattHours = accumulatedSaleWattHours;
+    }
+
+    public void setAccumulatedPurchaseWattHours(Integer accumulatedPurchaseWattHours) {
+        this.accumulatedPurchaseWattHours = accumulatedPurchaseWattHours;
+    }
+
+    public void setAccumulatedProductionWattHours(Integer accumulatedProductionWattHours) {
+        this.accumulatedProductionWattHours = accumulatedProductionWattHours;
+    }
+
+    public void setAccumulatedConsumptionWattHours(Integer accumulatedConsumptionWattHours) {
+        this.accumulatedConsumptionWattHours = accumulatedConsumptionWattHours;
+    }
+
+    public void setAccumulatedSelfConsumptionWattHours(Integer accumulatedSelfConsumptionWattHours) {
+        this.accumulatedSelfConsumptionWattHours = accumulatedSelfConsumptionWattHours;
+    }
 }
