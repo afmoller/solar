@@ -22,24 +22,24 @@
   ],
   "paths": {
     "/api/v1/saveSummaryPerDayEntries": {
-      "put": {
+      "post": {
         "tags": [
           "summary-per-day-controller"
         ],
         "operationId": "saveSummaryPerDayEntries",
-        "parameters": [
-          {
-            "name": "summaryPerDayEntries",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/SummaryPerDayEntry"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SummaryPerDayEntry"
+                }
               }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
@@ -140,19 +140,19 @@
           "csv-controller"
         ],
         "operationId": "importCsvFileToDatabase",
-        "parameters": [
-          {
-            "name": "dateExportEntries",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/DataExportEntry"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DataExportEntry"
+                }
               }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK"
