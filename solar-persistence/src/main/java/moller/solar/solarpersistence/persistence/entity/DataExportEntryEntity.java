@@ -274,4 +274,132 @@ public class DataExportEntryEntity {
     public String getMultichannelSwitchOverride() {
         return multichannelSwitchOverride;
     }
+
+    public void setIid(Integer iid) {
+        this.iid = iid;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setTimestampYear(int timestampYear) {
+        this.timestampYear = timestampYear;
+    }
+
+    public void setTimestampMonth(int timestampMonth) {
+        this.timestampMonth = timestampMonth;
+    }
+
+    public void setTimestampDay(int timestampDay) {
+        this.timestampDay = timestampDay;
+    }
+
+    public void setDi1(Integer di1) {
+        this.di1 = di1;
+    }
+
+    public void setDi2(Integer di2) {
+        this.di2 = di2;
+    }
+
+    public void setDi3(Integer di3) {
+        this.di3 = di3;
+    }
+
+    public void setDi4(Integer di4) {
+        this.di4 = di4;
+    }
+
+    public void setDi5(Integer di5) {
+        this.di5 = di5;
+    }
+
+    public void setDi6(Integer di6) {
+        this.di6 = di6;
+    }
+
+    public void setDi7(Integer di7) {
+        this.di7 = di7;
+    }
+
+    public void setDi8(Integer di8) {
+        this.di8 = di8;
+    }
+
+    public void setImportRead(Integer importRead) {
+        this.importRead = importRead;
+    }
+
+    public void setDi9(Integer di9) {
+        this.di9 = di9;
+    }
+
+    public void setDi10(Integer di10) {
+        this.di10 = di10;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public void setWlan(String wlan) {
+        this.wlan = wlan;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public void setDi11(Integer di11) {
+        this.di11 = di11;
+    }
+
+    public void setDi12(Integer di12) {
+        this.di12 = di12;
+    }
+
+    public void setDi13(Integer di13) {
+        this.di13 = di13;
+    }
+
+    public void setDi14(Integer di14) {
+        this.di14 = di14;
+    }
+
+    public void setDi15(Integer di15) {
+        this.di15 = di15;
+    }
+
+    public void setDi16(Integer di16) {
+        this.di16 = di16;
+    }
+
+    public void setDi17(Integer di17) {
+        this.di17 = di17;
+    }
+
+    public void setDi18(Integer di18) {
+        this.di18 = di18;
+    }
+
+    public void setDi19(Integer di19) {
+        this.di19 = di19;
+    }
+
+    public void setDi20(Integer di20) {
+        this.di20 = di20;
+    }
+
+    public void setMultichannelSwitchOverride(String multichannelSwitchOverride) {
+        this.multichannelSwitchOverride = multichannelSwitchOverride;
+    }
 }

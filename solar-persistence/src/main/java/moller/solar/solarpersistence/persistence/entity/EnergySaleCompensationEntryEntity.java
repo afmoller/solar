@@ -65,4 +65,28 @@ public class EnergySaleCompensationEntryEntity {
     public Integer getCompensationAmountInMinorUnit() {
         return compensationAmountInMinorUnit;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setCompensationDate(LocalDate compensationDate) {
+        this.compensationDate = compensationDate;
+    }
+
+    public void setProductionFromDate(LocalDate productionFromDate) {
+        this.productionFromDate = productionFromDate;
+    }
+
+    public void setProductionToDate(LocalDate productionToDate) {
+        this.productionToDate = productionToDate;
+    }
+
+    public void setProductionYear(Integer productionYear) {
+        this.productionYear = productionYear;
+    }
+
+    public void setCompensationAmountInMinorUnit(Integer compensationAmountInMinorUnit) {
+        this.compensationAmountInMinorUnit = compensationAmountInMinorUnit;
+    }
 }

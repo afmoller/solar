@@ -89,4 +89,40 @@ public class EnergyCostEntryEntity {
     public Integer getValueAddedTaxPercentageRateInMinorUnit() {
         return valueAddedTaxPercentageRateInMinorUnit;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setFromDate(LocalDate fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public void setToDate(LocalDate toDate) {
+        this.toDate = toDate;
+    }
+
+    public void setFeeOneInTenThousands(Integer feeOneInTenThousands) {
+        this.feeOneInTenThousands = feeOneInTenThousands;
+    }
+
+    public void setFeeTwoInTenThousands(Integer feeTwoInTenThousands) {
+        this.feeTwoInTenThousands = feeTwoInTenThousands;
+    }
+
+    public void setFeeThreeInTenThousands(Integer feeThreeInTenThousands) {
+        this.feeThreeInTenThousands = feeThreeInTenThousands;
+    }
+
+    public void setEnergyCostPerKwhInTenThousands(Integer energyCostPerKwhInTenThousands) {
+        this.energyCostPerKwhInTenThousands = energyCostPerKwhInTenThousands;
+    }
+
+    public void setElectricalGridCostInTenThousands(Integer electricalGridCostInTenThousands) {
+        this.electricalGridCostInTenThousands = electricalGridCostInTenThousands;
+    }
+
+    public void setValueAddedTaxPercentageRateInMinorUnit(Integer valueAddedTaxPercentageRateInMinorUnit) {
+        this.valueAddedTaxPercentageRateInMinorUnit = valueAddedTaxPercentageRateInMinorUnit;
+    }
 }
