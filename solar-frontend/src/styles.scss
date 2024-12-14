@@ -3,8 +3,8 @@
 html {
   height: 100%;
   --toolbar-height: 40px;
-  --mat-table-header-headline-size: 14px;
-  --mat-table-row-item-label-text-size: 14px;
+  --mat-table-header-headline-size: 10px;
+  --mat-table-row-item-label-text-size: 10px;
   --mat-table-header-container-height: 36px;
   --mat-table-footer-container-height: 32px;
   --mat-table-row-item-container-height: 32px;
@@ -13,7 +13,11 @@ html {
 }
 
 .mat-mdc-cell {
-  padding: 0 3px !important;
+  padding: 0 1px !important;
+}
+
+.mat-mdc-header-cell {
+  padding: 0 1px !important;
 }
 
 body {

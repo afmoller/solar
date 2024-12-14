@@ -1,0 +1,141 @@
+<mat-dialog-content>
+  
+  <form #energyCostForm="ngForm">
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Date from</mat-label>
+        <input
+          [ngModel]="dateFromAsMoment()"
+          (ngModelChange)="dateFromAsMoment.set($event)"
+          matInput
+          [matDatepicker]="pickerdatefrom"
+          required
+          name="dateFromAsMoment"
+        >
+        <mat-datepicker-toggle matIconSuffix [for]="pickerdatefrom"></mat-datepicker-toggle>
+        <mat-datepicker #pickerdatefrom></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Date to</mat-label>
+        <input
+          [ngModel]="dateToAsMoment()"
+          (ngModelChange)="dateToAsMoment.set($event)"
+          matInput
+          [matDatepicker]="pickerdateto"
+          required
+          name="dateToAsMoment"
+        >
+        <mat-datepicker-toggle matIconSuffix [for]="pickerdateto"></mat-datepicker-toggle>
+        <mat-datepicker #pickerdateto></mat-datepicker>
+      </mat-form-field>
+    </div>
+    
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Netznutzung Niedertarif (CHF/kWh)</mat-label>
+        <input
+          [ngModel]="electricalgridcostintenthousands()"
+          (ngModelChange)="electricalgridcostintenthousands.set($event)"
+          id="electricalgridcostintenthousands"
+          type="number"
+          required
+          name="electricalgridcostintenthousands"
+          matInput
+          matTooltip="An input value of 510 will be displayed as CHF 0.051"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="padding" >
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>EWK Strom Haushalt Niedertarif Buchsi-Strom (CHF/kWh)</mat-label>
+        <input
+          [ngModel]="energycostperkwhintenthousands()"
+          (ngModelChange)="energycostperkwhintenthousands.set($event)"
+          id="energycostperkwhintenthousands"
+          type="number"
+          required
+          name="energycostperkwhintenthousands"
+          matInput
+          matTooltip="An input value of 860 will be displayed as CHF 0.086"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Abgaben: KEV + Gewässerschutz (CHF/kWh)</mat-label>
+        <input
+          [ngModel]="feeoneintenthousands()"
+          (ngModelChange)="feeoneintenthousands.set($event)"  
+          id="feeoneintenthousands"
+          type="number"
+          required
+          name="feeoneintenthousands"
+          matInput
+          matTooltip="An input value of 230 will be displayed as CHF 0.023"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Konzessionsabgabe an die Gemeinde (CHF/kWh)</mat-label>
+        <input
+          [ngModel]="feetwointenthousands()"
+          (ngModelChange)="feetwointenthousands.set($event)"  
+          id="feetwointenthousands"
+          type="number"
+          required
+          name="feetwointenthousands"
+          matInput
+          matTooltip="An input value of 75 will be displayed as CHF 0.0075"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Stromreserve (CHF/kWh)</mat-label>
+        <input
+          [ngModel]="feethreeintenthousands()"
+          (ngModelChange)="feethreeintenthousands.set($event)"  
+          id="feethreeintenthousands"
+          type="number"
+          required
+          name="feethreeintenthousands"
+          matInput
+          matTooltip="An input value of 12 will be displayed as CHF 0.0012"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>MwstSatz (%)</mat-label>
+        <input
+          [ngModel]="valueaddedtaxpercentagerateinminorunit()"
+          (ngModelChange)="valueaddedtaxpercentagerateinminorunit.set($event)"  
+          id="valueaddedtaxpercentagerateinminorunit"
+          type="number"
+          required
+          name="valueaddedtaxpercentagerateinminorunit"
+          matInput
+          matTooltip="An input value of 770 will be displayed as 7.7"
+        >
+      </mat-form-field>
+    </div>
+  </form>
+  
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <button mat-button [disabled]="!energyCostForm.form.valid" [mat-dialog-close]="exportDialogData()">
+    <mat-icon>save</mat-icon>
+  </button>
+</mat-dialog-actions>

@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { Component, inject, model, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, inject, model, OnInit, ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
@@ -23,7 +23,7 @@ import {
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { DatePipe } from "@angular/common";
 import { MatDialog } from '@angular/material/dialog';
-import { ReturnOnInvestmentEntryDialogComponent } from '../../components/dialog/editreturnoninvestmentsentry/returnoninvestmentsentrydialog.component';
+import { ReturnOnInvestmentEntryDialogComponent } from '../../components/dialog/returnoninvestmentsentrydialog/returnoninvestmentsentrydialog.component';
 
 export const MY_FORMATS = {
   parse: {

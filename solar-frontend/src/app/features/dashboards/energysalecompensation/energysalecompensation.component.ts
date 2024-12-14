@@ -56,12 +56,12 @@ export const MY_FORMATS = {
   ],
   providers: [
     MatDatepickerModule,
-    {    
+    {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
       deps: [MAT_DATE_LOCALE]
     },
-    { 
+    {
       provide: MAT_DATE_FORMATS,
       useValue: MY_FORMATS
     },
@@ -72,7 +72,7 @@ export const MY_FORMATS = {
 export class EnergySaleCompensationComponent implements OnInit {
 
   inputForm: FormGroup;
-  
+
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['compensationdate',
                                 'compensation',
@@ -94,7 +94,7 @@ export class EnergySaleCompensationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private energySaleCompensationService: EnergySaleCompensationService
   ) {
-    
+
     Chart.register(Annotation);
     Chart.register(Colors);
 
@@ -223,7 +223,7 @@ export class EnergySaleCompensationComponent implements OnInit {
       return 'even';
     }
   }
-  
+
   divideValueByHundred(valueToDivideByHundred: number): string {
     return (valueToDivideByHundred / 100).toString();
   }

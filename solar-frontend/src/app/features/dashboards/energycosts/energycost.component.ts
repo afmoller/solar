@@ -14,6 +14,7 @@ import { EnergyCostCreateentry } from 'src/app/core/models/energycostcreateentry
 import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
 import { 
   Component,
+  inject,
   OnInit
 } from '@angular/core';
 import { 
@@ -21,16 +22,15 @@ import {
   MatTableModule
 } from '@angular/material/table'
 import { 
-  FormBuilder,
-  FormGroup,
   ReactiveFormsModule,
-  Validators
 } from '@angular/forms';
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS
 } from '@angular/material/core';
+import { EnergyCostEntryDialogComponent } from '../../components/dialog/energycostentrydialog/energycostentrydialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 export const MY_FORMATS = {
   parse: {
@@ -78,7 +78,7 @@ export const MY_FORMATS = {
 
 export class EnergyCostComponent implements OnInit {
 
-  inputFormEnergyCost: FormGroup;
+  readonly dialog = inject(MatDialog);
 
   dataSourceEnergyCosts = new MatTableDataSource();
 
@@ -95,36 +95,7 @@ export class EnergyCostComponent implements OnInit {
                                           'deleteenergycost'
                                          ];
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private energyCostService: EnergyCostService
-  ) {
-    this.inputFormEnergyCost = this.buildEnergyCostInputForm(formBuilder);
-  }
-
-  energyCostFormIsInvalid() {
-    return !this.inputFormEnergyCost.valid;
-  }
-
-  onSubmitEnergyCost() {
-    let fromDateDateValue: Date = this.inputFormEnergyCost.get('datefrom')?.value.toDate();
-    let toDateValue: Date = this.inputFormEnergyCost.get('dateto')?.value.toDate();
-
-    const newEntry: EnergyCostCreateentry =  {
-      fromDate: fromDateDateValue.toLocaleDateString(),
-      toDate: toDateValue.toLocaleDateString(),
-      feeOneInTenThousands: this.inputFormEnergyCost.get('feeoneintenthousands')?.value,
-      feeTwoInTenThousands: this.inputFormEnergyCost.get('feetwointenthousands')?.value,
-      feeThreeInTenThousands: this.inputFormEnergyCost.get('feethreeintenthousands')?.value,
-      electricalGridCostInTenThousands: this.inputFormEnergyCost.get('electricalgridcostintenthousands')?.value,
-      energyCostPerKwhInTenThousands: this.inputFormEnergyCost.get('energycostperkwhintenthousands')?.value,
-      valueAddedTaxPercentageRateInMinorUnit: this.inputFormEnergyCost.get('valueaddedtaxpercentagerateinminorunit')?.value
-    }
-
-    this.energyCostService.create(newEntry).subscribe(data => {
-      this.inputFormEnergyCost.reset();
-      this.loadEnergyCostData();
-    });
+  constructor(private energyCostService: EnergyCostService) {
   }
 
   ngOnInit() {
@@ -135,45 +106,6 @@ export class EnergyCostComponent implements OnInit {
     this.energyCostService.getAll().subscribe(data => {
       this.dataSourceEnergyCosts.data = data;
     })
-  }
-
-  buildEnergyCostInputForm(formBuilder: FormBuilder): FormGroup {
-    let inputForm: FormGroup = formBuilder.group({
-      datefrom: [
-        moment(),
-        Validators.required
-      ],
-      dateto: [
-        moment(),
-        Validators.required
-      ],
-      electricalgridcostintenthousands: [
-        '',
-        Validators.required
-      ],
-      energycostperkwhintenthousands: [
-        '',
-        Validators.required
-      ],
-      feeoneintenthousands: [
-        '',
-        Validators.required
-      ],
-      feetwointenthousands: [
-        '',
-        Validators.required
-      ],
-      feethreeintenthousands: [
-        '',
-        Validators.required
-      ],
-      valueaddedtaxpercentagerateinminorunit: [
-        '',
-        Validators.required
-      ],
-    });
-
-    return inputForm;
   }
 
   getValueIfPositive(amount: number, isPositive: boolean): string {
@@ -256,5 +188,50 @@ export class EnergyCostComponent implements OnInit {
     })
 
     return dataSet;
+  }
+
+  openEditDialog(id?: number): void {
+    if (id) {
+      this.energyCostService.get(id).subscribe(energyCostEntry => {
+        this.openAndInitialEditDialog(energyCostEntry);
+      });
+    }
+  }
+
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(EnergyCostEntryDialogComponent);
+        
+    dialogRef.afterClosed().subscribe(result => {
+      
+      if (result !== undefined) {
+        let energyCostToCreate = dialogRef.componentInstance.exportDialogData();
+        this.createEnergyCostEntry(energyCostToCreate);
+      }
+    });
+  }
+
+  private openAndInitialEditDialog(returnOnInvestmentEntry: EnergyCostentry) {
+    const dialogRef = this.dialog.open(EnergyCostEntryDialogComponent);
+    dialogRef.componentInstance.initiateDialog(returnOnInvestmentEntry);
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+      if (result !== undefined) {
+        let energyCostToUpdate = dialogRef.componentInstance.exportDialogData();
+        this.updateEnergyCostEntry(energyCostToUpdate);
+      }
+    });
+  }
+
+  private createEnergyCostEntry(energyCostToCreate: EnergyCostentry) {
+    this.energyCostService.create(energyCostToCreate).subscribe(createdEnergyCost => {
+      this.loadEnergyCostData();
+    });
+  }
+
+  private updateEnergyCostEntry(energyCostToUpdate: EnergyCostentry) {
+    this.energyCostService.update(energyCostToUpdate).subscribe(updatedEnergyCost => {
+      this.loadEnergyCostData();
+    })
   }
 }
