@@ -2,6 +2,7 @@ package moller.solar.solarpersistence.controller;
 
 import moller.solar.solarpersistence.service.EnergySaleCompensationService;
 import moller.solarpersistence.openapi.api.EnergySaleCompensationControllerApi;
+import moller.solarpersistence.openapi.model.EnergyCostEntry;
 import moller.solarpersistence.openapi.model.EnergySaleCompensationEntry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +29,13 @@ public class EnergySaleCompensationController implements EnergySaleCompensationC
     }
 
     @Override
+    public ResponseEntity<EnergySaleCompensationEntry> updateEnergySaleCompensationEntry(EnergySaleCompensationEntry energySaleCompensationEntry) {
+        EnergySaleCompensationEntry updatedEnergySaleCompensationEntry = energySaleCompensationService.updateEnergySaleCompensationEntry(energySaleCompensationEntry);
+
+        return ResponseEntity.of(Optional.of(updatedEnergySaleCompensationEntry));
+    }
+
+    @Override
     public ResponseEntity<Integer> deleteEnergySaleCompensationEntry(Integer id) {
         return ResponseEntity.of(Optional.of(energySaleCompensationService.deleteEnergySaleCompensationEntry(id)));
     }
@@ -40,5 +48,11 @@ public class EnergySaleCompensationController implements EnergySaleCompensationC
             return ResponseEntity.of(Optional.empty());
         }
         return ResponseEntity.of(Optional.of(allEnergySaleCompensationEntries));
+    }
+
+    @Override
+    public ResponseEntity<EnergySaleCompensationEntry> getEnergySaleCompensationEntry(Integer id) {
+        EnergySaleCompensationEntry energySaleCompensationEntry = energySaleCompensationService.getEnergySaleCompensationEntry(id);
+        return ResponseEntity.of(Optional.of(energySaleCompensationEntry));
     }
 }

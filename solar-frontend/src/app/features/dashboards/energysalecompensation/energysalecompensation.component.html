@@ -87,6 +87,9 @@
         <ng-container matColumnDef="delete">
           <th mat-header-cell *matHeaderCellDef>Delete row</th>
           <td mat-cell *matCellDef="let row" class="align-right">
+            <button mat-raised-button (click)="openEditDialog(row.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
             <button mat-raised-button (click)="deleteRow(row.id)">
               <mat-icon>delete</mat-icon>
             </button>
@@ -101,59 +104,8 @@
     </div>
 
     <div>
-      <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
-        <div class="table">
-
-          <div class="padding">
-            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Compensation date</mat-label>
-              <input id="compensationdate" matInput [matDatepicker]="pickercompensationdate" formControlName="compensationdate">
-              <mat-datepicker-toggle matIconSuffix [for]="pickercompensationdate"></mat-datepicker-toggle>
-              <mat-datepicker #pickercompensationdate></mat-datepicker>
-            </mat-form-field>
-          </div>
-
-          <div class="padding">
-            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Compensation CHF (in minor unit)</mat-label>
-              <input id="compensation" type="number" formControlName="compensation" matInput>
-            </mat-form-field>
-          </div>
-
-          <div class="padding">
-            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Production year</mat-label>
-              <input id="productionyear" type="number" formControlName="productionyear" matInput>
-            </mat-form-field>
-          </div>
-
-          <div class="padding">
-            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Production from</mat-label>
-              <input id="productionfrom" matInput [matDatepicker]="pickerproductionfrom" formControlName="productionfrom">
-              <mat-datepicker-toggle matIconSuffix [for]="pickerproductionfrom"></mat-datepicker-toggle>
-              <mat-datepicker #pickerproductionfrom></mat-datepicker>
-            </mat-form-field>
-          </div>
-
-          <div class="padding">
-            <mat-form-field appearance="outline" subscriptSizing="dynamic">
-              <mat-label>Production to</mat-label>
-              <input id="productionto" matInput [matDatepicker]="pickerproductionto" formControlName="productionto">
-              <mat-datepicker-toggle matIconSuffix [for]="pickerproductionto"></mat-datepicker-toggle>
-              <mat-datepicker #pickerproductionto></mat-datepicker>
-            </mat-form-field>
-          </div>
-
-          <div class="padding">
-            <button type="submit" class="form-button" mat-raised-button [disabled]="formIsInvalid()">
-              <mat-icon>save</mat-icon>
-            </button>
-          </div>
-        </div>
-
-      </form>
+      <button mat-raised-button (click)="openCreateDialog()">New entry</button>
     </div>
-
+   
   </div>
 </div>

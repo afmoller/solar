@@ -1,0 +1,94 @@
+<mat-dialog-content>
+  
+  <form #energySaleCompensationForm="ngForm">
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Compensation date</mat-label>
+        <input
+          [ngModel]="compensationDateAsMoment()"
+          (ngModelChange)="compensationDateAsMoment.set($event)"
+          matInput
+          [matDatepicker]="pickercompensationdate"
+          required
+          name="compensationDateAsMoment"
+        >
+        <mat-datepicker-toggle matIconSuffix [for]="pickercompensationdate"></mat-datepicker-toggle>
+        <mat-datepicker #pickercompensationdate></mat-datepicker>
+      </mat-form-field>
+    </div>
+    
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Compensation CHF (in minor unit)</mat-label>
+        <input
+          [ngModel]="compensationAmountInMinorUnit()"
+          (ngModelChange)="compensationAmountInMinorUnit.set($event)"
+          id="compensationAmountInMinorUnit"
+          type="number"
+          required
+          name="compensationAmountInMinorUnit"
+          matInput
+          matTooltip="An input value of 510 will be displayed as CHF 5.1"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="padding" >
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Production year</mat-label>
+        <input
+          [ngModel]="productionYear()"
+          (ngModelChange)="productionYear.set($event)"
+          id="productionYear"
+          type="number"
+          required
+          name="productionYear"
+          matInput
+          matTooltip="Which year was the energy produced"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Production from</mat-label>
+        <input
+          [ngModel]="productionFromDateAsMoment()"
+          (ngModelChange)="productionFromDateAsMoment.set($event)"
+          matInput
+          [matDatepicker]="pickerproductionfromdate"
+          required
+          name="productionFromDateAsMoment"
+        >
+        <mat-datepicker-toggle matIconSuffix [for]="pickerproductionfromdate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerproductionfromdate></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Production to</mat-label>
+        <input
+          [ngModel]="productionToDateAsMoment()"
+          (ngModelChange)="productionToDateAsMoment.set($event)"
+          matInput
+          [matDatepicker]="pickerproductiontodate"
+          required
+          name="productionToDateAsMoment"
+        >
+        <mat-datepicker-toggle matIconSuffix [for]="pickerproductiontodate"></mat-datepicker-toggle>
+        <mat-datepicker #pickerproductiontodate></mat-datepicker>
+      </mat-form-field>
+    </div>
+   
+  </form>
+  
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <button mat-button [disabled]="!energySaleCompensationForm.form.valid" [mat-dialog-close]="exportDialogData()">
+    <mat-icon>save</mat-icon>
+  </button>
+</mat-dialog-actions>

@@ -1,8 +1,10 @@
 package moller.solar.solarpersistence.service;
 
 import moller.solar.solarpersistence.mapper.EnergySaleCompensationMapper;
+import moller.solar.solarpersistence.persistence.entity.EnergyCostEntryEntity;
 import moller.solar.solarpersistence.persistence.entity.EnergySaleCompensationEntryEntity;
 import moller.solar.solarpersistence.persistence.repository.EnergySaleCompensationRepository;
+import moller.solarpersistence.openapi.model.EnergyCostEntry;
 import moller.solarpersistence.openapi.model.EnergySaleCompensationEntry;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -32,10 +34,13 @@ public class EnergySaleCompensationService {
     }
 
     @Transactional
-    public EnergySaleCompensationEntry createEnergySaleCompensationEntry(EnergySaleCompensationEntry energySaleCompensationEntryEntity) {
-        EnergySaleCompensationEntryEntity savedEnergySaleCompensationEntryEntity = energySaleCompensationRepository.save(energySaleCompensationMapper.map(energySaleCompensationEntryEntity));
+    public EnergySaleCompensationEntry createEnergySaleCompensationEntry(EnergySaleCompensationEntry energySaleCompensationEntry) {
+        return saveEnergySaleCompensationEntry(energySaleCompensationEntry);
+    }
 
-        return energySaleCompensationMapper.map(savedEnergySaleCompensationEntryEntity);
+    @Transactional
+    public EnergySaleCompensationEntry updateEnergySaleCompensationEntry(EnergySaleCompensationEntry energySaleCompensationEntry) {
+        return saveEnergySaleCompensationEntry(energySaleCompensationEntry);
     }
 
     @Transactional
@@ -43,5 +48,17 @@ public class EnergySaleCompensationService {
         energySaleCompensationRepository.deleteById(id);
 
         return id;
+    }
+
+    @Transactional
+    public EnergySaleCompensationEntry getEnergySaleCompensationEntry(Integer id) {
+        EnergySaleCompensationEntryEntity referenceById = energySaleCompensationRepository.getReferenceById(id);
+        return energySaleCompensationMapper.map(referenceById);
+    }
+
+    private EnergySaleCompensationEntry saveEnergySaleCompensationEntry(EnergySaleCompensationEntry energySaleCompensationEntryToSave) {
+        EnergySaleCompensationEntryEntity savedEnergySaleCompensationEntryEntity = energySaleCompensationRepository.save(energySaleCompensationMapper.map(energySaleCompensationEntryToSave));
+
+        return energySaleCompensationMapper.map(savedEnergySaleCompensationEntryEntity);
     }
 }

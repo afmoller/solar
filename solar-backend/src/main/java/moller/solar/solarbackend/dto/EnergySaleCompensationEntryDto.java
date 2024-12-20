@@ -5,8 +5,8 @@ import java.time.LocalDate;
 public class EnergySaleCompensationEntryDto {
 
     private Integer id;
-    private LocalDate productionFrom;
-    private LocalDate productionTo;
+    private LocalDate productionFromDate;
+    private LocalDate productionToDate;
     private LocalDate compensationDate;
     private Integer productionYear;
     private Integer compensationAmountInMinorUnit;
@@ -19,12 +19,12 @@ public class EnergySaleCompensationEntryDto {
         this.id = id;
     }
 
-    public LocalDate getProductionFrom() {
-        return productionFrom;
+    public LocalDate getProductionFromDate() {
+        return productionFromDate;
     }
 
-    public void setProductionFrom(LocalDate productionFrom) {
-        this.productionFrom = productionFrom;
+    public void setProductionFromDate(LocalDate productionFromDate) {
+        this.productionFromDate = productionFromDate;
     }
 
     public Integer getCompensationAmountInMinorUnit() {
@@ -43,12 +43,12 @@ public class EnergySaleCompensationEntryDto {
         this.productionYear = productionYear;
     }
 
-    public LocalDate getProductionTo() {
-        return productionTo;
+    public LocalDate getProductionToDate() {
+        return productionToDate;
     }
 
-    public void setProductionTo(LocalDate productionTo) {
-        this.productionTo = productionTo;
+    public void setProductionToDate(LocalDate productionToDate) {
+        this.productionToDate = productionToDate;
     }
 
     public LocalDate getCompensationDate() {

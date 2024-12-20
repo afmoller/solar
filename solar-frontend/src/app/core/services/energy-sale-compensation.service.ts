@@ -11,7 +11,7 @@ import { EnergySaleCompensationCreateentry } from '../models/energysalecompensat
 })
 
 export class EnergySaleCompensationService {
-
+    
   private energySaleCompensationsUrl: string;
   private energySaleCompensationsBaseUrl: string;
   private returnOnInvestmentDashboardUrl: string;
@@ -34,7 +34,15 @@ export class EnergySaleCompensationService {
     return this.http.post(this.energySaleCompensationsUrl, newEntry);
   }
 
+  public update(existingEntry: EnergySaleCompensationentry): Observable<Object> {
+    return this.http.put(this.energySaleCompensationsUrl, existingEntry);
+  }
+
   public delete(id: number): Observable<Object>  {
     return this.http.delete(this.energySaleCompensationsUrl + '/' + id);
+  }
+
+  public get(id: number): Observable<EnergySaleCompensationentry> {
+    return this.http.get<EnergySaleCompensationentry>(this.energySaleCompensationsUrl + '/' + id)
   }
 }
