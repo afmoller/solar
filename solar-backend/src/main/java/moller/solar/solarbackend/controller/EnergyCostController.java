@@ -64,7 +64,7 @@ public class EnergyCostController extends AbstractV1BaseController {
     }
 
     @GetMapping(value = "/energy-costs/{id}")
-    public ResponseEntity<EnergyCostEntry> getReturnOnInvestmentEntry(@PathVariable Integer id) {
+    public ResponseEntity<EnergyCostEntry> getEnergyCostEntry(@PathVariable Integer id) {
         EnergyCostEntry energyCostEntry = energyCostControllerApi.getEnergyCostEntry(id);
 
         return ResponseEntity.of(Optional.of(energyCostEntry));

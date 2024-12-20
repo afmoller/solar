@@ -33,12 +33,12 @@ public class EnergyCostService {
 
     @Transactional
     public EnergyCostEntry createEnergyCostEntry(EnergyCostEntry energyCostEntry) {
-        return saveReturnOnInvestmentEntry(energyCostEntry);
+        return saveEnergyCostEntry(energyCostEntry);
     }
 
     @Transactional
     public EnergyCostEntry updateEnergyCostEntry(EnergyCostEntry energyCostEntry) {
-        return saveReturnOnInvestmentEntry(energyCostEntry);
+        return saveEnergyCostEntry(energyCostEntry);
     }
 
     @Transactional
@@ -54,7 +54,7 @@ public class EnergyCostService {
         return energyCostMapper.map(referenceById);
     }
 
-    private EnergyCostEntry saveReturnOnInvestmentEntry(EnergyCostEntry energyCostEntryToSave) {
+    private EnergyCostEntry saveEnergyCostEntry(EnergyCostEntry energyCostEntryToSave) {
         EnergyCostEntryEntity savedEnergyCostEntryEntity = energyCostRepository.save(energyCostMapper.map(energyCostEntryToSave));
 
         return energyCostMapper.map(savedEnergyCostEntryEntity);
