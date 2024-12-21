@@ -1,30 +1,43 @@
-import Annotation from 'chartjs-plugin-annotation';
+import { DatePipe } from "@angular/common";
 import { BaseChartDirective } from 'ng2-charts';
+import Annotation from 'chartjs-plugin-annotation';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
-import { Component, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { MatTableDataSource, MatTableModule } from '@angular/material/table'
-import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
-import { EnergySaleCompensationService } from 'src/app/core/services/energy-sale-compensation.service';
-import { EnergySaleCompensationCreateentry } from 'src/app/core/models/energysalecompensationcreateentry';
 import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
+import { EnergySaleCompensationService } from 'src/app/core/services/energy-sale-compensation.service';
+import { EnergySaleCompensationEntryDialogComponent } from '../../components/dialog/energysalecompensationentrydialog/energysalecompensationentrydialog.component';
+
+import { 
+  Chart,
+  ChartConfiguration,
+  ChartEvent,
+  ChartType,
+  Colors 
+} from 'chart.js';
+
+import {
+  Component,
+  inject,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
+
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS
 } from "@angular/material/core";
-import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import { DatePipe } from "@angular/common";
-import moment from 'moment';
-import { EnergySaleCompensationEntryDialogComponent } from '../../components/dialog/energysalecompensationentrydialog/energysalecompensationentrydialog.component';
-import { MatDialog } from '@angular/material/dialog';
 
 export const MY_FORMATS = {
   parse: {
@@ -75,8 +88,6 @@ export class EnergySaleCompensationComponent implements OnInit {
 
   readonly dialog = inject(MatDialog);
 
-  inputForm: FormGroup;
-
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['compensationdate',
                                 'compensation',
@@ -94,44 +105,15 @@ export class EnergySaleCompensationComponent implements OnInit {
                                          'compensationYear'
                                         ];
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private energySaleCompensationService: EnergySaleCompensationService
-  ) {
-
+  constructor(private energySaleCompensationService: EnergySaleCompensationService) {
     Chart.register(Annotation);
     Chart.register(Colors);
-
-    this.inputForm = this.buildInputForm(formBuilder);
-  }
-
-  formIsInvalid() {
-    return !this.inputForm.valid;
-  }
-
-  onSubmit(): void {
-    let compensationDateValue: Date = this.inputForm.get('compensationdate')?.value.toDate();
-    let productionfromValue: Date = this.inputForm.get('productionfrom')?.value.toDate();
-    let productionToValue: Date = this.inputForm.get('productionto')?.value.toDate();
-
-    const newEntry: EnergySaleCompensationCreateentry =  {
-      compensationDate: compensationDateValue.toLocaleDateString(),
-      productionFromDate: productionfromValue.toLocaleDateString(),
-      productionToDate: productionToValue.toLocaleDateString(),
-      compensationAmountInMinorUnit: this.inputForm.get('compensation')?.value,
-      productionYear: this.inputForm.get('productionyear')?.value
-    }
-
-    this.energySaleCompensationService.create(newEntry).subscribe(data => {
-      this.inputForm.reset();
-      this.loadData();
-    });
   }
 
   ngOnInit() {
     this.loadData();
   }
-
+  
   loadData() {
     this.energySaleCompensationService.getAll().subscribe(data => {
       this.dataSource.data = data;
@@ -150,33 +132,6 @@ export class EnergySaleCompensationComponent implements OnInit {
         child.chart?.update()
       });
     });
-  }
-
-  buildInputForm(formBuilder: FormBuilder): FormGroup  {
-    let inputForm: FormGroup = formBuilder.group({
-      compensationdate: [
-        moment(),
-        Validators.required
-      ],
-      productionfrom: [
-        moment(),
-        Validators.required
-      ],
-      productionto: [
-        moment(),
-        Validators.required
-      ],
-      compensation: [
-        '',
-        Validators.required
-      ],
-      productionyear: [
-        '',
-        Validators.required
-      ],
-    });
-
-    return inputForm;
   }
 
   getValueIfPositive(amount: number, isPositive: boolean): string {
@@ -235,7 +190,6 @@ export class EnergySaleCompensationComponent implements OnInit {
   divideValueByTenThousand(valueToDivideByTenThousand: number): string {
     return (valueToDivideByTenThousand / 10000).toString();
   }
-
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
