@@ -1,11 +1,27 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import Annotation from 'chartjs-plugin-annotation';
-import { YearOverYearEntry } from '../../../core/models/yearoveryearentry';
-import { YearOverYearEntryService } from '../../../core/services/year-over-year.service';
 import { ActivatedRoute } from '@angular/router';
-import { NgFor } from '@angular/common';
+import Annotation from 'chartjs-plugin-annotation';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { YearOverYearEntryService } from '../../../core/services/year-over-year.service';
+
+import {
+  OnInit,
+  Component,
+  ViewChild
+} from '@angular/core';
+
+import {
+  Chart,
+  Colors,
+  ChartType,
+  ChartEvent,
+  ChartConfiguration
+} from 'chart.js';
+
+import {
+  MatTableModule,
+  MatTableDataSource
+} from '@angular/material/table'
 
 @Component({
   selector: 'app-year-over-year',
@@ -14,8 +30,9 @@ import { NgFor } from '@angular/common';
   standalone: true,
 
   imports: [
-    NgFor,
-    BaseChartDirective,
+    MatTableModule,
+    MatSidenavModule,
+    BaseChartDirective
   ]
 })
 
@@ -25,10 +42,13 @@ export class YearOverYearComponent implements OnInit {
   valueType: string = '';
   menuTitle: string = '';
 
-  tableRows : string[][] = [];
   private monthLabels: string[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   displayedColumns: string[] = ['Year'].concat(this.monthLabels);
-  
+  dataSourceTableRows = new MatTableDataSource<string[]>();
+
+  events: string[] = [];
+  opened: boolean = true;
+
   constructor(
     private yearOverYearEntryService: YearOverYearEntryService,
     private route: ActivatedRoute) {
@@ -46,8 +66,6 @@ export class YearOverYearComponent implements OnInit {
       this.valueType = this.valueType ?? 'production';
       this.menuTitle = this.getDiagramTitle(this.valueType, this.mode);
 
-      this.tableRows = [];
-
       this.loadDataAndUpdateDiagram();
     });
   }
@@ -63,39 +81,38 @@ export class YearOverYearComponent implements OnInit {
       let index = 0;
 
       let monthValues = data.monthValues;
-      
+      let tableRows : string[][] = [];
+
       for (let i = 0; i < monthValues.length; i += nrOfMonthsPerYear) {
         const twelveMonths = monthValues.slice(i, i + nrOfMonthsPerYear);
 
         if(this.mode === 'normal') {
-          this.lineChartData.datasets[index].data = this.divideByThousand(twelveMonths);
+          this.lineChartData.datasets[index].data = this.doDivideValue(this.valueType) ? this.divideByThousand(twelveMonths) : twelveMonths;
         } else {
           for(let i = 0; i < 12; i++) {
             if (i > 0) {
-              twelveMonths[i] = twelveMonths[i] + twelveMonths[i-1];     
-            } 
+              twelveMonths[i] = twelveMonths[i] + twelveMonths[i-1];
+            }
           }
-          this.lineChartData.datasets[index].data = this.divideByThousand(twelveMonths);
-          
+          this.lineChartData.datasets[index].data = this.doDivideValue(this.valueType) ? this.divideByThousand(twelveMonths) : twelveMonths;
         }
 
         if (data.years[index] == '-1') {
-          data.years[index] = 'Lowest'; 
+          data.years[index] = 'Lowest';
         }
         if (data.years[index] == '-2') {
-          data.years[index] = 'Highest'; 
+          data.years[index] = 'Highest';
         }
         if (data.years[index] == '-3') {
-          data.years[index] = 'Average'; 
+          data.years[index] = 'Average';
         }
 
         this.lineChartData.datasets[index].label = data.years[index];
-              
+
         let tableRow: Array<string> = [];
         tableRow.push(String(data.years[index]));
-        tableRow = tableRow.concat(this.divideByThousand(twelveMonths).map(String));
-
-        this.tableRows.push(tableRow);
+        tableRow = tableRow.concat((this.doDivideValue(this.valueType) ? this.divideByThousand(twelveMonths) : twelveMonths).map(String));
+        tableRows.push(tableRow);
 
         index++;
       }
@@ -110,16 +127,21 @@ export class YearOverYearComponent implements OnInit {
         }
       }
 
-      this.lineChartData.labels = this.monthLabels;  
+      this.lineChartData.labels = this.monthLabels;
       this.chart?.update();
       this.chart?.render();
 
-    }); 
+      this.dataSourceTableRows.data = tableRows;
+    });
+  }
+
+  private doDivideValue(valueType: string): boolean {
+    return valueType !== 'autarky';
   }
 
   private getDiagramTitle(valueType: string, mode: string): string {
     let suffix: string = '';
-    
+
     if (valueType === 'autarky') {
       suffix = 'in %'
     } else {
@@ -134,7 +156,7 @@ export class YearOverYearComponent implements OnInit {
         }
       }
     }
-    
+
     if (valueType) {
       let diagramTitle: string = '';
 
@@ -156,8 +178,8 @@ export class YearOverYearComponent implements OnInit {
           break;
         case 'autarky':
           diagramTitle =  'Autarky';
-          break;  
-      } 
+          break;
+      }
 
       return diagramTitle + ' ' + suffix;
     }
@@ -225,7 +247,7 @@ export class YearOverYearComponent implements OnInit {
     },
 
     plugins: {
-      legend: { 
+      legend: {
         display: true,
         position: 'bottom'
       },

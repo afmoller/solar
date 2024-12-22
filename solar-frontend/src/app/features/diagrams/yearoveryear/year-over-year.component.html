@@ -1,25 +1,82 @@
-<div class="diagram-container">
-  <canvas
-    baseChart
-    class="chart"
-    [data]="lineChartData"
-    [options]="lineChartOptions"
-    [type]="lineChartType"
-    (chartHover)="chartHovered($event)"
-    (chartClick)="chartClicked($event)">
-  </canvas>
-</div>
-<div class="table-container">
-  <table class="value-table">
-    <tr class="table-header">
-      <th class="table-header-cell" *ngFor="let columnName of displayedColumns">
-        {{ columnName }}
-      </th>
-    </tr>
-    <tr class="table-row" *ngFor="let row of tableRows" > 
-      <td class="table-cell" *ngFor="let column of row">
-        {{ column }}
-      </td>
-    </tr>
-  </table>
-</div>
+<mat-sidenav-container autosize>
+  <mat-sidenav-content>
+
+    <div class="diagram-container">
+      <canvas
+        baseChart
+        class="chart"
+        [data]="lineChartData"
+        [options]="lineChartOptions"
+        [type]="lineChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="sidenav.toggle()">
+      </canvas>
+    </div>
+
+  </mat-sidenav-content>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" position="end">
+
+    <div class="table-container">
+
+      <table mat-table [dataSource]="dataSourceTableRows" class="mat-elevation-z8">
+        <ng-container matColumnDef="Year">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Year</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[0]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Jan">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Jan</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[1]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Feb">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Feb</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[2]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Mar">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Mar</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[3]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Apr">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Apr</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[4]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="May">
+          <th mat-header-cell *matHeaderCellDef class="align-center">May</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[5]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Jun">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Jun</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[6]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Jul">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Jul</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[7]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Aug">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Aug</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[8]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Sep">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Sep</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[9]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Oct">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Oct</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[10]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Nov">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Nov</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[11]}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Dec">
+          <th mat-header-cell *matHeaderCellDef class="align-center">Dec</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{row[12]}}</td>
+        </ng-container>
+        
+        <!-- Header and Row Declarations -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
+        <tr mat-row *matRowDef="let row; let odd = odd; columns: displayedColumns" [class.striped-row]="odd"></tr>
+      </table>
+    </div>
+
+  </mat-sidenav>
+</mat-sidenav-container>
