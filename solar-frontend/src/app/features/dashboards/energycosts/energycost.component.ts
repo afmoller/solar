@@ -14,14 +14,14 @@ import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompe
 import { EnergyCostEntryDialogComponent } from '../../components/dialog/energycostentrydialog/energycostentrydialog.component';
 
 import { 
-  Component,
   inject,
-  OnInit
+  OnInit,
+  Component
 } from '@angular/core';
 
 import { 
-  MatTableDataSource,
-  MatTableModule
+  MatTableModule,
+  MatTableDataSource
 } from '@angular/material/table'
 
 import { 
