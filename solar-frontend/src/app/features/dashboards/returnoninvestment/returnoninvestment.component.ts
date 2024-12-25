@@ -1,29 +1,49 @@
-import Annotation from 'chartjs-plugin-annotation';
+import { DatePipe } from "@angular/common";
+import { FormsModule } from '@angular/forms';
 import { BaseChartDirective } from 'ng2-charts';
+import Annotation from 'chartjs-plugin-annotation';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatNativeDateModule } from '@angular/material/core';
-import { Component, inject, model, OnInit, ViewChild } from '@angular/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'
-import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ReturnOnInvestmentDashboard } from 'src/app/core/models/returnoninvestmentdashboard';
-import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
+import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { ReturnOnInvestmentEntry } from 'src/app/core/models/returnoninvestmententry';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
+import { ReturnOnInvestmentEntryDialogComponent } from '../../components/dialog/returnoninvestmentsentrydialog/returnoninvestmentsentrydialog.component';
+
+import { 
+  MatTableModule,
+  MatTableDataSource
+} from '@angular/material/table';
+
+import { 
+  inject,
+  signal,
+  OnInit,
+  Component,
+  ViewChild
+} from '@angular/core';
+
+import {
+  Chart,
+  ChartConfiguration,
+  ChartEvent,
+  ChartType,
+  Colors
+} from 'chart.js';
+
 import {
   DateAdapter,
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS
 } from "@angular/material/core";
-import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import { DatePipe } from "@angular/common";
-import { MatDialog } from '@angular/material/dialog';
-import { ReturnOnInvestmentEntryDialogComponent } from '../../components/dialog/returnoninvestmentsentrydialog/returnoninvestmentsentrydialog.component';
+
 
 export const MY_FORMATS = {
   parse: {
@@ -44,17 +64,18 @@ export const MY_FORMATS = {
   standalone: true,
 
   imports: [
-    MatSidenavModule,
+    FormsModule,
     MatIconModule,
     MatInputModule,
     MatTableModule,
     MatRadioModule,
     MatButtonModule,
+    MatSidenavModule,
+    MatCheckboxModule,
     BaseChartDirective,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatNativeDateModule,
-    ReactiveFormsModule
+    MatNativeDateModule
   ],
   providers: [
     MatDatepickerModule,
@@ -73,7 +94,7 @@ export const MY_FORMATS = {
 
 export class ReturnOnInvestmentComponent implements OnInit {
 
-  readonly name = model('');
+  checked = signal(false);
   readonly dialog = inject(MatDialog);
 
   totalCost: string = '0';
@@ -99,9 +120,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
   events: string[] = [];
   opened: boolean = true;
 
-  constructor(
-    private returnOnInvestmentService: ReturnOnInvestmentService
-  ) {
+  constructor(private returnOnInvestmentService: ReturnOnInvestmentService) {
     Chart.register(Annotation);
     Chart.register(Colors);
   }
@@ -149,11 +168,6 @@ export class ReturnOnInvestmentComponent implements OnInit {
         this.updateReturnOnInvestmentEntry(returnOnInvestmentToUpdate);
       }
     });
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   ngOnInit() {
@@ -284,5 +298,9 @@ export class ReturnOnInvestmentComponent implements OnInit {
     active?: object[];
   }): void {
 
+  }
+
+  isHidden(): boolean {
+    return !this.checked();
   }
 }

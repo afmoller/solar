@@ -1,33 +1,39 @@
 import { DatePipe } from "@angular/common";
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
 import { EnergySaleCompensationService } from 'src/app/core/services/energy-sale-compensation.service';
 import { EnergySaleCompensationEntryDialogComponent } from '../../components/dialog/energysalecompensationentrydialog/energysalecompensationentrydialog.component';
 
 import { 
+  MatTableModule,
+  MatTableDataSource
+} from '@angular/material/table';
+
+import { 
   Chart,
-  ChartConfiguration,
-  ChartEvent,
+  Colors, 
   ChartType,
-  Colors 
+  ChartEvent,
+  ChartConfiguration
 } from 'chart.js';
 
 import {
-  Component,
   inject,
   OnInit,
+  signal,
+  Component,
   QueryList,
   ViewChild,
   ViewChildren
@@ -58,16 +64,17 @@ export const MY_FORMATS = {
   standalone: true,
 
   imports: [
+    FormsModule,
     MatIconModule,
     MatInputModule,
     MatRadioModule,
     MatTableModule,
     MatButtonModule,
+    MatSidenavModule,
     BaseChartDirective,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatNativeDateModule,
-    ReactiveFormsModule
+    MatNativeDateModule
   ],
   providers: [
     MatDatepickerModule,
@@ -86,25 +93,23 @@ export const MY_FORMATS = {
 
 export class EnergySaleCompensationComponent implements OnInit {
 
+  checked = signal(false);
   readonly dialog = inject(MatDialog);
-
-  dataSource = new MatTableDataSource();
+  
+  dataSourceCumulated = new MatTableDataSource();
   displayedColumns: string[] = ['compensationdate',
                                 'compensation',
-                                'productionyear',
+                                'compensationCumulated',
                                 'productionfrom',
                                 'productionto',
-                                'delete'
+                                'productionyear',
+                                'compensationYear',
+                                'actions'
                                ];
 
-  dataSourceCumulated = new MatTableDataSource();
-  displayedColumnsCumulated: string[] = ['compensationDate',
-                                         'compensation',
-                                         'compensationCumulated',
-                                         'productionYear',
-                                         'compensationYear'
-                                        ];
-
+  events: string[] = [];
+  opened: boolean = true;
+  
   constructor(private energySaleCompensationService: EnergySaleCompensationService) {
     Chart.register(Annotation);
     Chart.register(Colors);
@@ -116,7 +121,6 @@ export class EnergySaleCompensationComponent implements OnInit {
   
   loadData() {
     this.energySaleCompensationService.getAll().subscribe(data => {
-      this.dataSource.data = data;
       this.dataSourceCumulated.data = this.createDataSourceCumulated(data);
 
       this.lineChartData.datasets[0].data = this.createCompensationDataSet(data);
@@ -125,29 +129,12 @@ export class EnergySaleCompensationComponent implements OnInit {
       this.lineChartDataCumulated.datasets[0].data = this.createCompensationDataSetCumulated(data);
       this.lineChartDataCumulated.labels =  this.getDates(data);
 
-      this.dataSource.data = this.dataSource.data.reverse();
       this.dataSourceCumulated.data = this.dataSourceCumulated.data.reverse();
 
       this.charts?.forEach((child) => {
         child.chart?.update()
       });
     });
-  }
-
-  getValueIfPositive(amount: number, isPositive: boolean): string {
-    if (isPositive) {
-      return this.formatValue(amount);
-    } else {
-      return '';
-    }
-  }
-
-  getValueIfNegative(amount: number, isPositive: boolean): string {
-    if (!isPositive) {
-      return '-' + this.formatValue(amount);
-    } else {
-      return '';
-    }
   }
 
   formatValue(amountInMinor: number): string {
@@ -320,7 +307,9 @@ export class EnergySaleCompensationComponent implements OnInit {
         compensation: element.compensationAmountInMinorUnit,
         productionYear: element.productionYear,
         compensationCumulated: cumulated,
-        oddYear: element.productionYear % 2 === 0
+        oddYear: element.productionYear % 2 === 0,
+        productionFromDate: element.productionFromDate,
+        productionToDate: element.productionToDate
       }
 
       dataSet.push(dataSetRow);
@@ -372,5 +361,9 @@ export class EnergySaleCompensationComponent implements OnInit {
     this.energySaleCompensationService.update(energySaleCompensationToUpdate).subscribe(updatedEnergySaleCompensation => {
       this.loadData();
     })
+  }
+
+  isHidden(): boolean {
+    return !this.checked();
   }
 }

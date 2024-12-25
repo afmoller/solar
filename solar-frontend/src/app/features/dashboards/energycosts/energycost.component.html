@@ -45,12 +45,23 @@
           <td mat-cell *matCellDef="let row" class="align-center">{{divideValueByHundred(row.valueAddedTaxPercentageRateInMinorUnit)}}%</td>
         </ng-container>
         <ng-container matColumnDef="deleteenergycost">
-          <th mat-header-cell *matHeaderCellDef class="align-center">Actions</th>
+          <th mat-header-cell *matHeaderCellDef>
+            <input
+              [ngModel]="checked()"
+              (ngModelChange)="checked.set($event)"
+              id="actions"
+              type="checkbox"
+              name="actions"     
+            />
+            <button mat-raised-button (click)="openCreateDialog()" [hidden]="isHidden()">
+              <mat-icon>add_box</mat-icon>
+            </button>
+          </th>
           <td mat-cell *matCellDef="let row" class="align-center">
-            <button mat-raised-button (click)="openEditDialog(row.id)">
+            <button mat-raised-button (click)="openEditDialog(row.id)" [hidden]="isHidden()">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-raised-button (click)="deleteEnergyCostRow(row.id)">
+            <button mat-raised-button (click)="deleteEnergyCostRow(row.id)" [hidden]="isHidden()">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
@@ -62,11 +73,5 @@
 
       </table>
     </div>
-
-    
-
-  </div>
-  <div>
-    <button mat-raised-button (click)="openCreateDialog()">New entry</button>
   </div>
 </div>

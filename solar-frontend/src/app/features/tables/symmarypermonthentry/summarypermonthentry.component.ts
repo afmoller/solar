@@ -1,16 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
-import { SummaryPerMonthEntryService } from 'src/app/core/services/summary-per-month-entry.service';
 import { Summarypermonthentry } from 'src/app/core/models/summarypermonthentry';
+import { SummaryPerMonthEntryService } from 'src/app/core/services/summary-per-month-entry.service';
+
+import { 
+  Component,
+  OnInit
+} from '@angular/core';
+
+import {
+  MatTableModule,
+  MatTableDataSource
+} from '@angular/material/table'
 
 @Component({
   selector: 'app-summarypermonthentry',
   templateUrl: './summarypermonthentry.component.html',
   styleUrls: ['./summarypermonthentry.component.scss'],
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule]
+  
+  imports: [
+    MatInputModule,
+    MatTableModule,
+    MatFormFieldModule
+  ]
 })
 export class SummarypermonthentryComponent implements OnInit {
 
@@ -24,9 +37,7 @@ export class SummarypermonthentryComponent implements OnInit {
                                 'autarchy'
                               ];
 
-  constructor(
-    private summaryPerMonthEntryService: SummaryPerMonthEntryService
-  ) {}
+  constructor(private summaryPerMonthEntryService: SummaryPerMonthEntryService) {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

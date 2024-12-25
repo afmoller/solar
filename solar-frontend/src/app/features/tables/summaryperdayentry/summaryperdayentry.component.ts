@@ -1,16 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
-import { SummaryPerDayEntryService } from '../../../core/services/summary-per-day-entry.service';
 import { Summaryperdayentry } from 'src/app/core/models/summaryperdayentry';
+import { SummaryPerDayEntryService } from '../../../core/services/summary-per-day-entry.service';
+
+import {
+  OnInit,
+  Component
+} from '@angular/core';
+
+import { 
+  MatTableModule,
+  MatTableDataSource
+} from '@angular/material/table'
 
 @Component({
   selector: 'app-summaryperdayentry',
   templateUrl: './summaryperdayentry.component.html',
   styleUrls: ['./summaryperdayentry.component.scss'],
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule]
+  
+  imports: [
+    MatInputModule,
+    MatTableModule,
+    MatFormFieldModule
+  ]
 })
 export class SummaryperdayentryComponent implements OnInit {
 
@@ -59,7 +72,7 @@ export class SummaryperdayentryComponent implements OnInit {
         entry.autarchy = Math.round((entry.autarchy + Number.EPSILON) * 100) / 100;
       });
 
-      this.dataSource.data = summaryPerDayEntries;
+      this.dataSource.data = summaryPerDayEntries.reverse();
     });
   }
 }

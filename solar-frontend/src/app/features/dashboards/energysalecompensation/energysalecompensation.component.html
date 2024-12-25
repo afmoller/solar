@@ -1,111 +1,92 @@
-<div class="table">
-
-  <div class="content-container">
-    <div class="content-container">
+<mat-sidenav-container autosize>
+  <mat-sidenav-content (click)="sidenav.toggle()">
+ 
+    <div class="diagram-content-container">
       <canvas
         baseChart
         height="350"
         [data]="lineChartData"
         [options]="lineChartOptions"
         [type]="lineChartType"
-        (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)">
+        (chartHover)="chartHovered($event)">
       </canvas>
-
     </div>
-    <div class="content-container">
+    <div class="diagram-content-container">
         <canvas
           baseChart
           height="350"
           [data]="lineChartDataCumulated"
           [options]="lineChartOptions"
           [type]="lineChartType"
-          (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)">
+          (chartHover)="chartHovered($event)">
         </canvas>
     </div>
+   
+  </mat-sidenav-content>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" position="end">
 
     <div class="content-container">
-      <div class="table-container-cumulated">
+      <div class="table-container">
 
-          <table mat-table [dataSource]="dataSourceCumulated" class="mat-elevation-z8" >
-            <ng-container matColumnDef="compensationDate">
-              <th mat-header-cell *matHeaderCellDef>Compensation date</th>
-              <td mat-cell *matCellDef="let row"> {{row.compensationDate}} </td>
-            </ng-container>
-            <ng-container matColumnDef="compensation">
-              <th mat-header-cell *matHeaderCellDef>Compensation (CHF)</th>
-              <td mat-cell *matCellDef="let row">{{formatValue(row.compensation)}}</td>
-            </ng-container>
-            <ng-container matColumnDef="compensationCumulated">
-              <th mat-header-cell *matHeaderCellDef>Compensation cumulated</th>
-              <td mat-cell *matCellDef="let row"> {{formatValue(row.compensationCumulated)}} </td>
-            </ng-container>
-            <ng-container matColumnDef="productionYear">
-              <th mat-header-cell *matHeaderCellDef>Production year</th>
-              <td mat-cell *matCellDef="let row" class="{{oddOrEven(row.productionYear)}}">{{row.productionYear}}</td>
-            </ng-container>
-            <ng-container matColumnDef="compensationYear">
-              <th mat-header-cell *matHeaderCellDef>Compensation year</th>
-              <td mat-cell *matCellDef="let row" class="{{oddOrEven(extractYear(row.compensationDate))}}">{{extractYear(row.compensationDate)}}</td>
-            </ng-container>
+        <table mat-table [dataSource]="dataSourceCumulated" class="mat-elevation-z8">
+          <ng-container matColumnDef="compensationdate">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let row"> {{row.compensationDate}} </td>
+          </ng-container>
+          <ng-container matColumnDef="compensation">
+            <th mat-header-cell *matHeaderCellDef>CHF</th>
+            <td mat-cell *matCellDef="let row">{{formatValue(row.compensation)}}</td>
+          </ng-container>
+          <ng-container matColumnDef="compensationCumulated">
+            <th mat-header-cell *matHeaderCellDef>CHF cumulated</th>
+            <td mat-cell *matCellDef="let row"> {{formatValue(row.compensationCumulated)}} </td>
+          </ng-container>
+          <ng-container matColumnDef="productionfrom">
+            <th mat-header-cell *matHeaderCellDef>From</th>
+            <td mat-cell *matCellDef="let row"> {{row.productionFromDate}} </td>
+          </ng-container>
+          <ng-container matColumnDef="productionto">
+            <th mat-header-cell *matHeaderCellDef>To</th>
+            <td mat-cell *matCellDef="let row" class="align-right"> {{row.productionToDate}} </td>
+          </ng-container>
+          <ng-container matColumnDef="productionyear">
+            <th mat-header-cell *matHeaderCellDef>Production year</th>
+            <td mat-cell *matCellDef="let row">{{row.productionYear}}</td>
+          </ng-container>
+          <ng-container matColumnDef="compensationYear">
+            <th mat-header-cell *matHeaderCellDef>Compensation year</th>
+            <td mat-cell *matCellDef="let row" class="{{oddOrEven(extractYear(row.compensationDate))}}">{{extractYear(row.compensationDate)}}</td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>
+              <input
+                [ngModel]="checked()"
+                (ngModelChange)="checked.set($event)"
+                id="actions"
+                type="checkbox"
+                name="actions"     
+              />
+              <button mat-raised-button (click)="openCreateDialog()" [hidden]="isHidden()">
+                <mat-icon>add_box</mat-icon>
+              </button>
+            </th>
+            <td mat-cell *matCellDef="let row" class="align-right">
+              <button mat-raised-button (click)="openEditDialog(row.id)" [hidden]="isHidden()">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-raised-button (click)="deleteRow(row.id)" [hidden]="isHidden()">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
 
-            <!-- Header and Row Declarations -->
-            <tr mat-header-row *matHeaderRowDef="displayedColumnsCumulated sticky: true" class="header"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsCumulated"></tr>
-          </table>
+          <!-- Header and Row Declarations -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns" class="{{oddOrEven(row.productionYear)}}"></tr>
 
-
+        </table>
       </div>
     </div>
-  </div>
 
-  <div class="content-container">
-    <div class="table-container">
-
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="compensationdate">
-          <th mat-header-cell *matHeaderCellDef>Compensation date</th>
-          <td mat-cell *matCellDef="let row"> {{row.compensationDate}} </td>
-        </ng-container>
-        <ng-container matColumnDef="compensation">
-          <th mat-header-cell *matHeaderCellDef>Compensation (CHF)</th>
-          <td mat-cell *matCellDef="let row">{{formatValue(row.compensationAmountInMinorUnit)}}</td>
-        </ng-container>
-        <ng-container matColumnDef="productionyear">
-          <th mat-header-cell *matHeaderCellDef>Production year</th>
-          <td mat-cell *matCellDef="let row">{{row.productionYear}}</td>
-        </ng-container>
-        <ng-container matColumnDef="productionfrom">
-          <th mat-header-cell *matHeaderCellDef>Production from</th>
-          <td mat-cell *matCellDef="let row"> {{row.productionFromDate}} </td>
-        </ng-container>
-        <ng-container matColumnDef="productionto">
-          <th mat-header-cell *matHeaderCellDef>Production to</th>
-          <td mat-cell *matCellDef="let row" class="align-right"> {{row.productionToDate}} </td>
-        </ng-container>
-        <ng-container matColumnDef="delete">
-          <th mat-header-cell *matHeaderCellDef>Delete row</th>
-          <td mat-cell *matCellDef="let row" class="align-right">
-            <button mat-raised-button (click)="openEditDialog(row.id)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-raised-button (click)="deleteRow(row.id)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        <!-- Header and Row Declarations -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="{{oddOrEven(row.productionYear)}}"></tr>
-
-      </table>
-    </div>
-
-    <div>
-      <button mat-raised-button (click)="openCreateDialog()">New entry</button>
-    </div>
-   
-  </div>
-</div>
+  </mat-sidenav>
+</mat-sidenav-container>

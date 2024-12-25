@@ -1,4 +1,5 @@
 import { DatePipe } from "@angular/common";
+import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -16,17 +17,14 @@ import { EnergyCostEntryDialogComponent } from '../../components/dialog/energyco
 import { 
   inject,
   OnInit,
-  Component
+  Component,
+  signal
 } from '@angular/core';
 
 import { 
   MatTableModule,
   MatTableDataSource
 } from '@angular/material/table'
-
-import { 
-  ReactiveFormsModule,
-} from '@angular/forms';
 
 import {
   DateAdapter,
@@ -53,6 +51,7 @@ export const MY_FORMATS = {
   standalone: true,
 
   imports: [
+    FormsModule,
     MatIconModule,
     MatInputModule,
     MatRadioModule,
@@ -60,8 +59,7 @@ export const MY_FORMATS = {
     MatButtonModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatNativeDateModule,
-    ReactiveFormsModule
+    MatNativeDateModule
   ],
   providers: [
     MatDatepickerModule,
@@ -80,6 +78,7 @@ export const MY_FORMATS = {
 
 export class EnergyCostComponent implements OnInit {
 
+  checked = signal(false);
   readonly dialog = inject(MatDialog);
 
   dataSourceEnergyCosts = new MatTableDataSource();
@@ -106,7 +105,7 @@ export class EnergyCostComponent implements OnInit {
 
   loadEnergyCostData() {
     this.energyCostService.getAll().subscribe(data => {
-      this.dataSourceEnergyCosts.data = data;
+      this.dataSourceEnergyCosts.data = data.reverse();
     })
   }
 
@@ -161,10 +160,10 @@ export class EnergyCostComponent implements OnInit {
 
   totalCostVatExcludedInTenThousands(energyCostentry: EnergyCostentry): number {
     return energyCostentry.electricalGridCostInTenThousands +
-                                      energyCostentry.energyCostPerKwhInTenThousands +
-                                      energyCostentry.feeOneInTenThousands +
-                                      energyCostentry.feeTwoInTenThousands +
-                                      energyCostentry.feeThreeInTenThousands;
+      energyCostentry.energyCostPerKwhInTenThousands +
+      energyCostentry.feeOneInTenThousands +
+      energyCostentry.feeTwoInTenThousands +
+      energyCostentry.feeThreeInTenThousands;
   }
 
   totalCostVatIncluded(energyCostentry: EnergyCostentry): string {
@@ -235,5 +234,9 @@ export class EnergyCostComponent implements OnInit {
     this.energyCostService.update(energyCostToUpdate).subscribe(updatedEnergyCost => {
       this.loadEnergyCostData();
     })
+  }
+
+  isHidden(): boolean {
+    return !this.checked();
   }
 }
