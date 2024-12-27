@@ -1,0 +1,21 @@
+{
+  "extends": "stylelint-config-sass-guidelines",
+  "plugins": [
+    "stylelint-no-unsupported-browser-features",
+    "stylelint-use-nesting"
+  ],
+  "rules": {
+    "plugin/no-unsupported-browser-features": [
+      true,
+      {
+        "severity": "warning"
+      }
+    ],
+    "csstools/use-nesting": [
+      true,
+      {
+        "except": ["&:hover"]
+      }
+    ]
+  }
+}
