@@ -46,36 +46,35 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-returnoninvestmentsentrydialog',
-  templateUrl: 'returnoninvestmentsentrydialog.component.html',
-  styleUrls: ['returnoninvestmentsentrydialog.component.scss'],
-  standalone: true,
-  imports: [
-    FormsModule,
-    MatIconModule,
-    MatDialogClose,
-    MatInputModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatDialogActions,
-    MatDialogContent,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
-  ],
-  providers: [
-    MatDatepickerModule,
-    {    
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE]
-    },
-    { 
-      provide: MAT_DATE_FORMATS,
-      useValue: MY_FORMATS
-    },
-    DatePipe,
-  ]
+    selector: 'app-returnoninvestmentsentrydialog',
+    templateUrl: 'returnoninvestmentsentrydialog.component.html',
+    styleUrls: ['returnoninvestmentsentrydialog.component.scss'],
+    imports: [
+        FormsModule,
+        MatIconModule,
+        MatDialogClose,
+        MatInputModule,
+        MatRadioModule,
+        MatButtonModule,
+        MatDialogActions,
+        MatDialogContent,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
+    ],
+    providers: [
+        MatDatepickerModule,
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE]
+        },
+        {
+            provide: MAT_DATE_FORMATS,
+            useValue: MY_FORMATS
+        },
+        DatePipe,
+    ]
 })
 
 export class ReturnOnInvestmentEntryDialogComponent {

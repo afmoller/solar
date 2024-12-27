@@ -24,16 +24,14 @@ import {
 } from '@angular/material/table'
 
 @Component({
-  selector: 'app-year-over-year',
-  templateUrl: './year-over-year.component.html',
-  styleUrls: ['./year-over-year.component.scss'],
-  standalone: true,
-
-  imports: [
-    MatTableModule,
-    MatSidenavModule,
-    BaseChartDirective
-  ]
+    selector: 'app-year-over-year',
+    templateUrl: './year-over-year.component.html',
+    styleUrls: ['./year-over-year.component.scss'],
+    imports: [
+        MatTableModule,
+        MatSidenavModule,
+        BaseChartDirective
+    ]
 })
 
 export class YearOverYearComponent implements OnInit {

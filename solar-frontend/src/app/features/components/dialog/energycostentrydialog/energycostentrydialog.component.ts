@@ -47,37 +47,36 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-energycostentrydialog',
-  templateUrl: 'energycostentrydialog.component.html',
-  styleUrls: ['energycostentrydialog.component.scss'],
-  standalone: true,
-  imports: [
-    FormsModule,
-    MatIconModule,
-    MatDialogClose,
-    MatInputModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatDialogActions,
-    MatDialogContent,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    ReactiveFormsModule,
-    MatTooltipModule
-  ],
-  providers: [
-    MatDatepickerModule,
-    {    
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE]
-    },
-    { 
-      provide: MAT_DATE_FORMATS,
-      useValue: MY_FORMATS
-    },
-    DatePipe,
-  ]
+    selector: 'app-energycostentrydialog',
+    templateUrl: 'energycostentrydialog.component.html',
+    styleUrls: ['energycostentrydialog.component.scss'],
+    imports: [
+        FormsModule,
+        MatIconModule,
+        MatDialogClose,
+        MatInputModule,
+        MatRadioModule,
+        MatButtonModule,
+        MatDialogActions,
+        MatDialogContent,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
+        MatTooltipModule
+    ],
+    providers: [
+        MatDatepickerModule,
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE]
+        },
+        {
+            provide: MAT_DATE_FORMATS,
+            useValue: MY_FORMATS
+        },
+        DatePipe,
+    ]
 })
 
 export class EnergyCostEntryDialogComponent {

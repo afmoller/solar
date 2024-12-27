@@ -14,16 +14,14 @@ import {
 } from '@angular/material/table'
 
 @Component({
-  selector: 'app-summarypermonthentry',
-  templateUrl: './summarypermonthentry.component.html',
-  styleUrls: ['./summarypermonthentry.component.scss'],
-  standalone: true,
-  
-  imports: [
-    MatInputModule,
-    MatTableModule,
-    MatFormFieldModule
-  ]
+    selector: 'app-summarypermonthentry',
+    templateUrl: './summarypermonthentry.component.html',
+    styleUrls: ['./summarypermonthentry.component.scss'],
+    imports: [
+        MatInputModule,
+        MatTableModule,
+        MatFormFieldModule
+    ]
 })
 export class SummarypermonthentryComponent implements OnInit {
 

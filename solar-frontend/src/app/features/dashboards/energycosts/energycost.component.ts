@@ -45,35 +45,33 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-energycost',
-  templateUrl: './energycost.component.html',
-  styleUrls: ['./energycost.component.scss'],
-  standalone: true,
-
-  imports: [
-    FormsModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatTableModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
-  providers: [
-    MatDatepickerModule,
-    {    
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE]
-    },
-    { 
-      provide: MAT_DATE_FORMATS,
-      useValue: MY_FORMATS
-    },
-    DatePipe,
-  ],
+    selector: 'app-energycost',
+    templateUrl: './energycost.component.html',
+    styleUrls: ['./energycost.component.scss'],
+    imports: [
+        FormsModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatTableModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatNativeDateModule
+    ],
+    providers: [
+        MatDatepickerModule,
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE]
+        },
+        {
+            provide: MAT_DATE_FORMATS,
+            useValue: MY_FORMATS
+        },
+        DatePipe,
+    ]
 })
 
 export class EnergyCostComponent implements OnInit {

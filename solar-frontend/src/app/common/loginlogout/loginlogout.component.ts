@@ -21,16 +21,15 @@ import {
 } from '@abacritt/angularx-social-login';
 
 @Component({
-  selector: 'app-google-login-logout',
-  templateUrl: './loginlogout.component.html',
-  styleUrl: './loginlogout.component.scss',
-  standalone: true,
-  imports: [
-    NgIf,
-    RouterModule,
-    MatIconModule,
-    GoogleSigninButtonModule
-  ],
+    selector: 'app-google-login-logout',
+    templateUrl: './loginlogout.component.html',
+    styleUrl: './loginlogout.component.scss',
+    imports: [
+        NgIf,
+        RouterModule,
+        MatIconModule,
+        GoogleSigninButtonModule
+    ]
 })
 
 export class LoginLogoutComponent implements OnInit, OnDestroy {

@@ -58,37 +58,35 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-energysalecompensation',
-  templateUrl: './energysalecompensation.component.html',
-  styleUrls: ['./energysalecompensation.component.scss'],
-  standalone: true,
-
-  imports: [
-    FormsModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatTableModule,
-    MatButtonModule,
-    MatSidenavModule,
-    BaseChartDirective,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
-  providers: [
-    MatDatepickerModule,
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE]
-    },
-    {
-      provide: MAT_DATE_FORMATS,
-      useValue: MY_FORMATS
-    },
-    DatePipe,
-  ]
+    selector: 'app-energysalecompensation',
+    templateUrl: './energysalecompensation.component.html',
+    styleUrls: ['./energysalecompensation.component.scss'],
+    imports: [
+        FormsModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatTableModule,
+        MatButtonModule,
+        MatSidenavModule,
+        BaseChartDirective,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatNativeDateModule
+    ],
+    providers: [
+        MatDatepickerModule,
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE]
+        },
+        {
+            provide: MAT_DATE_FORMATS,
+            useValue: MY_FORMATS
+        },
+        DatePipe,
+    ]
 })
 
 export class EnergySaleCompensationComponent implements OnInit {

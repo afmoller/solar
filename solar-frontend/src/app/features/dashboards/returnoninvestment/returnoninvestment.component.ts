@@ -58,38 +58,36 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-returnoninvestment',
-  templateUrl: './returnoninvestment.component.html',
-  styleUrls: ['./returnoninvestment.component.scss'],
-  standalone: true,
-
-  imports: [
-    FormsModule,
-    MatIconModule,
-    MatInputModule,
-    MatTableModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatCheckboxModule,
-    BaseChartDirective,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
-  providers: [
-    MatDatepickerModule,
-    {    
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE]
-    },
-    { 
-      provide: MAT_DATE_FORMATS,
-      useValue: MY_FORMATS
-    },
-    DatePipe,
-  ]
+    selector: 'app-returnoninvestment',
+    templateUrl: './returnoninvestment.component.html',
+    styleUrls: ['./returnoninvestment.component.scss'],
+    imports: [
+        FormsModule,
+        MatIconModule,
+        MatInputModule,
+        MatTableModule,
+        MatRadioModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatCheckboxModule,
+        BaseChartDirective,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatNativeDateModule
+    ],
+    providers: [
+        MatDatepickerModule,
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE]
+        },
+        {
+            provide: MAT_DATE_FORMATS,
+            useValue: MY_FORMATS
+        },
+        DatePipe,
+    ]
 })
 
 export class ReturnOnInvestmentComponent implements OnInit {

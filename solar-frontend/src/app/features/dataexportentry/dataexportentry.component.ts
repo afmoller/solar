@@ -4,15 +4,12 @@ import { DataExportEntryService } from '../../core/services/data-export-entry.se
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-dataexportentry',
-  templateUrl: './dataexportentry.component.html',
-  styleUrls: ['./dataexportentry.component.scss'],
-  standalone: true,
-
-  imports: [
-    ReactiveFormsModule
-  ]
-
+    selector: 'app-dataexportentry',
+    templateUrl: './dataexportentry.component.html',
+    styleUrls: ['./dataexportentry.component.scss'],
+    imports: [
+        ReactiveFormsModule
+    ]
 })
 export class DataexportentryComponent  {
 

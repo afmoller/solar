@@ -22,20 +22,18 @@ interface Month {
 }
 
 @Component({
-  selector: 'app-csvimport',
-  templateUrl: './csvimport.component.html',
-  styleUrls: ['./csvimport.component.scss'],
-  standalone: true,
-
-  imports: [
-    MatIconButton,
-    MatIconModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatProgressBarModule
-  ]
+    selector: 'app-csvimport',
+    templateUrl: './csvimport.component.html',
+    styleUrls: ['./csvimport.component.scss'],
+    imports: [
+        MatIconButton,
+        MatIconModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatProgressBarModule
+    ]
 })
 
 export class CsvImportComponent  {

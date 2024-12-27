@@ -14,19 +14,17 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 @Component({
-  selector: 'app-all',
-  templateUrl: './all.component.html',
-  styleUrls: ['./all.component.scss'],
-  standalone: true,
-
-  imports: [
-    BaseChartDirective,
-    ReactiveFormsModule,
-    MatSidenavModule,
-MatToolbarModule,
-MatIconModule,
-MatExpansionModule
-  ]
+    selector: 'app-all',
+    templateUrl: './all.component.html',
+    styleUrls: ['./all.component.scss'],
+    imports: [
+        BaseChartDirective,
+        ReactiveFormsModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatExpansionModule
+    ]
 })
 
 export class AllComponent implements OnInit {

@@ -14,16 +14,14 @@ import {
 } from '@angular/material/table'
 
 @Component({
-  selector: 'app-summaryperdayentry',
-  templateUrl: './summaryperdayentry.component.html',
-  styleUrls: ['./summaryperdayentry.component.scss'],
-  standalone: true,
-  
-  imports: [
-    MatInputModule,
-    MatTableModule,
-    MatFormFieldModule
-  ]
+    selector: 'app-summaryperdayentry',
+    templateUrl: './summaryperdayentry.component.html',
+    styleUrls: ['./summaryperdayentry.component.scss'],
+    imports: [
+        MatInputModule,
+        MatTableModule,
+        MatFormFieldModule
+    ]
 })
 export class SummaryperdayentryComponent implements OnInit {
 

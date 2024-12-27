@@ -47,37 +47,36 @@ export const MY_FORMATS = {
 };
 
 @Component({
-  selector: 'app-energysalecompensationentrydialog',
-  templateUrl: 'energysalecompensationentrydialog.component.html',
-  styleUrls: ['energysalecompensationentrydialog.component.scss'],
-  standalone: true,
-  imports: [
-    FormsModule,
-    MatIconModule,
-    MatDialogClose,
-    MatInputModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatDialogActions,
-    MatDialogContent,
-    MatTooltipModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    ReactiveFormsModule
-  ],
-  providers: [
-    MatDatepickerModule,
-    {    
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE]
-    },
-    { 
-      provide: MAT_DATE_FORMATS,
-      useValue: MY_FORMATS
-    },
-    DatePipe,
-  ]
+    selector: 'app-energysalecompensationentrydialog',
+    templateUrl: 'energysalecompensationentrydialog.component.html',
+    styleUrls: ['energysalecompensationentrydialog.component.scss'],
+    imports: [
+        FormsModule,
+        MatIconModule,
+        MatDialogClose,
+        MatInputModule,
+        MatRadioModule,
+        MatButtonModule,
+        MatDialogActions,
+        MatDialogContent,
+        MatTooltipModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        ReactiveFormsModule
+    ],
+    providers: [
+        MatDatepickerModule,
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE]
+        },
+        {
+            provide: MAT_DATE_FORMATS,
+            useValue: MY_FORMATS
+        },
+        DatePipe,
+    ]
 })
 
 export class EnergySaleCompensationEntryDialogComponent {

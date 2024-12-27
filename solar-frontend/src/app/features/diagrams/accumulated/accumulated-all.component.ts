@@ -5,14 +5,12 @@ import Annotation from 'chartjs-plugin-annotation';
 import { AccumulatedAllEntryService } from '../../../core/services/accumulated-all-entry.service';
 
 @Component({
-  selector: 'app-accumulated-all',
-  templateUrl: './accumulated-all.component.html',
-  styleUrls: ['./accumulated-all.component.scss'],
-  standalone: true,
-
-  imports: [
-    BaseChartDirective,
-  ]
+    selector: 'app-accumulated-all',
+    templateUrl: './accumulated-all.component.html',
+    styleUrls: ['./accumulated-all.component.scss'],
+    imports: [
+        BaseChartDirective,
+    ]
 })
 
 export class AccumulatedAllComponent implements OnInit {
