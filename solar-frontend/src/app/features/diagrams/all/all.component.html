@@ -20,7 +20,7 @@
       <mat-accordion multi="true">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>Data resolution</mat-panel-title>
+            <mat-panel-title>Resolution</mat-panel-title>
           </mat-expansion-panel-header>
             
           <div>
@@ -45,7 +45,7 @@
         
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>Diagram type</mat-panel-title>
+            <mat-panel-title>Type</mat-panel-title>
           </mat-expansion-panel-header>
                 
           <div>
@@ -62,36 +62,30 @@
 
         <mat-expansion-panel>
           <mat-expansion-panel-header>
-            <mat-panel-title>Date selection</mat-panel-title>
+            <mat-panel-title>Period</mat-panel-title>
           </mat-expansion-panel-header>
-                
-          <div class="table">   
-            <div>
-              <div class="table">
-                <div>
-                  <div>
-                    <span>From</span>
-                  </div>
-                  <div>
-                    <span>To</span>
-                  </div>
-                </div>
-                <div>
-                  <div>
-                    <input id="fromDate" type="date" formControlName="fromDate" (change)="fromDateChange()">
-                    <button class="button" type="button" (click)="decreaseMonth('fromDate')">-</button>
-                    <button class="button" type="button" (click)="increaseMonth('fromDate')">+</button>
-                  </div>
-                  <div>
-                    <input id="toDate" type="date" formControlName="toDate" (change)="toDateChange()">
-                    <button class="button" type="button" (click)="decreaseMonth('toDate')">-</button>
-                    <button class="button" type="button" (click)="increaseMonth('toDate')">+</button>
-                  </div>
-                </div>
-              </div>
+            
+          <div>
+              <span>From</span>
             </div>
-          </div>
-          
+            <div>
+              <input id="fromDate" type="date" formControlName="fromDate" (change)="fromDateChange()" title="Date from">
+            </div>
+            <div>
+              <button class="button" type="button" (click)="decreaseMonth('fromDate')">-</button>
+              <button class="button" type="button" (click)="increaseMonth('fromDate')">+</button>
+            </div>
+            <div>
+              <span>To</span>
+            </div>
+            <div>
+              <input id="toDate" type="date" formControlName="toDate" (change)="toDateChange()" title="Date to"> 
+            </div>
+            <div>
+              <button class="button" type="button" (click)="decreaseMonth('toDate')">-</button>
+              <button class="button" type="button" (click)="increaseMonth('toDate')">+</button>
+            </div>
+            
         </mat-expansion-panel>
 
         <mat-expansion-panel>

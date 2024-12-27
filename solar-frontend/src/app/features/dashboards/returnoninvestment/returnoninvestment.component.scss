@@ -11,8 +11,8 @@
   overflow: auto;
 }
 
-.centered {
-  text-align: center;
+.align-left {
+  text-align: left;
 }
 
 .content-container {
@@ -22,7 +22,7 @@
 
 .cost {
   background-color: rgb(255, 199, 206);
-  text-align: right;
+  text-align: center;
 }
 
 .align-right {
@@ -31,7 +31,7 @@
 
 .income {
   background-color: rgb(198, 239, 206);
-  text-align: right;
+  text-align: center;
 }
 
 .header {
@@ -41,12 +41,14 @@
 td {
   border-left: 1px solid;
   border-bottom: 1px solid;
+  text-align: center;
 }
 
 th {
   border-left: 1px solid;
   border-bottom: 1px solid;
   border-top: 1px solid;
+  text-align: center;
 }
 
 .table {

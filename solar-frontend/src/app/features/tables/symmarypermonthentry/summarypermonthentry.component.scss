@@ -20,10 +20,14 @@
   overflow: auto;
 }
 
-.centered {
+.content-container {
+  background-color: rgb(255, 255, 255);
+}
+
+td {
   text-align: center;
 }
 
-.content-container {
-  background-color: rgb(255, 255, 255);
+th {
+  text-align: center;
 }
