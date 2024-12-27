@@ -23,7 +23,7 @@
 
         <springdoc-openapi-starter-webmvc-ui.version>2.6.0</springdoc-openapi-starter-webmvc-ui.version>
         <commons-csv.version>1.11.0</commons-csv.version>
-        <org.springframework.boot.version>3.3.5</org.springframework.boot.version>
+        <org.springframework.boot.version>3.4.1</org.springframework.boot.version>
         <jackson-databind-nullable.version>0.2.6</jackson-databind-nullable.version>
         <mapstruct.version>1.6.2</mapstruct.version>
         <openapi-generator-maven-plugin.version>7.8.0</openapi-generator-maven-plugin.version>
