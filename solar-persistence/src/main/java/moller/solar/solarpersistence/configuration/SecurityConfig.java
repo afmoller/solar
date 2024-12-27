@@ -91,7 +91,6 @@ public class SecurityConfig {
     @Bean
     ApplicationListener<AuthenticationSuccessEvent> successfulEvent() {
         return event -> {
-            LOGGER.info("AuthenticationSuccessEvent:{}", event);
         };
     }
 
