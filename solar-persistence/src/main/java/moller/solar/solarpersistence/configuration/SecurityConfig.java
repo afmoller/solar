@@ -1,5 +1,7 @@
 package moller.solar.solarpersistence.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Value("${security.allowed-email-claim}")
     private String allowedEmailClaim;
@@ -87,14 +91,15 @@ public class SecurityConfig {
     @Bean
     ApplicationListener<AuthenticationSuccessEvent> successfulEvent() {
         return event -> {
-
+            LOGGER.info("AuthenticationSuccessEvent:{}", event);
         };
     }
 
     @Bean
     ApplicationListener<AuthenticationFailureBadCredentialsEvent> failureBadCredentialsEvent() {
         return event -> {
-            System.out.println("FailureBadCredentials: " + event.getException());
+            LOGGER.error("FailureBadCredentials: {}", String.valueOf(event.getException()));
+            LOGGER.error("Event details: {}", event);
         };
     }
 }
