@@ -1,4 +1,9 @@
 // You can add global styles to this file, and also import other style files //
+body {
+  margin: 0;
+  height: 100%;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
 
 html {
   height: 100%;
@@ -20,15 +25,25 @@ html {
   padding: 0 1px !important;
 }
 
-body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
-
 .mat-expansion-panel-body {
   padding: 0 6px 10px !important;
+}
+
+@media only screen and (min-width: 2000px) {
+  html {
+    --mat-table-header-headline-size: 16px;
+    --mat-table-row-item-label-text-size: 16px;
+  }
+
+  .mat-mdc-header-cell {
+    padding: 0 4px !important;
+  }
+
+  .mat-mdc-cell {
+    padding: 0 4px !important;
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0 16px 10px !important;
+  }
 }
