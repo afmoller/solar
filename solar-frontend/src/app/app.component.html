@@ -8,7 +8,7 @@
 
 </mat-toolbar>
 
-<mat-sidenav-container>
+<mat-sidenav-container autosize>
   <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="border">
 
     <mat-accordion multi="true">
