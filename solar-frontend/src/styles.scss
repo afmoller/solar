@@ -10,9 +10,9 @@ html {
   --toolbar-height: 40px;
   --mat-table-header-headline-size: 8px;
   --mat-table-row-item-label-text-size: 8px;
-  --mat-table-header-container-height: 36px;
+  --mat-table-header-container-height: 25px;
   --mat-table-footer-container-height: 32px;
-  --mat-table-row-item-container-height: 32px;
+  --mat-table-row-item-container-height: 20px;
   --mat-toolbar-standard-height: var(--toolbar-height);
   --mat-toolbar-mobile-height: var(--toolbar-height);
 }
@@ -33,6 +33,9 @@ html {
   html {
     --mat-table-header-headline-size: 16px;
     --mat-table-row-item-label-text-size: 16px;
+    --mat-table-header-container-height: 36px;
+    --mat-table-footer-container-height: 32px;
+    --mat-table-row-item-container-height: 32px;
   }
 
   .mat-mdc-header-cell {
