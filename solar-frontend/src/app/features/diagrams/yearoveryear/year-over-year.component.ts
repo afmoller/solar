@@ -205,6 +205,11 @@ export class YearOverYearComponent implements OnInit {
       {
         data: [],
         fill: false,
+        borderColor: 'rgb(255, 102, 0)',
+      },
+      {
+        data: [],
+        fill: false,
         borderColor: 'rgb(255, 153, 153)',
         borderDash: [10,10],
       },
