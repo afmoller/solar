@@ -1,0 +1,195 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Solar weather station backend REST API",
+    "description": "This API exposes APIs used by the Solar frontend Angular application and methods for ECOWitt compatible weather stations to post their data",
+    "contact": {
+      "name": "Fredrik Möller",
+      "url": "https://github.com/afmoller/solar"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8082",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/v1/weather-station-data-entries": {
+      "post": {
+        "tags": [
+          "weather-station-controller"
+        ],
+        "operationId": "createWeatherStationDataEntry",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherStationDataEntry"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "WeatherStationDataEntry": {
+        "type": "object",
+        "properties": {
+          "dateutc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tempinf": {
+            "type": "number",
+            "format": "float"
+          },
+          "humidityin": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "baromrelin": {
+            "type": "number",
+            "format": "float"
+          },
+          "baromabsin": {
+            "type": "number",
+            "format": "float"
+          },
+          "tempf": {
+            "type": "number",
+            "format": "float"
+          },
+          "humidity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "winddir": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "windspeedmph": {
+            "type": "number",
+            "format": "float"
+          },
+          "windgustmph": {
+            "type": "number",
+            "format": "float"
+          },
+          "maxdailygust": {
+            "type": "number",
+            "format": "float"
+          },
+          "uv": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "solarradiation": {
+            "type": "number",
+            "format": "float"
+          },
+          "rainratein": {
+            "type": "number",
+            "format": "float"
+          },
+          "eventrainin": {
+            "type": "number",
+            "format": "float"
+          },
+          "hourlyrainin": {
+            "type": "number",
+            "format": "float"
+          },
+          "dailyrainin": {
+            "type": "number",
+            "format": "float"
+          },
+          "weeklyrainin": {
+            "type": "number",
+            "format": "float"
+          },
+          "monthlyrainin": {
+            "type": "number",
+            "format": "float"
+          },
+          "yearlyrainin": {
+            "type": "number",
+            "format": "float"
+          },
+          "wh25batt": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "wh65batt": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stationtype": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "freq": {
+            "type": "string"
+          },
+          "interval": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "passkey": {
+            "type": "string"
+          },
+          "runtime": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "heap": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "required": [
+          "dateutc",
+          "tempinf",
+          "humidityin",
+          "baromrelin",
+          "baromabsin",
+          "tempf",
+          "humidity",
+          "winddir",
+          "windspeedmph",
+          "windgustmph",
+          "maxdailygust",
+          "uv",
+          "solarradiation",
+          "rainratein",
+          "eventrainin",
+          "hourlyrainin",
+          "dailyrainin",
+          "weeklyrainin",
+          "monthlyrainin",
+          "yearlyrainin",
+          "wh25batt",
+          "wh65batt",
+          "stationtype",
+          "model",
+          "freq",
+          "interval",
+          "passkey",
+          "runtime",
+          "heap"
+        ]
+      }
+    }
+  }
+}

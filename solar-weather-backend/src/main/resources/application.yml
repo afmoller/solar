@@ -1,0 +1,8 @@
+server:
+  port: 8082
+
+logging:
+  file:
+    name: weather-backend.log
+
+dry-run: 'true'
