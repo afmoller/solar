@@ -3,12 +3,16 @@ package moller.solar.solarbackend.configuration;
 import moller.solar.solarbackend.interceptor.AuthorizationHeaderSetterInterceptor;
 import moller.solarpersistence.openapi.client.ApiClient;
 import moller.solarpersistence.openapi.client.api.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestClient;
 
 @Configuration
 public class RestConfiguration {
+
+    @Value("${rest.solar-persistence.base-path}")
+    private String basePath;
 
     private final RestClient.Builder builder;
 
@@ -48,7 +52,10 @@ public class RestConfiguration {
 
     @Bean
     public ApiClient apiClient() {
-        return new ApiClient(restClient(builder));
+        ApiClient apiClient = new ApiClient(restClient(builder));
+        apiClient.setBasePath(basePath);
+
+        return apiClient;
     }
 
     @Bean

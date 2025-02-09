@@ -23,3 +23,7 @@ server:
 logging:
   file:
     name: logs/backend.log
+
+rest:
+  solar-persistence:
+    base-path: http://localhost:8081
