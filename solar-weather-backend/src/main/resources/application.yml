@@ -3,6 +3,6 @@ server:
 
 logging:
   file:
-    name: weather-backend.log
+    name: logs/weather-backend.log
 
 dry-run: 'true'

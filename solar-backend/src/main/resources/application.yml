@@ -22,4 +22,4 @@ server:
 
 logging:
   file:
-    name: backend.log
+    name: logs/backend.log
