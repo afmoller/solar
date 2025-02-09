@@ -18,3 +18,9 @@
 /.idea/vcs.xml
 /solar-persistence-api/target/
 /solar-weather-persistence-api/target/
+/solar-weather-backend/.mvn/wrapper/maven-wrapper.properties
+/solar-weather-backend/mvnw
+/solar-weather-backend/mvnw.cmd
+/solar-persistence/.mvn/wrapper/maven-wrapper.properties
+/solar-persistence/mvnw
+/solar-persistence/mvnw.cmd
