@@ -22,7 +22,7 @@ public class WeatherStationService {
     }
 
     @Transactional
-    public WeatherStationDataEntry createWeaterStationEntry(WeatherStationDataEntry weatherStationDataEntry) {
+    public WeatherStationDataEntry createWeatherStationEntry(WeatherStationDataEntry weatherStationDataEntry) {
         WeatherStationEntryEntity savedWeatherStationEntryEntity = weatherStationRepository.save(weatherStationMapper.map(weatherStationDataEntry));
 
         return weatherStationMapper.map(savedWeatherStationEntryEntity);

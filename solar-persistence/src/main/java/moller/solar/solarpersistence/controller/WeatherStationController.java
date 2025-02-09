@@ -17,11 +17,9 @@ public class WeatherStationController implements WeatherStationControllerApi {
         this.weatherStationService = weatherStationService;
     }
 
-
     @Override
     public ResponseEntity<Void> createWeatherStationDataEntry(WeatherStationDataEntry weatherStationDataEntry) {
-        WeatherStationDataEntry createdWeatherStationDataEntry = weatherStationService.createWeaterStationEntry(weatherStationDataEntry);
-
+        WeatherStationDataEntry createdWeatherStationDataEntry = weatherStationService.createWeatherStationEntry(weatherStationDataEntry);
 
         return ResponseEntity.noContent().build();
     }
