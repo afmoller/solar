@@ -24,3 +24,4 @@
 /solar-persistence/.mvn/wrapper/maven-wrapper.properties
 /solar-persistence/mvnw
 /solar-persistence/mvnw.cmd
+/logs/*
