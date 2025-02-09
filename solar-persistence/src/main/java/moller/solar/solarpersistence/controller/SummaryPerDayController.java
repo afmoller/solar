@@ -1,9 +1,10 @@
 package moller.solar.solarpersistence.controller;
 
 import jakarta.validation.Valid;
+import moller.openapi.persistence.solar.api.SummaryPerDayControllerApi;
+import moller.openapi.persistence.solar.model.SummaryPerDayEntry;
 import moller.solar.solarpersistence.service.SummaryPerDayService;
-import moller.solarpersistence.openapi.api.SummaryPerDayControllerApi;
-import moller.solarpersistence.openapi.model.SummaryPerDayEntry;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 

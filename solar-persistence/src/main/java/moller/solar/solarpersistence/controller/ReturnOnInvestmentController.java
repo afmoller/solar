@@ -1,8 +1,8 @@
 package moller.solar.solarpersistence.controller;
 
+import moller.openapi.persistence.solar.api.ReturnOnInvestmentControllerApi;
+import moller.openapi.persistence.solar.model.ReturnOnInvestmentEntry;
 import moller.solar.solarpersistence.service.ReturnOnInvestmentService;
-import moller.solarpersistence.openapi.api.ReturnOnInvestmentControllerApi;
-import moller.solarpersistence.openapi.model.ReturnOnInvestmentEntry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 

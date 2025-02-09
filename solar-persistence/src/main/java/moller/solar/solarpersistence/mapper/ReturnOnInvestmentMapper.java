@@ -1,7 +1,7 @@
 package moller.solar.solarpersistence.mapper;
 
+import moller.openapi.persistence.solar.model.ReturnOnInvestmentEntry;
 import moller.solar.solarpersistence.persistence.entity.ReturnOnInvestmentEntryEntity;
-import moller.solarpersistence.openapi.model.ReturnOnInvestmentEntry;
 import org.mapstruct.Mapper;
 
 import java.util.List;

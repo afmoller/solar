@@ -1,9 +1,10 @@
 package moller.solar.solarpersistence.controller;
 
 import jakarta.validation.Valid;
+import moller.openapi.persistence.solar.api.CsvControllerApi;
+import moller.openapi.persistence.solar.model.DataExportEntry;
 import moller.solar.solarpersistence.service.DataExportService;
-import moller.solarpersistence.openapi.api.CsvControllerApi;
-import moller.solarpersistence.openapi.model.DataExportEntry;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 

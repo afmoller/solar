@@ -1,9 +1,9 @@
 package moller.solar.solarpersistence.service;
 
+import moller.openapi.persistence.solar.model.SummaryPerDayEntry;
 import moller.solar.solarpersistence.mapper.SummaryPerDayMapper;
 import moller.solar.solarpersistence.persistence.entity.SummaryPerDayEntryEntity;
 import moller.solar.solarpersistence.persistence.repository.SummaryPerDayRepository;
-import moller.solarpersistence.openapi.model.SummaryPerDayEntry;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,11 +1,9 @@
 package moller.solar.solarpersistence.service;
 
+import moller.openapi.persistence.solar.model.EnergySaleCompensationEntry;
 import moller.solar.solarpersistence.mapper.EnergySaleCompensationMapper;
-import moller.solar.solarpersistence.persistence.entity.EnergyCostEntryEntity;
 import moller.solar.solarpersistence.persistence.entity.EnergySaleCompensationEntryEntity;
 import moller.solar.solarpersistence.persistence.repository.EnergySaleCompensationRepository;
-import moller.solarpersistence.openapi.model.EnergyCostEntry;
-import moller.solarpersistence.openapi.model.EnergySaleCompensationEntry;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

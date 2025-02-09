@@ -1,9 +1,9 @@
 package moller.solar.solarpersistence.service;
 
+import moller.openapi.persistence.solar.model.DataExportEntry;
 import moller.solar.solarpersistence.mapper.DataExportMapper;
 import moller.solar.solarpersistence.persistence.entity.DataExportEntryEntity;
 import moller.solar.solarpersistence.persistence.repository.DataExportRepository;
-import moller.solarpersistence.openapi.model.DataExportEntry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

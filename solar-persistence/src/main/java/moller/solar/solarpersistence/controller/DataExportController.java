@@ -1,8 +1,8 @@
 package moller.solar.solarpersistence.controller;
 
+import moller.openapi.persistence.solar.api.DataExportControllerApi;
+import moller.openapi.persistence.solar.model.DataExportEntry;
 import moller.solar.solarpersistence.service.DataExportService;
-import moller.solarpersistence.openapi.api.DataExportControllerApi;
-import moller.solarpersistence.openapi.model.DataExportEntry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 

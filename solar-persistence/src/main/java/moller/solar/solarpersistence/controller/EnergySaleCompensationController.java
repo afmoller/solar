@@ -1,9 +1,8 @@
 package moller.solar.solarpersistence.controller;
 
+import moller.openapi.persistence.solar.api.EnergySaleCompensationControllerApi;
+import moller.openapi.persistence.solar.model.EnergySaleCompensationEntry;
 import moller.solar.solarpersistence.service.EnergySaleCompensationService;
-import moller.solarpersistence.openapi.api.EnergySaleCompensationControllerApi;
-import moller.solarpersistence.openapi.model.EnergyCostEntry;
-import moller.solarpersistence.openapi.model.EnergySaleCompensationEntry;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,7 +1,7 @@
 package moller.solar.solarpersistence.mapper;
 
+import moller.openapi.persistence.solar.model.DataExportEntry;
 import moller.solar.solarpersistence.persistence.entity.DataExportEntryEntity;
-import moller.solarpersistence.openapi.model.DataExportEntry;
 import org.mapstruct.Mapper;
 
 import java.util.List;
