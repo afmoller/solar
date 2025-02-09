@@ -69,7 +69,7 @@ public class WeatherStationController {
         this.weatherStationControllerApi = weatherStationControllerApi;
     }
 
-    @PostMapping(value = "/weather-station-data-entries", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @PostMapping(value = "/weather-station-sensor-data-entries", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<Void> createWeatherStationDataEntry(@RequestParam MultiValueMap<String,String> paramMap) {
 
         try {
