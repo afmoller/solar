@@ -55,6 +55,9 @@ public class SecurityConfig {
                                 "/actuator/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/v1/weather-station-data-entries").permitAll()
+
                         //
                         .requestMatchers(HttpMethod.GET, "/api/v1/**").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/v1/**").authenticated()

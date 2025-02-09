@@ -73,6 +73,11 @@
 			<groupId>moller</groupId>
 			<artifactId>${solar.persistence.api.artifact.id}</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>moller</groupId>
+			<artifactId>${solar.weather.persistence.api.artifact.id}</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -104,6 +109,11 @@
 						<artifactId>${solar.persistence.api.artifact.id}</artifactId>
 						<version>${solar.persistence.api.version}</version>
 					</dependency>
+					<dependency>
+						<groupId>moller</groupId>
+						<artifactId>${solar.weather.persistence.api.artifact.id}</artifactId>
+						<version>${solar.weather.persistence.api.version}</version>
+					</dependency>
 				</dependencies>
 
 				<executions>
@@ -115,14 +125,32 @@
 						<configuration>
 							<inputSpec>solar-persistence-api-spec.yaml</inputSpec>
 							<generatorName>spring</generatorName>
-							<apiPackage>moller.solarpersistence.openapi.api</apiPackage>
-							<modelPackage>moller.solarpersistence.openapi.model</modelPackage>
+							<apiPackage>moller.openapi.persistence.solar.api</apiPackage>
+							<modelPackage>moller.openapi.persistence.solar.model</modelPackage>
 							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
 							<configOptions>
 								<useTags>true</useTags>
 								<useJakartaEe>true</useJakartaEe>
 								<interfaceOnly>true</interfaceOnly>
 								<dateLibrary>java8-localdatetime</dateLibrary>
+							</configOptions>
+						</configuration>
+					</execution>
+					<execution>
+						<id>Generate Spring Boot artefacts for the ${solar.weather.persistence.api.artifact.id} Open API specification</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>solar-weather-persistence-api-spec.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<apiPackage>moller.openapi.persistence.weather.api</apiPackage>
+							<modelPackage>moller.openapi.persistence.weather.model</modelPackage>
+							<supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+							<configOptions>
+								<useTags>true</useTags>
+								<useJakartaEe>true</useJakartaEe>
+								<interfaceOnly>true</interfaceOnly>
 							</configOptions>
 						</configuration>
 					</execution>
