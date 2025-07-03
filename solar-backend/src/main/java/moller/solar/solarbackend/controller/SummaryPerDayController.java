@@ -252,7 +252,7 @@ public class SummaryPerDayController extends AbstractV1BaseController {
 
     private void  calculateAverageValue(int nrOfYears, Map<Integer, Integer> monthAndAccumulatedValue) {
         monthAndAccumulatedValue.keySet().forEach(month -> {
-            monthAndAccumulatedValue.put(month, (int)((double)monthAndAccumulatedValue.get(month) / (double)3));
+            monthAndAccumulatedValue.put(month, (int)((double)monthAndAccumulatedValue.get(month) / (double)nrOfYears));
         });
     }
 
