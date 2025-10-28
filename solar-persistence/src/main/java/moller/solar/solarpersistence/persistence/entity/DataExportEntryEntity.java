@@ -109,13 +109,13 @@ public class DataExportEntryEntity {
     private String version;
 
     @Column(name = DI_11)
-    private Integer di11;
+    private Double di11;
 
     @Column(name = DI_12)
-    private Integer di12;
+    private Double di12;
 
     @Column(name = DI_13)
-    private Integer di13;
+    private Double di13;
 
     @Column(name = DI_14)
     private Integer di14;
@@ -231,15 +231,15 @@ public class DataExportEntryEntity {
         return version;
     }
 
-    public Integer getDi11() {
+    public Double getDi11() {
         return di11;
     }
 
-    public Integer getDi12() {
+    public Double getDi12() {
         return di12;
     }
 
-    public Integer getDi13() {
+    public Double getDi13() {
         return di13;
     }
 
@@ -359,15 +359,15 @@ public class DataExportEntryEntity {
         this.version = version;
     }
 
-    public void setDi11(Integer di11) {
+    public void setDi11(Double di11) {
         this.di11 = di11;
     }
 
-    public void setDi12(Integer di12) {
+    public void setDi12(Double di12) {
         this.di12 = di12;
     }
 
-    public void setDi13(Integer di13) {
+    public void setDi13(Double di13) {
         this.di13 = di13;
     }
 
