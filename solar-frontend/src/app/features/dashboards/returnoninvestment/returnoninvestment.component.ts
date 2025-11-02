@@ -17,12 +17,12 @@ import { ReturnOnInvestmentEntry } from 'src/app/core/models/returnoninvestmente
 import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
 import { ReturnOnInvestmentEntryDialogComponent } from '../../components/dialog/returnoninvestmentsentrydialog/returnoninvestmentsentrydialog.component';
 
-import { 
+import {
   MatTableModule,
   MatTableDataSource
 } from '@angular/material/table';
 
-import { 
+import {
   inject,
   signal,
   OnInit,
@@ -94,6 +94,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
 
   checked = signal(false);
   readonly dialog = inject(MatDialog);
+  private returnOnInvestmentService = inject(ReturnOnInvestmentService);
 
   totalCost: string = '0';
   totalIncome: string = '0';
@@ -118,23 +119,23 @@ export class ReturnOnInvestmentComponent implements OnInit {
   events: string[] = [];
   opened: boolean = true;
 
-  constructor(private returnOnInvestmentService: ReturnOnInvestmentService) {
+  constructor() {
     Chart.register(Annotation);
     Chart.register(Colors);
   }
-  
+
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(ReturnOnInvestmentEntryDialogComponent);
-        
+
     dialogRef.afterClosed().subscribe(result => {
-      
+
       if (result !== undefined) {
         let returnOnInvestmentToCreate = dialogRef.componentInstance.exportDialogData();
         this.createReturnOnInvestmentEntry(returnOnInvestmentToCreate);
       }
     });
   }
-  
+
   openEditDialog(id?: number): void {
     if (id) {
       this.returnOnInvestmentService.get(id).subscribe(returnOnInvestmentEntry => {
@@ -160,7 +161,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
     dialogRef.componentInstance.initiateDialog(returnOnInvestmentEntry);
 
     dialogRef.afterClosed().subscribe(result => {
-      
+
       if (result !== undefined) {
         let returnOnInvestmentToUpdate = dialogRef.componentInstance.exportDialogData();
         this.updateReturnOnInvestmentEntry(returnOnInvestmentToUpdate);
@@ -174,20 +175,20 @@ export class ReturnOnInvestmentComponent implements OnInit {
 
   loadData() {
     this.returnOnInvestmentService.find().subscribe(data => {
-      
+
       let returnOnInvestmentEntries = data.returnOnInvestmentDashboardEntryDtos.reverse();
-      
+
       returnOnInvestmentEntries.forEach(entry => {
         entry.numberOfYearsUntilPaid = Math.round((entry.numberOfYearsUntilPaid + Number.EPSILON) * 100) / 100;
       });
-      
+
       this.dataSource.data = returnOnInvestmentEntries;
 
       this.totalCost = this.formatValue(data.totalCost);
       this.totalIncome = this.formatValue(data.totalIncome);
 
       this.dataSourceTotals.data = [{income: this.totalIncome, cost: this.totalCost}];
-      
+
       this.lineChartData.datasets[0].data = data.numberOfYearsUntilPaid;
       this.lineChartData.labels = data.dates;
       this.chart?.update();
@@ -248,7 +249,7 @@ export class ReturnOnInvestmentComponent implements OnInit {
       },
       point: {
         radius: 3,
-        
+
       }
     },
     scales: {

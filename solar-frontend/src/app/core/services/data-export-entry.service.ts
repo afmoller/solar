@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Dataexportentry } from '../models/dataexportentry';
 import { environment } from '../../../environments/environment';
@@ -11,9 +11,11 @@ import { DateTimeAndValuesWatthoursEntry } from '../models/datetimeandvalueswatt
 })
 export class DataExportEntryService {
 
+  private http = inject(HttpClient);
+
   private dataexportentriesBaseUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.dataexportentriesBaseUrl = environment.backendApiHost + '/api/v1/';
   }
 

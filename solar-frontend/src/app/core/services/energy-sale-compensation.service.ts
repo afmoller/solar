@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { EnergySaleCompensationentry } from '../models/energysalecompensationentry';
@@ -9,11 +9,13 @@ import { EnergySaleCompensationentry } from '../models/energysalecompensationent
 })
 
 export class EnergySaleCompensationService {
-    
+
+  private http = inject(HttpClient);
+
   private energySaleCompensationsUrl: string;
   private energySaleCompensationsBaseUrl: string;
-  
-  constructor(private http: HttpClient) {
+
+  constructor() {
     this.energySaleCompensationsBaseUrl = environment.backendApiHost + '/api/v1';
     this.energySaleCompensationsUrl = this.energySaleCompensationsBaseUrl + '/energy-sale-compensations';
   }

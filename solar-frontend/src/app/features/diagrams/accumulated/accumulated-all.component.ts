@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
@@ -15,7 +15,9 @@ import { AccumulatedAllEntryService } from '../../../core/services/accumulated-a
 
 export class AccumulatedAllComponent implements OnInit {
 
-  constructor(private accumulatedAllEntryService: AccumulatedAllEntryService) {
+  private accumulatedAllEntryService = inject(AccumulatedAllEntryService);
+
+  constructor() {
     Chart.register(Annotation);
     Chart.register(Colors);
   }
@@ -89,7 +91,7 @@ export class AccumulatedAllComponent implements OnInit {
     },
 
     plugins: {
-      legend: { 
+      legend: {
         display: true,
         position: 'bottom'
       },

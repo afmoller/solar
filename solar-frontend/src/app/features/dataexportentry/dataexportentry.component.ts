@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Dataexportentry } from '../../core/models/dataexportentry';
 import { DataExportEntryService } from '../../core/services/data-export-entry.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -13,12 +13,10 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 })
 export class DataexportentryComponent  {
 
-  dataexportentry: Dataexportentry | undefined;
+  private formBuilder = inject(FormBuilder);
+  private dataexportentryservice = inject(DataExportEntryService);
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private dataexportentryservice: DataExportEntryService
-  ) {}
+  dataexportentry: Dataexportentry | undefined;
 
   inputForm = this.formBuilder.group({
     iid: ''

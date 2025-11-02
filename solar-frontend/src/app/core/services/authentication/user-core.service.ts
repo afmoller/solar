@@ -1,14 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { JwtService } from './jwt.service';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 
 @Injectable({ providedIn: 'root' })
 export class UserCoreService {
 
-  constructor(
-    private jwtService: JwtService,
-    private socialAuthService: SocialAuthService,
-  ) {}
+  private jwtService = inject(JwtService);
+  private socialAuthService = inject(SocialAuthService);
 
   /**
    * Purge the user and sign out from the SocialAuthService library.

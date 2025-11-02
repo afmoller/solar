@@ -3,9 +3,10 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { Summarypermonthentry } from 'src/app/core/models/summarypermonthentry';
 import { SummaryPerMonthEntryService } from 'src/app/core/services/summary-per-month-entry.service';
 
-import { 
+import {
   Component,
-  OnInit
+  OnInit,
+  inject
 } from '@angular/core';
 
 import {
@@ -25,6 +26,8 @@ import {
 })
 export class SummarypermonthentryComponent implements OnInit {
 
+  private summaryPerMonthEntryService = inject(SummaryPerMonthEntryService);
+
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['yearMonthOfEntry',
                                 'productionWattHours',
@@ -34,8 +37,6 @@ export class SummarypermonthentryComponent implements OnInit {
                                 'consumptionWattHours',
                                 'autarchy'
                               ];
-
-  constructor(private summaryPerMonthEntryService: SummaryPerMonthEntryService) {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

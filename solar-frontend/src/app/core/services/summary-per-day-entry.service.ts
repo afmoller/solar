@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Summaryperdayentry } from '../models/summaryperdayentry';
@@ -9,9 +9,11 @@ import { Summaryperdayentry } from '../models/summaryperdayentry';
 })
 export class SummaryPerDayEntryService {
 
+  private http = inject(HttpClient);
+
   private summaryperdayentriesBaseUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.summaryperdayentriesBaseUrl = environment.backendApiHost + '/api/v1/';
   }
 

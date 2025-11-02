@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Allentry } from '../models/allentry';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -11,7 +11,9 @@ export class AccumulatedAllEntryService {
 
   private accumulatedallentriesUrl: string;
 
-  constructor(private http: HttpClient) {
+  private http = inject(HttpClient);
+
+  constructor() {
     this.accumulatedallentriesUrl = environment.backendApiHost + '/api/v1/getAllAccumulatedValues';
   }
 

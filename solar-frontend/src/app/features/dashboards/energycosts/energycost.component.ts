@@ -14,14 +14,14 @@ import { EnergyCostService } from 'src/app/core/services/energy-cost.service';
 import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
 import { EnergyCostEntryDialogComponent } from '../../components/dialog/energycostentrydialog/energycostentrydialog.component';
 
-import { 
+import {
   inject,
   OnInit,
   Component,
   signal
 } from '@angular/core';
 
-import { 
+import {
   MatTableModule,
   MatTableDataSource
 } from '@angular/material/table'
@@ -78,6 +78,7 @@ export class EnergyCostComponent implements OnInit {
 
   checked = signal(false);
   readonly dialog = inject(MatDialog);
+  private energyCostService = inject(EnergyCostService);
 
   dataSourceEnergyCosts = new MatTableDataSource();
 
@@ -93,9 +94,6 @@ export class EnergyCostComponent implements OnInit {
                                           'valueAddedTaxRate',
                                           'deleteenergycost'
                                          ];
-
-  constructor(private energyCostService: EnergyCostService) {
-  }
 
   ngOnInit() {
     this.loadEnergyCostData();
@@ -178,7 +176,7 @@ export class EnergyCostComponent implements OnInit {
   divideValueByTenThousand(valueToDivideByTenThousand: number): string {
     return (valueToDivideByTenThousand / 10000).toString();
   }
-  
+
   getDates(data: EnergySaleCompensationentry[]): unknown[] {
     let dataSet: string[] = [];
 
@@ -199,9 +197,9 @@ export class EnergyCostComponent implements OnInit {
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(EnergyCostEntryDialogComponent);
-        
+
     dialogRef.afterClosed().subscribe(result => {
-      
+
       if (result !== undefined) {
         let energyCostToCreate = dialogRef.componentInstance.exportDialogData();
         this.createEnergyCostEntry(energyCostToCreate);
@@ -214,7 +212,7 @@ export class EnergyCostComponent implements OnInit {
     dialogRef.componentInstance.initiateDialog(returnOnInvestmentEntry);
 
     dialogRef.afterClosed().subscribe(result => {
-      
+
       if (result !== undefined) {
         let energyCostToUpdate = dialogRef.componentInstance.exportDialogData();
         this.updateEnergyCostEntry(energyCostToUpdate);

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
@@ -29,6 +29,12 @@ import {MatExpansionModule} from '@angular/material/expansion';
 
 export class AllComponent implements OnInit {
 
+  private route = inject(ActivatedRoute);
+  private formBuilder = inject(FormBuilder);
+  private allEntryService = inject(AllEntryService);
+  private dataExportEntryService = inject(DataExportEntryService);
+  private summaryPerDayEntryService = inject(SummaryPerDayEntryService);
+
   inputForm: FormGroup;
   menuTitle: string = '';
   menuTitlePrefix: string = '';
@@ -40,12 +46,7 @@ export class AllComponent implements OnInit {
   static readonly menuTitlePrefixWatts: string = 'kilowatts';
   static readonly menuTitlePrefixWattHours: string = 'kilowatt-hours';
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private allEntryService: AllEntryService,
-    private summaryPerDayEntryService: SummaryPerDayEntryService,
-    private dataExportEntryService: DataExportEntryService,
-    private route: ActivatedRoute) {
+  constructor() {
 
     Chart.register(Annotation);
     Chart.register(Colors);
@@ -229,7 +230,7 @@ export class AllComponent implements OnInit {
     active?: object[];
   }): void {
     console.log('chartClicked');
-    
+
   }
 
   public chartHovered({

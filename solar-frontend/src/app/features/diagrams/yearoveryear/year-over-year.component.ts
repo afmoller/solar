@@ -7,7 +7,8 @@ import { YearOverYearEntryService } from '../../../core/services/year-over-year.
 import {
   OnInit,
   Component,
-  ViewChild
+  ViewChild,
+  inject
 } from '@angular/core';
 
 import {
@@ -36,6 +37,9 @@ import {
 
 export class YearOverYearComponent implements OnInit {
 
+  private route = inject(ActivatedRoute);
+  private yearOverYearEntryService = inject(YearOverYearEntryService);
+
   mode: string | null = '';
   valueType: string = '';
   menuTitle: string = '';
@@ -47,10 +51,7 @@ export class YearOverYearComponent implements OnInit {
   events: string[] = [];
   opened: boolean = true;
 
-  constructor(
-    private yearOverYearEntryService: YearOverYearEntryService,
-    private route: ActivatedRoute) {
-
+  constructor() {
     Chart.register(Annotation);
     Chart.register(Colors);
   }

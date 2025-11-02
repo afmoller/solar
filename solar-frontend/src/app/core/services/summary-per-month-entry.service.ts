@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Summarypermonthentry } from '../models/summarypermonthentry';
@@ -9,9 +9,11 @@ import { Summarypermonthentry } from '../models/summarypermonthentry';
 })
 export class SummaryPerMonthEntryService {
 
+  private http = inject(HttpClient);
+
   private summarypermonthentriesUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.summarypermonthentriesUrl = environment.backendApiHost + '/api/v1/getMonthlyAccumulatedValues';
   }
 

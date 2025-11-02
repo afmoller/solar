@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Allentry } from '../models/allentry';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -9,12 +9,14 @@ import { environment } from '../../../environments/environment';
 })
 export class AllEntryService {
 
+  private http = inject(HttpClient);
+
   private allentriesUrlDay: string;
   private allentriesUrlMonth: string;
 
   private baseUrl: string = environment.backendApiHost;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.allentriesUrlDay = this.baseUrl + '/api/v1/getAllValuesForPeriod';
     this.allentriesUrlMonth = this.baseUrl + '/api/v1/getMonthlyAccumulatedValuesForPeriod';
   }

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { YearOverYearEntry } from '../models/yearoveryearentry';
@@ -9,9 +9,11 @@ import { YearOverYearEntry } from '../models/yearoveryearentry';
 })
 export class YearOverYearEntryService {
 
+  private http = inject(HttpClient);
+
   private yearoveryearUrl: string;
 
-  constructor(private http: HttpClient) {
+  constructor() {
     this.yearoveryearUrl = environment.backendApiHost + '/api/v1/getAggregatedMonthValues';
   }
 

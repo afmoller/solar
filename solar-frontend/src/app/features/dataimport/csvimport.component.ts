@@ -1,5 +1,5 @@
 import { Subscription, finalize } from 'rxjs';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,6 +37,9 @@ interface Month {
 
 export class CsvImportComponent  {
 
+  private http = inject(HttpClient);
+  private summaryPerDayEntryService = inject(SummaryPerDayEntryService);
+
   years: Year[] = [
     {value: 2024, viewValue: '2024'},
     {value: 2025, viewValue: '2025'},
@@ -73,10 +76,7 @@ export class CsvImportComponent  {
   uploadSub: Subscription = new Subscription;
   csvImportResult?: CsvImportResult | null;
 
-  constructor(
-    private http: HttpClient,
-    private summaryPerDayEntryService: SummaryPerDayEntryService
-  ) {
+  constructor() {
     this.requiredFileType = 'text/csv';
     this.uploadProgress = 0;
   }

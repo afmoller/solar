@@ -16,14 +16,14 @@ import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompe
 import { EnergySaleCompensationService } from 'src/app/core/services/energy-sale-compensation.service';
 import { EnergySaleCompensationEntryDialogComponent } from '../../components/dialog/energysalecompensationentrydialog/energysalecompensationentrydialog.component';
 
-import { 
+import {
   MatTableModule,
   MatTableDataSource
 } from '@angular/material/table';
 
-import { 
+import {
   Chart,
-  Colors, 
+  Colors,
   ChartType,
   ChartEvent,
   ChartConfiguration
@@ -93,7 +93,8 @@ export class EnergySaleCompensationComponent implements OnInit {
 
   checked = signal(false);
   readonly dialog = inject(MatDialog);
-  
+  private energySaleCompensationService = inject(EnergySaleCompensationService);
+
   dataSourceCumulated = new MatTableDataSource();
   displayedColumns: string[] = ['compensationdate',
                                 'compensation',
@@ -107,8 +108,8 @@ export class EnergySaleCompensationComponent implements OnInit {
 
   events: string[] = [];
   opened: boolean = true;
-  
-  constructor(private energySaleCompensationService: EnergySaleCompensationService) {
+
+  constructor() {
     Chart.register(Annotation);
     Chart.register(Colors);
   }
@@ -116,7 +117,7 @@ export class EnergySaleCompensationComponent implements OnInit {
   ngOnInit() {
     this.loadData();
   }
-  
+
   loadData() {
     this.energySaleCompensationService.getAll().subscribe(data => {
       this.dataSourceCumulated.data = this.createDataSourceCumulated(data);
@@ -326,9 +327,9 @@ export class EnergySaleCompensationComponent implements OnInit {
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(EnergySaleCompensationEntryDialogComponent);
-        
+
     dialogRef.afterClosed().subscribe(result => {
-      
+
       if (result !== undefined) {
         let energySaleCompensationToCreate = dialogRef.componentInstance.exportDialogData();
         this.createEnergySaleCompensationEntry(energySaleCompensationToCreate);
@@ -347,7 +348,7 @@ export class EnergySaleCompensationComponent implements OnInit {
     dialogRef.componentInstance.initiateDialog(energySaleCompensationEntry);
 
     dialogRef.afterClosed().subscribe(result => {
-      
+
       if (result !== undefined) {
         let energySaleCompensationToUpdate = dialogRef.componentInstance.exportDialogData();
         this.updateEnergyCostEntry(energySaleCompensationToUpdate);

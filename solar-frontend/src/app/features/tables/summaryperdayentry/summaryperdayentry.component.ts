@@ -5,10 +5,11 @@ import { SummaryPerDayEntryService } from '../../../core/services/summary-per-da
 
 import {
   OnInit,
-  Component
+  Component,
+  inject
 } from '@angular/core';
 
-import { 
+import {
   MatTableModule,
   MatTableDataSource
 } from '@angular/material/table'
@@ -25,6 +26,8 @@ import {
 })
 export class SummaryperdayentryComponent implements OnInit {
 
+  private summaryPerDayEntryService = inject(SummaryPerDayEntryService);
+
   dataSource = new MatTableDataSource();
   displayedColumns: string[] = ['date',
                                 'productionWattHours',
@@ -40,10 +43,6 @@ export class SummaryperdayentryComponent implements OnInit {
                                 'accumulatedConsumptionWattHours',
                                 'yearOfEntry',
                                 'monthOfEntry'];
-
-  constructor(
-    private summaryPerDayEntryService: SummaryPerDayEntryService
-  ) {}
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
