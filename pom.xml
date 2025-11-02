@@ -37,12 +37,12 @@
     </properties>
 
     <modules>
-        <module>../solar-persistence-api</module>
-        <module>../solar-persistence</module>
-        <module>../solar-frontend</module>
-        <module>../solar-backend</module>
-        <module>../solar-weather-persistence-api</module>
-        <module>../solar-weather-backend</module>
+        <module>/solar-persistence-api</module>
+        <module>/solar-persistence</module>
+        <module>/solar-frontend</module>
+        <module>/solar-backend</module>
+        <module>/solar-weather-persistence-api</module>
+        <module>/solar-weather-backend</module>
     </modules>
 
     <dependencyManagement>
