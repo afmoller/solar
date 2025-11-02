@@ -7,7 +7,8 @@ body {
 
 html {
   height: 100%;
-  --toolbar-height: 40px;
+  --toolbar-height: 30px;
+  --mat-toolbar-title-text-size: 15px;
   --mat-table-header-headline-size: 8px;
   --mat-table-row-item-label-text-size: 8px;
   --mat-table-header-container-height: 25px;
@@ -31,6 +32,8 @@ html {
 
 @media only screen and (min-width: 2000px) {
   html {
+    --toolbar-height: 40px;
+    --mat-toolbar-title-text-size: 25px;
     --mat-table-header-headline-size: 16px;
     --mat-table-row-item-label-text-size: 16px;
     --mat-table-header-container-height: 36px;
