@@ -1,4 +1,4 @@
-import { NgIf } from '@angular/common';
+
 import { JwtService } from '../../core/services/authentication/jwt.service';
 import { Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,11 +25,10 @@ import {
     templateUrl: './loginlogout.component.html',
     styleUrl: './loginlogout.component.scss',
     imports: [
-        NgIf,
-        RouterModule,
-        MatIconModule,
-        GoogleSigninButtonModule
-    ]
+    RouterModule,
+    MatIconModule,
+    GoogleSigninButtonModule
+]
 })
 
 export class LoginLogoutComponent implements OnInit, OnDestroy {
