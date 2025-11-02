@@ -6,6 +6,7 @@ import moller.openapi.persistence.solar.model.SummaryPerDayEntry;
 import moller.solar.solarpersistence.service.SummaryPerDayService;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
@@ -58,7 +59,7 @@ public class SummaryPerDayController implements SummaryPerDayControllerApi {
     }
 
     @Override
-    public ResponseEntity<Integer> saveSummaryPerDayEntries(List<@Valid SummaryPerDayEntry> summaryPerDayEntries) {
+    public ResponseEntity<Integer> saveSummaryPerDayEntries(@Valid @RequestBody List<@Valid SummaryPerDayEntry> summaryPerDayEntries) {
         Integer numberOfSavedEntries = summaryPerDayService.saveSummaryPerDayEntries(summaryPerDayEntries);
 
         return ResponseEntity.of(Optional.of(numberOfSavedEntries));
