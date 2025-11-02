@@ -26,4 +26,4 @@ logging:
 
 rest:
   solar-persistence:
-    base-path: http://localhost:8081
+    base-path: ${SOLAR_PERSISTENCE_BASE_PATH}

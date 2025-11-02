@@ -3,7 +3,7 @@ spring:
     show-sql: false
     open-in-view: false
   datasource:
-    url: jdbc:postgresql://localhost:5432/solar
+    url: ${DATASOURCE_URL}
     username: solar
     password: solar
     jpa:
