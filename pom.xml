@@ -21,7 +21,7 @@
         <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <springdoc-openapi-starter-webmvc-ui.version>2.8.13</springdoc-openapi-starter-webmvc-ui.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.8.14</springdoc-openapi-starter-webmvc-ui.version>
         <commons-csv.version>1.14.1</commons-csv.version>
         <org.springframework.boot.version>3.5.7</org.springframework.boot.version>
         <jackson-databind-nullable.version>0.2.8</jackson-databind-nullable.version>
