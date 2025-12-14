@@ -1,0 +1,27 @@
+<div class="table">
+
+  <div class="content-container">
+    <table>
+      <tr>
+        <th>
+          Property
+        </th>
+        <th>
+          Value
+        </th>
+      </tr>
+
+      @for (property of getObjectProperties(weatherEntry); track property) {
+        <tr >
+          <td>
+            {{property}}
+          </td>
+          <td>
+            {{weatherEntry[property]}}
+          </td>
+        </tr>
+      }
+
+    </table>
+  </div>
+</div>

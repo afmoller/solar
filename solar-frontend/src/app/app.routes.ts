@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AllComponent } from './features/diagrams/all/all.component';
 import { CsvImportComponent } from './features/dataimport/csvimport.component';
 import { LoginLogoutComponent } from './common/loginlogout/loginlogout.component';
+import { WeatherComponent } from './features/dashboards/weather/weather.component';
 import { EnergyCostComponent } from './features/dashboards/energycosts/energycost.component';
 import { DataexportentryComponent } from './features/dataexportentry/dataexportentry.component';
 import { YearOverYearComponent} from './features/diagrams/yearoveryear/year-over-year.component';
@@ -65,5 +66,10 @@ export const routes: Routes = [
     path: 'energy-sale-compensation',
     title:'energy-sale-compensation',
     component: EnergySaleCompensationComponent,
+  },
+  {
+    path: 'weather',
+    title:'weather',
+    component: WeatherComponent,
   }
 ];

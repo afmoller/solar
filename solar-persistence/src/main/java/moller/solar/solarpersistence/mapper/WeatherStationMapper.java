@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", config = MapstructConfig.class)
 public interface WeatherStationMapper {
 
-    WeatherStationDataEntry map(WeatherStationEntryEntity energyCostEntryEntity);
+    WeatherStationDataEntry map(WeatherStationEntryEntity weatherStationEntryEntity);
 
     WeatherStationEntryEntity map( WeatherStationDataEntry weatherStationDataEntry);
 }

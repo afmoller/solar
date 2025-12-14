@@ -51,6 +51,11 @@ public class RestConfiguration {
     }
 
     @Bean
+    public WeatherControllerApi weatherControllerApi() {
+        return new WeatherControllerApi(apiClient());
+    }
+
+    @Bean
     public ApiClient apiClient() {
         ApiClient apiClient = new ApiClient(restClient(builder));
         apiClient.setBasePath(basePath);

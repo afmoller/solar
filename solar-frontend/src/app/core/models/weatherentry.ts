@@ -1,0 +1,31 @@
+export interface Weatherentry {
+  dateUtc: string;
+  temperatureIndoorInCelcius: number;
+  humidityIndoor: number;
+  baromRelativeIndoor: number;
+  baromAbsoluteIndoor: number;
+  temperatureOutdoorInCelsius: number;
+  humidityOutdoor: number;
+  windDirection: number;
+  windSpeedInMeterPerSecond: number;
+  windGustInMeterPerSecond: number;
+  maxDailyGustInMeterPerSecond: number;
+  uv: number;
+  solarRadiation: number;
+  rainRateInMillimetersPerHour: number;
+  eventRainInMillimeters: number;
+  hourlyRainInMillimeters: number;
+  dailyRainInMillimeters: number;
+  weeklyRainInMillimeters: number;
+  monthlyRainInMillimeters: number;
+  yearlyRainInMillimeters: number;
+  wh25Batt: number;
+  wh65Batt: number
+  stationType: string;
+  model: string;
+  freq: string;
+  interval: number;
+  passkey: string;
+  runtime: number;
+  heap: number;
+}
