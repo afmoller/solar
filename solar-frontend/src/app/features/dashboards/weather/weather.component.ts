@@ -1,19 +1,38 @@
 import { Weatherentry } from 'src/app/core/models/weatherentry';
 import { WeatherService } from "src/app/core/services/weather.service";
+import { WeatherTableentry } from 'src/app/core/dto/weathertableentry';
 
 import {
   inject,
   OnInit,
-  Component,
+  Component
 } from '@angular/core';
+
+import {
+  MatTableModule,
+  MatTableDataSource
+} from '@angular/material/table'
 
 @Component({
     selector: 'app-weather',
     templateUrl: './weather.component.html',
-    styleUrls: ['./weather.component.scss']
+    styleUrls: ['./weather.component.scss'],
+    imports: [
+      MatTableModule
+    ]
 })
 
 export class WeatherComponent implements OnInit {
+
+  dataSourceMiscEntries = new MatTableDataSource();
+  dataSourceWindEntries = new MatTableDataSource();
+  dataSourceRainEntries = new MatTableDataSource();
+  dataSourceIndoorEntries = new MatTableDataSource();
+  dataSourceOutdoorEntries = new MatTableDataSource();
+  
+  displayedColumns: string[] = ['measurement',
+                                'value'
+                               ];
 
   weatherEntry: Weatherentry = {} as Weatherentry;
   
@@ -25,16 +44,77 @@ export class WeatherComponent implements OnInit {
 
   loadEnergyCostData() {
     this.weatherService.getCurrentWeather().subscribe(data => {
-      this.weatherEntry = data;  
+      this.weatherEntry = data;
+      
+      this.dataSourceMiscEntries.data = this.getMiscEntries(data);
+      this.dataSourceWindEntries.data = this.getWindEntries(data);
+      this.dataSourceRainEntries.data = this.getRainEntries(data);
+      this.dataSourceIndoorEntries.data = this.getIndoorEntries(data);
+      this.dataSourceOutdoorEntries.data = this.getOutdoorEntries(data);
     })
   }
+  
+  getIndoorEntries(data: Weatherentry): WeatherTableentry[] {
+    let entries = new Array<WeatherTableentry>();
+    
+    entries.push({key: 'Temperture', value: data.temperatureIndoorInCelcius.toFixed(1) + '°C'});
+    entries.push({key: 'Humidity', value: data.humidityIndoor.toFixed(0) + '%'});
+    entries.push({key: 'Barometer Rel', value: data.baromRelativeIndoor.toFixed(0) + ' hPa'});
+    entries.push({key: 'Barometer Abs', value: data.baromAbsoluteIndoor.toFixed(0) + ' hPa'});
+    
+    return entries;
+  }
 
-  getObjectProperties(myObject: Weatherentry | undefined): (keyof Weatherentry)[] {
-    if (myObject) {
-      const keys = Object.keys(myObject) as Array<keyof Weatherentry>;
-      return keys;
-    }
+  getOutdoorEntries(data: Weatherentry): WeatherTableentry[] {
+    let entries = new Array<WeatherTableentry>();
+    
+    entries.push({key: 'Temperture', value: data.temperatureOutdoorInCelsius.toFixed(1) + '°C'});
+    entries.push({key: 'Humidity', value: data.humidityOutdoor.toFixed(0) + '%'});
+    entries.push({key: 'Solarradiation', value: data.solarRadiation.toFixed(0) + ' w/m2'});
+    entries.push({key: 'UV Index', value: data.uv.toFixed(0)});
+    
+    return entries;
+  }
 
-    return [];
+   getRainEntries(data: Weatherentry): WeatherTableentry[] {
+    let entries = new Array<WeatherTableentry>();
+    
+    entries.push({key: 'Rate', value: data.rainRateInMillimetersPerHour.toFixed(0) + ' mm/h'});
+    entries.push({key: 'Event', value: data.eventRainInMillimeters.toFixed(0) + ' mm'});
+    entries.push({key: 'Hourly', value: data.hourlyRainInMillimeters.toFixed(0) + ' mm'});
+    entries.push({key: 'Daily', value: data.dailyRainInMillimeters.toFixed(1) + ' mm'});
+    entries.push({key: 'Weekly', value: data.weeklyRainInMillimeters.toFixed(0) + ' mm'});
+    entries.push({key: 'Monthly', value: data.monthlyRainInMillimeters.toFixed(0) + ' mm'});
+    entries.push({key: 'Yearly', value: data.yearlyRainInMillimeters.toFixed(0) + ' mm'});
+    
+    return entries;
+  }
+
+  getWindEntries(data: Weatherentry): WeatherTableentry[] {
+    let entries = new Array<WeatherTableentry>();
+    
+    entries.push({key: 'Wind speed', value: data.windSpeedInMeterPerSecond.toFixed(1) + ' m/s'});
+    entries.push({key: 'Wind Direction', value: data.windDirection.toFixed(0) + '°'});
+    entries.push({key: 'Gust', value: data.windGustInMeterPerSecond.toFixed(0) + ' m/s'});
+    entries.push({key: 'Max Daily Gust', value: data.maxDailyGustInMeterPerSecond.toFixed(0) + ' m/s'});
+    
+    return entries;
+  }
+
+  getMiscEntries(data: Weatherentry): WeatherTableentry[] {
+    let entries = new Array<WeatherTableentry>();
+    
+    entries.push({key: 'Frequency', value: data.freq + ' Hz'});
+    entries.push({key: 'Heap', value: data.heap.toFixed(0) + ' B'});
+    entries.push({key: 'Interval', value: data.interval.toFixed(0) + 's'});
+    entries.push({key: 'Model', value: data.model});
+    entries.push({key: 'Runtime', value: data.runtime.toFixed(0) + ' s'});
+    entries.push({key: 'Station type', value: data.stationType});
+    entries.push({key: 'wh25 Batt', value: data.wh25Batt.toFixed(0)});
+    entries.push({key: 'wh65 Batt', value: data.wh65Batt.toFixed(0)});
+    
+    return entries;
   }
 }
+
+

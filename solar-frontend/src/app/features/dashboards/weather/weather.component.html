@@ -1,27 +1,95 @@
 <div class="table">
-
+ 
   <div class="content-container">
-    <table>
-      <tr>
-        <th>
-          Property
-        </th>
-        <th>
-          Value
-        </th>
-      </tr>
 
-      @for (property of getObjectProperties(weatherEntry); track property) {
-        <tr >
-          <td>
-            {{property}}
-          </td>
-          <td>
-            {{weatherEntry[property]}}
-          </td>
-        </tr>
-      }
+    <!-- <span>{{weatherEntry.dateUtc}}</span> -->
 
-    </table>
-  </div>
+    <div class="content-container-top">
+      <div class="section">
+        <table mat-table [dataSource]="dataSourceIndoorEntries" class="mat-elevation-z8">
+          <ng-container matColumnDef="measurement">
+            <th mat-header-cell *matHeaderCellDef>Indoor</th>
+            <td mat-cell *matCellDef="let row">{{row.key}}</td>
+          </ng-container>
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let row">{{row.value}}</td>
+          </ng-container>
+          
+          <!-- Header and Row Declarations -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
+          <tr mat-row *matRowDef="let row; let odd = odd; columns: displayedColumns" [class.striped-row]="odd"></tr>
+        </table>
+      </div>
+      
+      <div class="section">
+        <table mat-table [dataSource]="dataSourceOutdoorEntries" class="mat-elevation-z8">
+          <ng-container matColumnDef="measurement">
+            <th mat-header-cell *matHeaderCellDef>Outdoor</th>
+            <td mat-cell *matCellDef="let row">{{row.key}}</td>
+          </ng-container>
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let row">{{row.value}}</td>
+          </ng-container>
+          
+          <!-- Header and Row Declarations -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
+          <tr mat-row *matRowDef="let row; let odd = odd; columns: displayedColumns" [class.striped-row]="odd"></tr>
+        </table>
+      </div>
+    
+      <div class="section">
+        <table mat-table [dataSource]="dataSourceWindEntries" class="mat-elevation-z8">
+          <ng-container matColumnDef="measurement">
+            <th mat-header-cell *matHeaderCellDef>Wind</th>
+            <td mat-cell *matCellDef="let row">{{row.key}}</td>
+          </ng-container>
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let row">{{row.value}}</td>
+          </ng-container>
+          
+          <!-- Header and Row Declarations -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
+          <tr mat-row *matRowDef="let row; let odd = odd; columns: displayedColumns" [class.striped-row]="odd"></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="content-container-bottom">
+      <div class="section">
+        <table mat-table [dataSource]="dataSourceRainEntries" class="mat-elevation-z8">
+          <ng-container matColumnDef="measurement">
+            <th mat-header-cell *matHeaderCellDef>Rain</th>
+            <td mat-cell *matCellDef="let row">{{row.key}}</td>
+          </ng-container>
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let row">{{row.value}}</td>
+          </ng-container>
+          
+          <!-- Header and Row Declarations -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
+          <tr mat-row *matRowDef="let row; let odd = odd; columns: displayedColumns" [class.striped-row]="odd"></tr>
+        </table>
+      </div>
+
+      <div class="section">
+        <table mat-table [dataSource]="dataSourceMiscEntries" class="mat-elevation-z8">
+          <ng-container matColumnDef="measurement">
+            <th mat-header-cell *matHeaderCellDef>Misc</th>
+            <td mat-cell *matCellDef="let row">{{row.key}}</td>
+          </ng-container>
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let row">{{row.value}}</td>
+          </ng-container>
+         
+          <!-- Header and Row Declarations -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns sticky: true" class="header"></tr>
+          <tr mat-row *matRowDef="let row; let odd = odd; columns: displayedColumns" [class.striped-row]="odd"></tr>
+        </table>
+      </div>
+    </div>      
 </div>
