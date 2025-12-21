@@ -28,7 +28,7 @@ export class UserCoreService {
    */
   private purgeUser(): void {
     this.jwtService.destroyToken();
-    this.jwtService.removeEmail();
+    this.jwtService.removeFirstName();
     return;
   }
 }

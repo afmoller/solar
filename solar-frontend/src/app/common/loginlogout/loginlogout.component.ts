@@ -46,7 +46,7 @@ export class LoginLogoutComponent implements OnInit, OnDestroy {
     this.authService.authState.subscribe((user) => {
       if (user != null) {
         this.jwtService.saveToken(user.idToken);
-        this.jwtService.saveEmail(user.email);
+        this.jwtService.saveFirstName(user.firstName);
 
         this.router.navigateByUrl('/return-on-investment');
       }
@@ -62,8 +62,8 @@ export class LoginLogoutComponent implements OnInit, OnDestroy {
     return this.userService.isSignedIn();
   }
 
-  getEmailAddress(): string {
-    return this.jwtService.getEmail();
+  getFirstName(): string {
+    return this.jwtService.getFirstName();
   }
 
   ngOnDestroy(): void {

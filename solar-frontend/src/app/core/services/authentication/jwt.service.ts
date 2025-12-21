@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class JwtService {
   
   tokenKey = 'jwtToken';
-  emailKey = 'email';
+  firstName = 'firstName';
 
   getToken(): String {
     return window.localStorage[this.tokenKey];
@@ -20,15 +20,15 @@ export class JwtService {
     window.localStorage.removeItem(this.tokenKey);
   }
 
-  getEmail(): string {
-    return window.localStorage[this.emailKey];
+  getFirstName(): string {
+    return window.localStorage[this.firstName];
   }
 
-  saveEmail(email: string) {
-    window.localStorage[this.emailKey] = email;
+  saveFirstName(firstName: string) {
+    window.localStorage[this.firstName] = firstName;
   }
 
-  removeEmail() {
-    window.localStorage.removeItem(this.emailKey);
+  removeFirstName() {
+    window.localStorage.removeItem(this.firstName);
   }
 }
