@@ -85,7 +85,7 @@ export class WeatherComponent implements OnInit {
     entries.push({key: 'Daily', value: data.dailyRainInMillimeters.toFixed(1) + ' mm'});
     entries.push({key: 'Weekly', value: data.weeklyRainInMillimeters.toFixed(1) + ' mm'});
     entries.push({key: 'Monthly', value: data.monthlyRainInMillimeters.toFixed(1) + ' mm'});
-    entries.push({key: 'Yearly', value: data.yearlyRainInMillimeters.toFixed(0) + ' mm'});
+    entries.push({key: 'Yearly', value: data.yearlyRainInMillimeters.toFixed(1) + ' mm'});
     
     return entries;
   }
