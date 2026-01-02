@@ -766,6 +766,40 @@
           }
         }
       }
+    },
+    "/api/v1/weather/getByDate": {
+      "get": {
+        "tags": [
+          "weather-controller"
+        ],
+        "operationId": "getWeatherByDateEntries",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherDataEntry"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
