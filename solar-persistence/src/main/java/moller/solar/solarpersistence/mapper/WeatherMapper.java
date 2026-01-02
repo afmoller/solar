@@ -5,6 +5,7 @@ import moller.solar.solarpersistence.persistence.entity.WeatherStationEntryEntit
 import org.mapstruct.Mapper;
 
 import java.time.ZoneId;
+import java.util.List;
 
 @Mapper(componentModel = "spring", config = MapstructConfig.class)
 public abstract class WeatherMapper {
@@ -40,6 +41,13 @@ public abstract class WeatherMapper {
                 .baromAbsoluteIndoor(inchMercuryToHectoPascal(weatherStationEntryEntity.getBaromabsin()))
                 .baromRelativeIndoor(inchMercuryToHectoPascal(weatherStationEntryEntity.getBaromrelin()))
                 .dateUtc(weatherStationEntryEntity.getDateutc().atZoneSameInstant(ZoneId.of("Europe/Paris")).toLocalDateTime());
+    }
+
+    public List<WeatherDataEntry> map(List<WeatherStationEntryEntity> weatherInformationForDate) {
+        return weatherInformationForDate
+                .stream()
+                .map(this::map)
+                .toList();
     }
 
     private Float mphToMs(Float mph) {

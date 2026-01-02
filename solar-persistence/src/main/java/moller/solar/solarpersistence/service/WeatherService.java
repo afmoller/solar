@@ -6,6 +6,9 @@ import moller.solar.solarpersistence.persistence.entity.WeatherStationEntryEntit
 import moller.solar.solarpersistence.persistence.repository.WeatherStationRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
+import java.util.List;
+
 @Service
 public class WeatherService {
 
@@ -23,5 +26,10 @@ public class WeatherService {
     public WeatherDataEntry getCurrentWeatherEntry() {
         WeatherStationEntryEntity currentWeatherEntry = weatherStationRepository.findCurrentWeatherEntry();
         return weatherMapper.map(currentWeatherEntry);
+    }
+
+    public List<WeatherDataEntry> getWeatherByDateEntries(OffsetDateTime dateFrom, OffsetDateTime dateTo) {
+        List<WeatherStationEntryEntity> weatherInformationForDate = weatherStationRepository.getWeatherInformationForDate(dateFrom, dateTo);
+        return weatherMapper.map(weatherInformationForDate);
     }
 }
