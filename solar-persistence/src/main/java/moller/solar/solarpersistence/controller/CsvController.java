@@ -1,10 +1,8 @@
 package moller.solar.solarpersistence.controller;
 
-import jakarta.validation.Valid;
 import moller.openapi.persistence.solar.api.CsvControllerApi;
 import moller.openapi.persistence.solar.model.DataExportEntry;
 import moller.solar.solarpersistence.service.DataExportService;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +20,7 @@ public class CsvController implements CsvControllerApi {
     }
 
     @Override
-    public ResponseEntity<Void> importCsvFileToDatabase(List<@Valid DataExportEntry> dateExportEntries) {
+    public ResponseEntity<Void> importCsvFileToDatabase(List<DataExportEntry> dateExportEntries) {
         dataExportService.importCsvFileToDatabase(dateExportEntries);
 
         return ResponseEntity.ok().build();
