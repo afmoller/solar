@@ -11,7 +11,6 @@
 
     <artifactId>solar-persistence-api</artifactId>
 
-    <version>1.0.0-SNAPSHOT</version>
     <name>solar-persistence-api</name>
     <description>Solar persistence API for the Solar project</description>
 

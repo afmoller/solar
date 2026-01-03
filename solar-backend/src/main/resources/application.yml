@@ -27,3 +27,9 @@ logging:
 rest:
   solar-persistence:
     base-path: ${SOLAR_PERSISTENCE_BASE_PATH}
+
+springdoc:
+  api-docs:
+    enabled: ${SPRINGDOC_API_DOCS_ENABLED:false}
+  swagger-ui:
+    enabled: ${SPRINGDOC_SWAGGER_UI_ENABLED:false}
