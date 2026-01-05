@@ -42,16 +42,16 @@
     "@angular/build": "^21.0.4",
     "@angular/cli": "~21.0.4",
     "@angular/compiler-cli": "^21.0.6",
-    "@typescript-eslint/eslint-plugin": "^7.13.1",
-    "@typescript-eslint/parser": "^7.2.0",
+    "@typescript-eslint/eslint-plugin": "^8.51.0",
+    "@typescript-eslint/parser": "^8.51.0",
     "baseline-browser-mapping": "^2.9.11",
     "eslint": "^8.57.0",
     "eslint-plugin-rxjs": "^5.0.3",
-    "stylelint": "^16.25.0",
+    "stylelint": "^16.26.1",
     "stylelint-config-sass-guidelines": "^12.1.0",
     "stylelint-formatter-html": "^1.0.1",
     "stylelint-no-unsupported-browser-features": "^8.0.5",
-    "stylelint-use-nesting": "^6.0.0",
+    "stylelint-use-nesting": "^6.0.1",
     "typescript": "~5.9.3"
   }
 }
