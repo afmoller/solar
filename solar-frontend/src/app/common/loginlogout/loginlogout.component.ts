@@ -44,7 +44,7 @@ export class LoginLogoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authService.authState.subscribe((user) => {
-      if (user != null) {
+      if (user != null && user.idToken && user.firstName) {
         this.jwtService.saveToken(user.idToken);
         this.jwtService.saveFirstName(user.firstName);
 
