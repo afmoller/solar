@@ -8,6 +8,11 @@
     "plugin/no-unsupported-browser-features": [
       true,
       {
+        "browsers": ["defaults",
+                      "not op_mini all",
+                      "not and_uc 15.5",
+                      "not and_qq 14.9",
+                      "not kaios 2.5"],
         "severity": "warning"
       }
     ],
