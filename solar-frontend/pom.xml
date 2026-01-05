@@ -20,7 +20,6 @@
       - npm install
       - npm run clean
       - npm run lint
-      - npm run test
       - npm run build-prod-ci -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -82,21 +81,6 @@
               </arguments>
             </configuration>
           </execution>
-
-<!--          <execution>-->
-<!--            <id>npm-run-test</id>-->
-<!--            <phase>test</phase>-->
-<!--            <goals>-->
-<!--              <goal>exec</goal>-->
-<!--            </goals>-->
-<!--            <configuration>-->
-<!--              <executable>npm</executable>-->
-<!--              <arguments>-->
-<!--                <argument>run</argument>-->
-<!--                <argument>test-ci</argument>-->
-<!--              </arguments>-->
-<!--            </configuration>-->
-<!--          </execution>-->
 
           <execution>
             <id>npm-run-build-prod</id>
