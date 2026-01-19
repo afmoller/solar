@@ -1,8 +1,10 @@
 package moller.solar.solarpersistence.service;
 
 import moller.openapi.persistence.solar.model.WeatherDataEntry;
+import moller.openapi.persistence.solar.model.WeatherDataEntryDateDto;
 import moller.solar.solarpersistence.mapper.WeatherMapper;
 import moller.solar.solarpersistence.persistence.entity.WeatherStationEntryEntity;
+import moller.solar.solarpersistence.persistence.projection.WeatherStationEntryProjection;
 import moller.solar.solarpersistence.persistence.repository.WeatherStationRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +30,8 @@ public class WeatherService {
         return weatherMapper.map(currentWeatherEntry);
     }
 
-    public List<WeatherDataEntry> getWeatherByDateEntries(OffsetDateTime dateFrom, OffsetDateTime dateTo) {
-        List<WeatherStationEntryEntity> weatherInformationForDate = weatherStationRepository.getWeatherInformationForDate(dateFrom, dateTo);
-        return weatherMapper.map(weatherInformationForDate);
+    public List<WeatherDataEntryDateDto> getWeatherByDateEntries(OffsetDateTime dateFrom, OffsetDateTime dateTo) {
+        List<WeatherStationEntryProjection> weatherInformationForDate = weatherStationRepository.getWeatherInformationForDate(dateFrom, dateTo);
+        return weatherMapper.mapToDto(weatherInformationForDate);
     }
 }

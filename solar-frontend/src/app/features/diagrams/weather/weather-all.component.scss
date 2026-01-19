@@ -1,0 +1,15 @@
+.centered {
+  text-align: center;
+}
+
+.content-container {
+  background-color: rgb(255, 255, 255);
+}
+
+.large {
+  height: calc(100vh - var(--toolbar-height));
+}
+
+.small {
+  height: calc((100vh - var(--toolbar-height)) / 3);
+}

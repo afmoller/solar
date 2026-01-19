@@ -792,7 +792,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/WeatherDataEntry"
+                    "$ref": "#/components/schemas/WeatherDataEntryDateDto"
                   }
                 }
               }
@@ -1233,6 +1233,88 @@
           "passkey",
           "runtime",
           "heap"
+        ]
+      },
+      "WeatherDataEntryDateDto": {
+        "type": "object",
+        "properties": {
+          "dateUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "temperatureIndoorInCelcius": {
+            "type": "number",
+            "format": "float"
+          },
+          "humidityIndoor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "baromAbsoluteIndoor": {
+            "type": "number",
+            "format": "float"
+          },
+          "temperatureOutdoorInCelsius": {
+            "type": "number",
+            "format": "float"
+          },
+          "humidityOutdoor": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "windDirection": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "windSpeedInMeterPerSecond": {
+            "type": "number",
+            "format": "float"
+          },
+          "windGustInMeterPerSecond": {
+            "type": "number",
+            "format": "float"
+          },
+          "maxDailyGustInMeterPerSecond": {
+            "type": "number",
+            "format": "float"
+          },
+          "uv": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "solarRadiation": {
+            "type": "number",
+            "format": "float"
+          },
+          "rainRateInMillimetersPerHour": {
+            "type": "number",
+            "format": "float"
+          },
+          "hourlyRainInMillimeters": {
+            "type": "number",
+            "format": "float"
+          },
+          "dailyRainInMillimeters": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "required": [
+          "dateUtc",
+          "temperatureIndoorInCelcius",
+          "humidityIndoor",
+          "baromAbsoluteIndoor",
+          "temperatureOutdoorInCelsius",
+          "humidityOutdoor",
+          "windDirection",
+          "windSpeedInMeterPerSecond",
+          "windGustInMeterPerSecond",
+          "maxDailyGustInMeterPerSecond",
+          "uv",
+          "solarRadiation",
+          "rainRateInMillimetersPerHour",
+          "hourlyRainInMillimeters",
+          "dailyRainInMillimeters"
         ]
       }
     },

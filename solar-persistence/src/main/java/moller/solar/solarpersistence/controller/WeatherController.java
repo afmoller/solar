@@ -2,6 +2,7 @@ package moller.solar.solarpersistence.controller;
 
 import moller.openapi.persistence.solar.api.WeatherControllerApi;
 import moller.openapi.persistence.solar.model.WeatherDataEntry;
+import moller.openapi.persistence.solar.model.WeatherDataEntryDateDto;
 import moller.solar.solarpersistence.service.WeatherService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ public class WeatherController implements WeatherControllerApi {
     }
 
     @Override
-    public ResponseEntity<List<WeatherDataEntry>> getWeatherByDateEntries(LocalDate date) {
+    public ResponseEntity<List<WeatherDataEntryDateDto>> getWeatherByDateEntries(LocalDate date) {
         ZoneOffset zoneOffset = ZoneId.of("Europe/Paris").getRules().getOffset(LocalDateTime.now());
 
         OffsetDateTime dateTimeFrom = OffsetDateTime.of(date, LocalTime.MIN, zoneOffset);

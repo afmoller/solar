@@ -1,7 +1,9 @@
 package moller.solar.solarpersistence.mapper;
 
 import moller.openapi.persistence.solar.model.WeatherDataEntry;
+import moller.openapi.persistence.solar.model.WeatherDataEntryDateDto;
 import moller.solar.solarpersistence.persistence.entity.WeatherStationEntryEntity;
+import moller.solar.solarpersistence.persistence.projection.WeatherStationEntryProjection;
 import org.mapstruct.Mapper;
 
 import java.time.ZoneId;
@@ -47,6 +49,28 @@ public abstract class WeatherMapper {
         return weatherInformationForDate
                 .stream()
                 .map(this::map)
+                .toList();
+    }
+
+    public List<WeatherDataEntryDateDto> mapToDto(List<WeatherStationEntryProjection> weatherStationEntryProjections) {
+        return weatherStationEntryProjections
+                .stream()
+                .map(weatherStationEntryProjection -> new WeatherDataEntryDateDto()
+                        .uv(weatherStationEntryProjection.uv())
+                        .windDirection(weatherStationEntryProjection.winddir())
+                        .humidityOutdoor(weatherStationEntryProjection.humidity())
+                        .humidityIndoor(weatherStationEntryProjection.humidityin())
+                        .solarRadiation(weatherStationEntryProjection.solarradiation())
+                        .windGustInMeterPerSecond(mphToMs(weatherStationEntryProjection.windgustmph()))
+                        .windSpeedInMeterPerSecond(mphToMs(weatherStationEntryProjection.windspeedmph()))
+                        .maxDailyGustInMeterPerSecond(mphToMs(weatherStationEntryProjection.maxdailygust()))
+                        .temperatureOutdoorInCelsius(fahrenheitToCelsius(weatherStationEntryProjection.tempf()))
+                        .temperatureIndoorInCelcius(fahrenheitToCelsius(weatherStationEntryProjection.tempinf()))
+                        .dailyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.dailyrainin()))
+                        .baromAbsoluteIndoor(inchMercuryToHectoPascal(weatherStationEntryProjection.baromabsin()))
+                        .hourlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.hourlyrainin()))
+                        .rainRateInMillimetersPerHour(inchesToMillimeters(weatherStationEntryProjection.rainratein()))
+                        .dateUtc(weatherStationEntryProjection.dateutc().atZoneSameInstant(ZoneId.of("Europe/Paris")).toLocalDateTime()))
                 .toList();
     }
 

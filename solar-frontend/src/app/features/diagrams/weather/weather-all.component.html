@@ -1,0 +1,62 @@
+<mat-sidenav-container>
+  <mat-sidenav-content class="border">
+    
+    @if (lineChartDataVisible) {
+      <div class="content-container" [class.large]="!opened" [class.small]="opened">
+        <canvas
+          baseChart
+          class="chart"
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [type]="lineChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="sidenav.toggle()"
+          (chartClick)="chartClicked('lineChartData')">
+        </canvas>
+      </div>
+    }
+
+    @if (solarAndHumidityLineChartDataVisible) {
+      <div class="content-container" [class.large]="!opened" [class.small]="opened">
+      <canvas
+        baseChart
+        class="chart"
+        [data]="solarAndHumidityLineChartData"
+        [options]="lineChartOptions"
+        [type]="lineChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="sidenav.toggle()"
+        (chartClick)="chartClicked('solarAndHumidityLineChartData')">
+      </canvas>
+    </div>
+    }
+    
+    @if (baroLineChartDataVisible) {
+      <div class="content-container" [class.large]="!opened" [class.small]="opened">
+        <canvas
+          baseChart
+          class="chart"
+          [data]="baroLineChartData"
+          [options]="lineChartOptions"
+          [type]="lineChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="sidenav.toggle()"
+          (chartClick)="chartClicked('baroLineChartData')">
+        </canvas>
+      </div>
+    }
+    
+</mat-sidenav-content>
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')" (closed)="events.push('close!')" class="border" position="end">
+    
+    <form [formGroup]="inputForm">
+      <div>
+        <span>Date</span>
+      </div>
+      <div>
+        <input id="selectedDate" type="date" formControlName="selectedDate" (change)="selectedDateChange()" title="Selected date">
+      </div>
+    </form>
+          
+  </mat-sidenav>  
+</mat-sidenav-container>
