@@ -25,7 +25,7 @@ export class WeatherAllComponent implements OnInit {
 
   private formBuilder = inject(FormBuilder);
   private weatherAllEntryService = inject(WeatherAllEntryService);
-  
+
   inputForm: FormGroup;
   menuTitle: string = '';
   menuTitlePrefix: string = '';
@@ -50,18 +50,18 @@ export class WeatherAllComponent implements OnInit {
       let dateAsString: string = this.getDateAsString(new Date());
 
       this.inputForm.get('selectedDate')?.setValue(dateAsString);
-      
+
       this.loadDataAndPopulateChart(dateAsString);
   }
 
   public selectedDateChange(): void {
     let selectedDateValue: string = this.inputForm.get('selectedDate')?.value;
-    
+
     this.loadDataAndPopulateChart(selectedDateValue);
   }
-  
+
   private loadDataAndPopulateChart(selectedDate: string): void {
-    
+
       this.weatherAllEntryService.findAll(selectedDate).subscribe(data => {
         this.lineChartData.datasets[0].data = data.dailyRainInMillimetersValues;
         this.lineChartData.datasets[1].data = data.hourlyRainInMillimetersValues;
@@ -74,7 +74,7 @@ export class WeatherAllComponent implements OnInit {
 
         this.lineChartData.labels = data.minToMaxLocalTimes;
 
-        
+
         this.solarAndHumidityLineChartData.datasets[0].data = data.solarRadiationValues;
         this.solarAndHumidityLineChartData.datasets[1].data = data.humidityIndoorValues;
         this.solarAndHumidityLineChartData.datasets[2].data = data.humidityOutdoorValues;
@@ -90,13 +90,13 @@ export class WeatherAllComponent implements OnInit {
         this.lineChartData.datasets[1].label = 'Rain hourly mm';
         this.lineChartData.datasets[2].label = 'Rain rate mm/h';
         this.lineChartData.datasets[3].label = 'Max gust m/s';
-        
+
         this.lineChartData.datasets[4].label = 'Temp indoor C';
         this.lineChartData.datasets[5].label = 'Temp outdoor C';
         this.lineChartData.datasets[6].label = 'UV index';
         this.lineChartData.datasets[7].label = 'Wind speed m/s';
 
-        
+
         this.solarAndHumidityLineChartData.datasets[0].label = 'Radiation w/m2';
         this.solarAndHumidityLineChartData.datasets[1].label = 'Humidity in %';
         this.solarAndHumidityLineChartData.datasets[2].label = 'Humidity out %';
@@ -104,9 +104,9 @@ export class WeatherAllComponent implements OnInit {
         this.baroLineChartData.datasets[0].label = 'Baro. abs. hPa';
 
         this.charts?.forEach((child) => {
-          child.chart?.update()
+          child.chart?.update();
         });
-      });   
+      });
   }
 
   public baroLineChartData: ChartConfiguration['data'] = {
@@ -198,7 +198,10 @@ export class WeatherAllComponent implements OnInit {
     plugins: {
       legend: {
         display: true,
-        position: 'right'
+        position: 'right',
+        labels: {
+          usePointStyle: true,
+        }
       }
     },
     responsive: true,
@@ -211,7 +214,7 @@ export class WeatherAllComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   @ViewChildren(BaseChartDirective) charts?: QueryList<BaseChartDirective>;
-  
+
   // events
   public chartClicked(source: string): void {
     if (source === 'lineChartData') {

@@ -205,7 +205,10 @@ export class AllComponent implements OnInit {
     plugins: {
       legend: {
         display: true,
-        position: 'bottom'
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+        }
       },
       title: {
         display: true,

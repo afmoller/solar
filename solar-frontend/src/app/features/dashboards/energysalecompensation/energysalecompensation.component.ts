@@ -224,7 +224,10 @@ export class EnergySaleCompensationComponent implements OnInit {
     plugins: {
       legend: {
         display: true,
-        position: 'bottom'
+        position: 'bottom',
+        labels: {
+          usePointStyle: true,
+        }
       }
     },
     responsive: true,
