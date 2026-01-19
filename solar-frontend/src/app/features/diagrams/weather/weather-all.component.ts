@@ -109,6 +109,32 @@ export class WeatherAllComponent implements OnInit {
       });
   }
 
+  decreaseDate(dateField: string): void {
+    if (dateField === 'selectedDate') {
+      this.shiftDateFieldValue('selectedDate', -1);
+      this.dateChange();
+    }
+  }
+
+  increaseDate(dateField: string): void {
+    if (dateField === 'selectedDate') {
+      this.shiftDateFieldValue('selectedDate', 1);
+      this.dateChange();
+    }
+  }
+
+   public dateChange(): void {
+    this.loadDataAndPopulateChart(this.inputForm.get('selectedDate')?.value);
+  }
+
+  private shiftDateFieldValue(dateField: string, shiftValue: number) {
+      let dateValue: string = this.inputForm.get(dateField)?.value;
+      let dateValueAsDate: Date = new Date(dateValue);
+      dateValueAsDate.setDate(dateValueAsDate.getDate() + shiftValue);
+
+      this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));  
+  }
+
   public baroLineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
