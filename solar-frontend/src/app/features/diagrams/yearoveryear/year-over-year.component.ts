@@ -189,24 +189,29 @@ export class YearOverYearComponent implements OnInit {
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
-        data: [],
+        data: [], // 2022
         fill: false,
         borderColor: 'rgb(144, 238, 144)',
       },
       {
-        data: [],
+        data: [], // 2023
         fill: false,
         borderColor: 'rgb(173, 216, 230)',
       },
       {
-        data: [],
+        data: [], // 2024
         fill: false,
         borderColor: 'rgb(255, 230, 153)',
       },
       {
-        data: [],
+        data: [], // 2025
         fill: false,
         borderColor: 'rgb(255, 102, 0)',
+      },
+      {
+        data: [], // 2026
+        fill: false,
+        borderColor: 'rgb(55, 102, 250)',
       },
       {
         data: [],
