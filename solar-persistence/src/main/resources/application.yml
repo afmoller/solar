@@ -1,11 +1,13 @@
 spring:
   jpa:
-    show-sql: false
     open-in-view: false
     properties:
       hibernate:
         jdbc:
           batch_size: 1000
+        format_sql: true
+        generate_statistics: true
+        show-sql: true
   datasource:
     url: ${DATASOURCE_URL}
     username: solar
@@ -27,6 +29,20 @@ server:
 logging:
   file:
     name: logs/persistence.log
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+        session:
+          metrics: DEBUG
+        statistics: TRACE
+        orm:
+          jdbc:
+            bind: TRACE
 
 springdoc:
   api-docs:
