@@ -30,7 +30,12 @@
         <mat-expansion-panel-header class="padding">
           <mat-panel-title>Diagrams</mat-panel-title>
         </mat-expansion-panel-header>
-        <h5 class="underline">Year over year</h5>
+          <h5 class="underline">Weather</h5>
+          <p>
+            <a routerLink="/weather-all" (click)="setPageTitle('Weather - Date selection')">Date selection</a>
+          </p>
+          
+          <h5 class="underline">Year over year</h5>
           <p>
             <a [routerLink]="['/year-over-year', 'sale', 'normal']" (click)="setPageTitle('Year over year - Sale')">Sale</a>
             <br>
@@ -65,11 +70,6 @@
             <a routerLink="/all" (click)="setPageTitle('All values - Date selection')">Date selection</a>
             <br>
             <a routerLink="/accumulated-all" routerLinkActive="active" ariaCurrentWhenActive="page" (click)="setPageTitle('All values - All time cumulated')">All time cumulated</a>
-          </p>
-
-          <h5 class="underline">Weather</h5>
-          <p>
-            <a routerLink="/weather-all" (click)="setPageTitle('Weather - Date selection')">Date selection</a>
           </p>
       </mat-expansion-panel>
 

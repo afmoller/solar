@@ -15,6 +15,20 @@
       </div>
     }
 
+    @if (rainLineChartDataVisible) {
+      <div class="content-container" [class.large]="!opened" [class.small]="opened">
+        <canvas
+          baseChart
+          [data]="rainLineChartData"
+          [options]="rainLineChartOptions"
+          [type]="lineChartType"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="sidenav.toggle()"
+          (chartClick)="chartClicked('rainLineChartData')">
+        </canvas>
+      </div>
+    }
+
     @if (solarAndHumidityLineChartDataVisible) {
       <div class="content-container" [class.large]="!opened" [class.small]="opened">
       <canvas

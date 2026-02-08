@@ -33,6 +33,7 @@ export class WeatherAllComponent implements OnInit {
   opened: boolean = true;
 
   lineChartDataVisible: boolean = true;
+  rainLineChartDataVisible: boolean = true;
   solarAndHumidityLineChartDataVisible: boolean = true;
   baroLineChartDataVisible: boolean = true;
 
@@ -63,17 +64,21 @@ export class WeatherAllComponent implements OnInit {
   private loadDataAndPopulateChart(selectedDate: string): void {
 
       this.weatherAllEntryService.findAll(selectedDate).subscribe(data => {
-        this.lineChartData.datasets[0].data = data.dailyRainInMillimetersValues;
-        this.lineChartData.datasets[1].data = data.hourlyRainInMillimetersValues;
-        this.lineChartData.datasets[2].data = data.rainRateInMillimetersPerHourValues;
-        this.lineChartData.datasets[3].data = data.maxDailyGustInMeterPerSecondValues;
-        this.lineChartData.datasets[4].data = data.temperatureIndoorInCelsiusValues;
-        this.lineChartData.datasets[5].data = data.temperatureOutdoorInCelsiusValues;
-        this.lineChartData.datasets[6].data = data.uvValues;
-        this.lineChartData.datasets[7].data = data.windSpeedInMeterPerSecondValues;
+        
+        
+        this.lineChartData.datasets[0].data = data.temperatureIndoorInCelsiusValues;
+        this.lineChartData.datasets[1].data = data.temperatureOutdoorInCelsiusValues;
+        this.lineChartData.datasets[2].data = data.uvValues;
+        this.lineChartData.datasets[3].data = data.windSpeedInMeterPerSecondValues;
+        this.lineChartData.datasets[4].data = data.maxDailyGustInMeterPerSecondValues;
 
         this.lineChartData.labels = data.minToMaxLocalTimes;
 
+        this.rainLineChartData.datasets[0].data = data.dailyRainInMillimetersValues;
+        this.rainLineChartData.datasets[1].data = data.hourlyRainInMillimetersValues;
+        this.rainLineChartData.datasets[2].data = data.rainRateInMillimetersPerHourValues;
+
+        this.rainLineChartData.labels = data.minToMaxLocalTimes;
 
         this.solarAndHumidityLineChartData.datasets[0].data = data.solarRadiationValues;
         this.solarAndHumidityLineChartData.datasets[1].data = data.humidityIndoorValues;
@@ -86,16 +91,15 @@ export class WeatherAllComponent implements OnInit {
 
         this.menuTitle = selectedDate;
 
-        this.lineChartData.datasets[0].label = 'Rain daily mm';
-        this.lineChartData.datasets[1].label = 'Rain hourly mm';
-        this.lineChartData.datasets[2].label = 'Rain rate mm/h';
-        this.lineChartData.datasets[3].label = 'Max gust m/s';
+        this.lineChartData.datasets[0].label = 'Temp in C';
+        this.lineChartData.datasets[1].label = 'Temp out C';
+        this.lineChartData.datasets[2].label = 'UV index';
+        this.lineChartData.datasets[3].label = 'Wind m/s';
+        this.lineChartData.datasets[4].label = 'Max gust m/s';
 
-        this.lineChartData.datasets[4].label = 'Temp indoor C';
-        this.lineChartData.datasets[5].label = 'Temp outdoor C';
-        this.lineChartData.datasets[6].label = 'UV index';
-        this.lineChartData.datasets[7].label = 'Wind speed m/s';
-
+        this.rainLineChartData.datasets[0].label = 'Rain daily mm';
+        this.rainLineChartData.datasets[1].label = 'Rain hourly mm';
+        this.rainLineChartData.datasets[2].label = 'Rain rate mm/h';
 
         this.solarAndHumidityLineChartData.datasets[0].label = 'Radiation w/m2';
         this.solarAndHumidityLineChartData.datasets[1].label = 'Humidity in %';
@@ -184,7 +188,14 @@ export class WeatherAllComponent implements OnInit {
       {
         data: [],
         fill: false,
-      },
+      }
+    ],
+    labels: [],
+  };
+
+
+  public rainLineChartData: ChartConfiguration['data'] = {
+    datasets: [
       {
         data: [],
         fill: false,
@@ -217,7 +228,42 @@ export class WeatherAllComponent implements OnInit {
         ticks: {
           // Disabled rotation for performance
           maxRotation: 0,
+        }
+      },
+    },
+
+    plugins: {
+      legend: {
+        display: true,
+        position: 'right',
+        labels: {
+          usePointStyle: true,
+        }
+      }
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: false,
+  };
+
+  public rainLineChartOptions: ChartConfiguration['options'] = {
+    elements: {
+      line: {
+        tension: 0.1,
+      },
+      point: {
+        radius: 1,
+      }
+    },
+    scales: {
+      // We use this empty structure as a placeholder for dynamic theming.
+      y: {
+        position: 'left',
+        ticks: {
+          // Disabled rotation for performance
+          maxRotation: 0,
         },
+        min: 0
       },
     },
 
@@ -244,12 +290,19 @@ export class WeatherAllComponent implements OnInit {
   // events
   public chartClicked(source: string): void {
     if (source === 'lineChartData') {
+      this.rainLineChartDataVisible = this.opened ? false: true;
+      this.solarAndHumidityLineChartDataVisible = this.opened ? false: true;
+      this.baroLineChartDataVisible = this.opened ? false: true;
+    } else if (source === 'rainLineChartData') {
+      this.lineChartDataVisible = this.opened ? false: true;
       this.solarAndHumidityLineChartDataVisible = this.opened ? false: true;
       this.baroLineChartDataVisible = this.opened ? false: true;
     } else if (source === 'solarAndHumidityLineChartData') {
+      this.rainLineChartDataVisible = this.opened ? false: true;
       this.lineChartDataVisible = this.opened ? false: true;
       this.baroLineChartDataVisible = this.opened ? false: true;
     } else {
+      this.rainLineChartDataVisible = this.opened ? false: true;
       this.lineChartDataVisible = this.opened ? false: true;
       this.solarAndHumidityLineChartDataVisible = this.opened ? false: true;
     }
