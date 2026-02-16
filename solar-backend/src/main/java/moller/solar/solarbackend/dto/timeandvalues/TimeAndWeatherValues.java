@@ -21,8 +21,8 @@ public class TimeAndWeatherValues {
     private final Float[] maxDailyGustInMeterPerSecondValues;
     private final Float[] rainRateInMillimetersPerHourValues;
 
-    public TimeAndWeatherValues() {
-        minToMaxLocalTimes = initializeMinToMaxLocalTimesList();
+    public TimeAndWeatherValues(LocalTime queryEndTime) {
+        minToMaxLocalTimes = initializeMinToMaxLocalTimesList(queryEndTime);
 
         int size = minToMaxLocalTimes.size();
 
@@ -140,12 +140,9 @@ public class TimeAndWeatherValues {
         return rainRateInMillimetersPerHourValues;
     }
 
-    private List<LocalTime> initializeMinToMaxLocalTimesList() {
+    private List<LocalTime> initializeMinToMaxLocalTimesList(LocalTime queryEndTime) {
 
-        LocalTime midnightStartOfDay = LocalTime.MIN;
-        LocalTime midnightEndOfDayMinusFourMinutes = LocalTime.MAX.withSecond(0).withNano(0).minusMinutes(4);
-
-        LocalTime queryLocalTime = midnightStartOfDay;
+        LocalTime queryLocalTime = LocalTime.MIN;
 
         List<LocalTime> localTimeList = new ArrayList<>();
 
@@ -153,7 +150,7 @@ public class TimeAndWeatherValues {
             localTimeList.add(queryLocalTime);
             queryLocalTime = queryLocalTime.plusMinutes(5);
 
-            if (queryLocalTime.equals(midnightEndOfDayMinusFourMinutes)) {
+            if (queryLocalTime.equals(queryEndTime)) {
                 localTimeList.add(queryLocalTime);
                 break;
             }

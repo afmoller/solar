@@ -40,9 +40,9 @@ public class WeatherController extends AbstractV1BaseController {
                         (objectWithSameKey, anotherObjectWithSameKey) -> anotherObjectWithSameKey));
 
         LocalTime midnightStartOfDay = LocalTime.MIN;
-        LocalTime midnightEndOfDayMinusFourMinutes = LocalTime.MAX.withSecond(0).withNano(0).minusMinutes(4);
+        LocalTime queryEndTime = getQueryEndtime(selectedDate);
 
-        TimeAndWeatherValues timeAndWeatherValues = new TimeAndWeatherValues();
+        TimeAndWeatherValues timeAndWeatherValues = new TimeAndWeatherValues(queryEndTime);
 
         LocalTime queryLocalTime = midnightStartOfDay;
 
@@ -66,7 +66,7 @@ public class WeatherController extends AbstractV1BaseController {
                 timeAndWeatherValues.setValueToWindSpeedInMeterPerSecondsList(index, weatherDataEntryDateDto.getWindSpeedInMeterPerSecond());
             }
 
-            if (queryLocalTime.equals(midnightEndOfDayMinusFourMinutes)) {
+            if (queryLocalTime.equals(queryEndTime)) {
                 break;
             } else {
                 queryLocalTime = queryLocalTime.plusMinutes(5);
@@ -76,5 +76,19 @@ public class WeatherController extends AbstractV1BaseController {
         }
 
         return ResponseEntity.of(Optional.of(timeAndWeatherValues));
+    }
+
+    private LocalTime getQueryEndtime(LocalDate selectedDate) {
+
+        LocalTime queryEndTime;
+
+        if (selectedDate.isEqual(LocalDate.now())) {
+            LocalTime now = LocalTime.now().withSecond(0).withNano(0);
+            queryEndTime = now.minusMinutes(now.getMinute() % 5);
+        } else {
+            queryEndTime = LocalTime.MAX.withSecond(0).withNano(0).minusMinutes(4);
+        }
+
+        return queryEndTime;
     }
 }
