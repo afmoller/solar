@@ -50,10 +50,10 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-csv</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.openapitools</groupId>
-			<artifactId>jackson-databind-nullable</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.openapitools</groupId>-->
+<!--			<artifactId>jackson-databind-nullable</artifactId>-->
+<!--		</dependency>-->
 
 		<dependency>
 			<groupId>moller</groupId>
@@ -98,6 +98,9 @@
 								<library>restclient</library>
 								<dateLibrary>java8-localdatetime</dateLibrary>
 								<generateBuilders>true</generateBuilders>
+								<useSpringBoot4>true</useSpringBoot4>
+								<useJackson3>true</useJackson3>
+								<openApiNullable>false</openApiNullable>
 							</configOptions>
 						</configuration>
 					</execution>

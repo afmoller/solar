@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.1</version>
+        <version>4.0.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -17,17 +17,16 @@
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>25</maven.compiler.source>
-        <maven.compiler.target>25</maven.compiler.target>
-        <maven.compiler.release>25</maven.compiler.release>
+        <maven.compiler.source>26</maven.compiler.source>
+        <maven.compiler.target>26</maven.compiler.target>
+        <maven.compiler.release>26</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <springdoc-openapi-starter-webmvc-ui.version>3.0.1</springdoc-openapi-starter-webmvc-ui.version>
+        <springdoc-openapi-starter-webmvc-ui.version>3.0.2</springdoc-openapi-starter-webmvc-ui.version>
         <commons-csv.version>1.14.1</commons-csv.version>
-        <org.springframework.boot.version>4.0.1</org.springframework.boot.version>
-        <jackson-databind-nullable.version>0.2.8</jackson-databind-nullable.version>
+        <org.springframework.boot.version>4.0.5</org.springframework.boot.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <openapi-generator-maven-plugin.version>7.18.0</openapi-generator-maven-plugin.version>
+        <openapi-generator-maven-plugin.version>7.21.0</openapi-generator-maven-plugin.version>
 
         <solar.persistence.api.artifact.id>solar-persistence-api</solar.persistence.api.artifact.id>
         <solar.persistence.api.version>1.0.0-SNAPSHOT</solar.persistence.api.version>
@@ -37,12 +36,12 @@
     </properties>
 
     <modules>
-        <module>/solar-persistence-api</module>
-        <module>/solar-persistence</module>
-        <module>/solar-frontend</module>
-        <module>/solar-backend</module>
-        <module>/solar-weather-persistence-api</module>
-        <module>/solar-weather-backend</module>
+        <module>solar-persistence-api</module>
+        <module>solar-persistence</module>
+        <module>solar-frontend</module>
+        <module>solar-backend</module>
+        <module>solar-weather-persistence-api</module>
+        <module>solar-weather-backend</module>
     </modules>
 
     <dependencyManagement>
@@ -108,11 +107,6 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openapitools</groupId>
-                <artifactId>jackson-databind-nullable</artifactId>
-                <version>${jackson-databind-nullable.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>

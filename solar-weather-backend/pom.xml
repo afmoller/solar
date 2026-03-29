@@ -29,10 +29,6 @@
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.openapitools</groupId>
-			<artifactId>jackson-databind-nullable</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>moller</groupId>
@@ -76,6 +72,9 @@
 								<sourceFolder>src/gen/java/main</sourceFolder>
 								<library>restclient</library>
 								<generateBuilders>true</generateBuilders>
+								<useSpringBoot4>true</useSpringBoot4>
+								<useJackson3>true</useJackson3>
+								<openApiNullable>false</openApiNullable>
 							</configOptions>
 						</configuration>
 					</execution>
