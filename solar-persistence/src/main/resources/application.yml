@@ -4,7 +4,7 @@ spring:
     properties:
       hibernate:
         jdbc:
-          batch_size: 1000
+          batch_size: 10000
         format_sql: true
         generate_statistics: true
         show-sql: true
@@ -32,17 +32,17 @@ logging:
   level:
     org:
       hibernate:
-        SQL: DEBUG
+        SQL: INFO
         type:
           descriptor:
             sql:
-              BasicBinder: TRACE
+              BasicBinder: INFO
         session:
           metrics: DEBUG
-        statistics: TRACE
+        statistics: INFO
         orm:
           jdbc:
-            bind: TRACE
+            bind: INFO
 
 springdoc:
   api-docs:

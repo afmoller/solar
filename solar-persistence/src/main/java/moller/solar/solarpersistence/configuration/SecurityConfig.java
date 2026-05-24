@@ -23,7 +23,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SecurityConfig.class);
 
     @Value("${security.allowed-email-claim}")
     private String allowedEmailClaim;
@@ -54,7 +54,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,
                                 "/actuator/**",
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**").permitAll()
+                                "/v3/api-docs/**",
+                                "/db-import").permitAll()
                         .requestMatchers(HttpMethod.POST,
                                 "/api/v1/weather-station-data-entries").permitAll()
 

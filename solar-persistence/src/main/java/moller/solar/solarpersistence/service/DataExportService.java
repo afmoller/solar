@@ -1,9 +1,9 @@
 package moller.solar.solarpersistence.service;
 
 import moller.openapi.persistence.solar.model.DataExportEntry;
-import moller.solar.solarpersistence.mapper.DataExportMapper;
-import moller.solar.solarpersistence.persistence.entity.DataExportEntryEntity;
-import moller.solar.solarpersistence.persistence.repository.DataExportRepository;
+import moller.solar.solarpersistence.mapper.DataExportIdPkMapper;
+import moller.solar.solarpersistence.persistence.entity.DataExportIdPkEntryEntity;
+import moller.solar.solarpersistence.persistence.repository.DataExportIdPkRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,20 +14,20 @@ import java.util.Optional;
 @Service
 public class DataExportService {
 
-    private final DataExportMapper dataExportMapper;
-    private final DataExportRepository dataExportRepository;
+    private final DataExportIdPkMapper dataExportMapper;
+    private final DataExportIdPkRepository dataExportRepository;
 
     public DataExportService(
-            DataExportMapper dataExportMapper,
-            DataExportRepository dataExportRepository) {
+            DataExportIdPkMapper dataExportMapper,
+            DataExportIdPkRepository dataExportRepository) {
 
         this.dataExportMapper = dataExportMapper;
         this.dataExportRepository = dataExportRepository;
     }
 
     @Transactional
-    public Optional<DataExportEntry> getDataExportEntryByIID(Integer iid) {
-        Optional<DataExportEntryEntity> dataExportEntryEntityById = dataExportRepository.findById(iid);
+    public Optional<DataExportEntry> getDataExportEntryByIID(Integer idPk) {
+        Optional<DataExportIdPkEntryEntity> dataExportEntryEntityById = dataExportRepository.findById(idPk);
 
         if (dataExportEntryEntityById.isPresent()) {
             return Optional.of(dataExportMapper.mapEntryToEntity(dataExportEntryEntityById.get()));
