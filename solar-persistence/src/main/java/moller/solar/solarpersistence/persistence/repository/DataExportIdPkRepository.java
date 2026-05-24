@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DataExportIdPkRepository extends JpaRepository<DataExportIdPkEntryEntity, Integer> {
@@ -18,4 +19,7 @@ public interface DataExportIdPkRepository extends JpaRepository<DataExportIdPkEn
 
     @Query(value = "SELECT d FROM DataExportIdPkEntryEntity d WHERE d.timestamp between :fromDateTime AND :toDateTime ORDER BY d.timestamp")
     List<DataExportIdPkEntryEntity> findByTimespanOrderedByTimestamp(LocalDateTime fromDateTime, LocalDateTime toDateTime);
+
+    @Query(value = "SELECT d FROM DataExportIdPkEntryEntity d WHERE d.iid = :iid")
+    Optional<DataExportIdPkEntryEntity> findByIid(int iid);
 }

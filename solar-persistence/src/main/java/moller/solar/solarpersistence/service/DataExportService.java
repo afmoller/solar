@@ -26,13 +26,10 @@ public class DataExportService {
     }
 
     @Transactional
-    public Optional<DataExportEntry> getDataExportEntryByIID(Integer idPk) {
-        Optional<DataExportIdPkEntryEntity> dataExportEntryEntityById = dataExportRepository.findById(idPk);
+    public Optional<DataExportEntry> getDataExportEntryByIID(Integer iId) {
+        Optional<DataExportIdPkEntryEntity> dataExportEntryEntityById = dataExportRepository.findByIid(iId);
 
-        if (dataExportEntryEntityById.isPresent()) {
-            return Optional.of(dataExportMapper.mapEntryToEntity(dataExportEntryEntityById.get()));
-        }
-        return Optional.empty();
+        return dataExportEntryEntityById.map(dataExportMapper::mapEntryToEntity);
     }
 
     @Transactional
