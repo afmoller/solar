@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.5</version>
+        <version>4.0.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -22,11 +22,11 @@
         <maven.compiler.release>26</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <springdoc-openapi-starter-webmvc-ui.version>3.0.2</springdoc-openapi-starter-webmvc-ui.version>
+        <springdoc-openapi-starter-webmvc-ui.version>3.0.3</springdoc-openapi-starter-webmvc-ui.version>
         <commons-csv.version>1.14.1</commons-csv.version>
-        <org.springframework.boot.version>4.0.5</org.springframework.boot.version>
+        <org.springframework.boot.version>4.0.6</org.springframework.boot.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <openapi-generator-maven-plugin.version>7.21.0</openapi-generator-maven-plugin.version>
+        <openapi-generator-maven-plugin.version>7.22.0</openapi-generator-maven-plugin.version>
 
         <solar.persistence.api.artifact.id>solar-persistence-api</solar.persistence.api.artifact.id>
         <solar.persistence.api.version>1.0.0-SNAPSHOT</solar.persistence.api.version>
