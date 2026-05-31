@@ -33,6 +33,7 @@ public class EnergyCostController extends AbstractV1BaseController {
                 .feeOneInTenThousands(energyCostEntryDto.getFeeOneInTenThousands())
                 .feeTwoInTenThousands(energyCostEntryDto.getFeeTwoInTenThousands())
                 .feeThreeInTenThousands(energyCostEntryDto.getFeeThreeInTenThousands())
+                .feeFourInTenThousands(energyCostEntryDto.getFeeFourInTenThousands())
                 .valueAddedTaxPercentageRateInMinorUnit(energyCostEntryDto.getValueAddedTaxPercentageRateInMinorUnit())
                 .build();
 
@@ -50,6 +51,7 @@ public class EnergyCostController extends AbstractV1BaseController {
                 .feeOneInTenThousands(energyCostEntryDto.getFeeOneInTenThousands())
                 .feeTwoInTenThousands(energyCostEntryDto.getFeeTwoInTenThousands())
                 .feeThreeInTenThousands(energyCostEntryDto.getFeeThreeInTenThousands())
+                .feeFourInTenThousands(energyCostEntryDto.getFeeFourInTenThousands())
                 .valueAddedTaxPercentageRateInMinorUnit(energyCostEntryDto.getValueAddedTaxPercentageRateInMinorUnit())
                 .build();
 

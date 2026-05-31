@@ -1073,6 +1073,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "feeFourInTenThousands": {
+            "type": "integer",
+            "format": "int32"
+          },
           "energyCostPerKwhInTenThousands": {
             "type": "integer",
             "format": "int32"

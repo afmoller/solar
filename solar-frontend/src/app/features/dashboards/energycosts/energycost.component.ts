@@ -89,6 +89,7 @@ export class EnergyCostComponent implements OnInit {
                                           'feeoneintenthousands',
                                           'feetwointenthousands',
                                           'feethreeintenthousands',
+                                          'feefourintenthousands',
                                           'totalcostvatexcluded',
                                           'totalcostvatincluded',
                                           'valueAddedTaxRate',
@@ -159,7 +160,8 @@ export class EnergyCostComponent implements OnInit {
       energyCostentry.energyCostPerKwhInTenThousands +
       energyCostentry.feeOneInTenThousands +
       energyCostentry.feeTwoInTenThousands +
-      energyCostentry.feeThreeInTenThousands;
+      energyCostentry.feeThreeInTenThousands +
+      energyCostentry.feeFourInTenThousands;
   }
 
   totalCostVatIncluded(energyCostentry: EnergyCostentry): string {

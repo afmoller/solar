@@ -89,6 +89,7 @@ export class EnergyCostEntryDialogComponent {
   feeoneintenthousands = signal<number>(0);
   feetwointenthousands = signal<number>(0);
   feethreeintenthousands = signal<number>(0);
+  feefourintenthousands = signal<number>(0);
   energycostperkwhintenthousands = signal<number>(0);
   electricalgridcostintenthousands = signal<number>(0);
   valueaddedtaxpercentagerateinminorunit = signal<number>(0);
@@ -103,6 +104,7 @@ export class EnergyCostEntryDialogComponent {
     this.feeoneintenthousands.set(energyCostEntry.feeOneInTenThousands);
     this.feetwointenthousands.set(energyCostEntry.feeTwoInTenThousands);
     this.feethreeintenthousands.set(energyCostEntry.feeThreeInTenThousands);
+    this.feefourintenthousands.set(energyCostEntry.feeFourInTenThousands);
     this.energycostperkwhintenthousands.set(energyCostEntry.energyCostPerKwhInTenThousands);
     this.electricalgridcostintenthousands.set(energyCostEntry.electricalGridCostInTenThousands);
     this.valueaddedtaxpercentagerateinminorunit.set(energyCostEntry.valueAddedTaxPercentageRateInMinorUnit);
@@ -120,6 +122,7 @@ export class EnergyCostEntryDialogComponent {
       feeOneInTenThousands: this.feeoneintenthousands(),
       feeTwoInTenThousands: this.feetwointenthousands(),
       feeThreeInTenThousands: this.feethreeintenthousands(),
+      feeFourInTenThousands: this.feefourintenthousands(),
       energyCostPerKwhInTenThousands: this.energycostperkwhintenthousands(),
       electricalGridCostInTenThousands: this.electricalgridcostintenthousands(),
       valueAddedTaxPercentageRateInMinorUnit: this.valueaddedtaxpercentagerateinminorunit()      

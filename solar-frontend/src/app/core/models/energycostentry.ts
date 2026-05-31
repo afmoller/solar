@@ -5,6 +5,7 @@ export interface EnergyCostentry {
   feeOneInTenThousands: number;
   feeTwoInTenThousands: number;
   feeThreeInTenThousands: number;
+  feeFourInTenThousands: number;
   energyCostPerKwhInTenThousands: number;
   electricalGridCostInTenThousands: number;
   valueAddedTaxPercentageRateInMinorUnit: number;

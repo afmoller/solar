@@ -32,6 +32,10 @@
           <th mat-header-cell *matHeaderCellDef title="Stromreserve (CHF/kWh)" class="align-center">Fee 3</th>
           <td mat-cell *matCellDef="let row" class="align-center">{{divideValueByTenThousand(row.feeThreeInTenThousands)}}</td>
         </ng-container>
+        <ng-container matColumnDef="feefourintenthousands">
+          <th mat-header-cell *matHeaderCellDef title="Zuschlag für solidarisierte Kosten (CHF/kWh)" class="align-center">Fee 4</th>
+          <td mat-cell *matCellDef="let row" class="align-center">{{divideValueByTenThousand(row.feeFourInTenThousands)}}</td>
+        </ng-container>
         <ng-container matColumnDef="totalcostvatexcluded">
           <th mat-header-cell *matHeaderCellDef title="Total exklusive Mwst (CHF/kWh)" class="align-center">Total excl. VAT</th>
           <td mat-cell *matCellDef="let row" class="align-center">{{divideValueByTenThousand(totalCostVatExcludedInTenThousands(row))}}</td>

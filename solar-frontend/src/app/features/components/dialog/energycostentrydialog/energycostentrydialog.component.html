@@ -115,6 +115,22 @@
 
     <div class="padding">
       <mat-form-field appearance="outline" subscriptSizing="dynamic">
+        <mat-label>Zuschlag für solidarisierte Kosten (CHF/kWh)</mat-label>
+        <input
+          [ngModel]="feefourintenthousands()"
+          (ngModelChange)="feefourintenthousands.set($event)"  
+          id="feefourintenthousands"
+          type="number"
+          required
+          name="feefourintenthousands"
+          matInput
+          matTooltip="An input value of 5 will be displayed as CHF 0.0005"
+        >
+      </mat-form-field>
+    </div>
+
+    <div class="padding">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic">
         <mat-label>MwstSatz (%)</mat-label>
         <input
           [ngModel]="valueaddedtaxpercentagerateinminorunit()"
