@@ -51,6 +51,13 @@ public class WeatherController extends AbstractV1BaseController {
         while (true) {
             WeatherDataEntryDateDto weatherDataEntryDateDto = serverEntriesByTime.get(queryLocalTime);
 
+            if (weatherDataEntryDateDto == null) {
+                // sometimes the data delivery from the weather station is not
+                // always once per minute, if so, then go one minute back and
+                // take that value.
+                weatherDataEntryDateDto = serverEntriesByTime.get(queryLocalTime.minusMinutes(1));
+            }
+
             if (weatherDataEntryDateDto != null) {
                 timeAndWeatherValues.setValueToBaromAbsoluteIndoorList(index, weatherDataEntryDateDto.getBaromAbsoluteIndoor());
                 timeAndWeatherValues.setValueToUvList(index, weatherDataEntryDateDto.getUv());
