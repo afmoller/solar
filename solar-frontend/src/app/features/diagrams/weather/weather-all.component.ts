@@ -43,29 +43,31 @@ export class WeatherAllComponent implements OnInit {
     Chart.register(Colors);
 
     this.inputForm = this.formBuilder.group({
-      selectedDate: ''
+      selectedDateFrom: '',
+      selectedDateTo: ''
     });
   }
 
   ngOnInit() {
       let dateAsString: string = this.getDateAsString(new Date());
 
-      this.inputForm.get('selectedDate')?.setValue(dateAsString);
+      this.inputForm.get('selectedDateFrom')?.setValue(dateAsString);
+      this.inputForm.get('selectedDateTo')?.setValue(dateAsString);
 
-      this.loadDataAndPopulateChart(dateAsString);
+      this.loadDataAndPopulateChart(dateAsString, dateAsString);
   }
 
   public selectedDateChange(): void {
-    let selectedDateValue: string = this.inputForm.get('selectedDate')?.value;
+    let selectedDateFromValue: string = this.inputForm.get('selectedDateFrom')?.value;
+    let selectedDateToValue: string = this.inputForm.get('selectedDateTo')?.value;
 
-    this.loadDataAndPopulateChart(selectedDateValue);
+    this.loadDataAndPopulateChart(selectedDateFromValue, selectedDateToValue);
   }
 
-  private loadDataAndPopulateChart(selectedDate: string): void {
+  private loadDataAndPopulateChart(selectedDateFrom: string, selectedDateTo: string): void {
 
-      this.weatherAllEntryService.findAll(selectedDate).subscribe(data => {
-        
-        
+      this.weatherAllEntryService.findAll(selectedDateFrom, selectedDateTo).subscribe(data => {
+
         this.lineChartData.datasets[0].data = data.temperatureIndoorInCelsiusValues;
         this.lineChartData.datasets[1].data = data.temperatureOutdoorInCelsiusValues;
         this.lineChartData.datasets[2].data = data.uvValues;
@@ -89,7 +91,7 @@ export class WeatherAllComponent implements OnInit {
         this.baroLineChartData.datasets[0].data = data.baromAbsoluteIndoorValues;
         this.baroLineChartData.labels = data.minToMaxLocalTimes;
 
-        this.menuTitle = selectedDate;
+        this.menuTitle = selectedDateFrom + ' - ' + selectedDateTo;
 
         this.lineChartData.datasets[0].label = 'Temp in C';
         this.lineChartData.datasets[1].label = 'Temp out C';
@@ -114,21 +116,34 @@ export class WeatherAllComponent implements OnInit {
   }
 
   decreaseDate(dateField: string): void {
-    if (dateField === 'selectedDate') {
-      this.shiftDateFieldValue('selectedDate', -1);
-      this.dateChange();
-    }
+    this.shiftDateFieldValue(dateField, -1);
+    this.dateChange(dateField);
   }
 
   increaseDate(dateField: string): void {
-    if (dateField === 'selectedDate') {
-      this.shiftDateFieldValue('selectedDate', 1);
-      this.dateChange();
-    }
+    this.shiftDateFieldValue(dateField, 1);
+    this.dateChange(dateField);
   }
 
-   public dateChange(): void {
-    this.loadDataAndPopulateChart(this.inputForm.get('selectedDate')?.value);
+   public dateChange(dateField: string): void {
+    let fromDateValue: string = this.inputForm.get('selectedDateFrom')?.value;
+    let toDateValue: string = this.inputForm.get('selectedDateTo')?.value
+
+    if (dateField === 'selectedDateTo') {
+      // Only change the from date automatically if the value is not set or if the
+      // from date is later than the to date.
+      if ((!fromDateValue && toDateValue) || (new Date(fromDateValue) > new Date(toDateValue))) {
+        this.inputForm.get('selectedDateFrom')?.setValue(toDateValue);
+      }
+    } else if (dateField === 'selectedDateFrom') {
+      // Only change the to date automatically if the value is not set or if the
+      // from date is later than the to date.
+      if ((fromDateValue && !toDateValue) || (new Date(fromDateValue) > new Date(toDateValue))) {
+        this.inputForm.get('selectedDateTo')?.setValue(fromDateValue);
+      }
+    }
+
+    this.loadDataAndPopulateChart(this.inputForm.get('selectedDateFrom')?.value, this.inputForm.get('selectedDateTo')?.value);
   }
 
   private shiftDateFieldValue(dateField: string, shiftValue: number) {
@@ -136,7 +151,7 @@ export class WeatherAllComponent implements OnInit {
       let dateValueAsDate: Date = new Date(dateValue);
       dateValueAsDate.setDate(dateValueAsDate.getDate() + shiftValue);
 
-      this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));  
+      this.inputForm.get(dateField)?.setValue(this.getDateAsString(dateValueAsDate));
   }
 
   public baroLineChartData: ChartConfiguration['data'] = {

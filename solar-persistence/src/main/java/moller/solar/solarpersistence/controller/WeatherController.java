@@ -26,11 +26,14 @@ public class WeatherController implements WeatherControllerApi {
     }
 
     @Override
-    public ResponseEntity<List<WeatherDataEntryDateDto>> getWeatherByDateEntries(LocalDate date) {
+    public ResponseEntity<List<WeatherDataEntryDateDto>> getWeatherByDateEntries(
+            LocalDate dateFrom,
+            LocalDate dateTo) {
+
         ZoneOffset zoneOffset = ZoneId.of("Europe/Paris").getRules().getOffset(LocalDateTime.now());
 
-        OffsetDateTime dateTimeFrom = OffsetDateTime.of(date, LocalTime.MIN, zoneOffset);
-        OffsetDateTime dateTimeTo = OffsetDateTime.of(date, LocalTime.MAX, zoneOffset);
+        OffsetDateTime dateTimeFrom = OffsetDateTime.of(dateFrom, LocalTime.MIN, zoneOffset);
+        OffsetDateTime dateTimeTo = OffsetDateTime.of(dateTo, LocalTime.MAX, zoneOffset);
 
         return ResponseEntity.of(Optional.of(weatherService.getWeatherByDateEntries(dateTimeFrom, dateTimeTo)));
     }

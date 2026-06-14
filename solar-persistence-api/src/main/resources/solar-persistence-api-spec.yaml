@@ -767,7 +767,7 @@
         }
       }
     },
-    "/api/v1/weather/getByDate": {
+    "/api/v1/weather/getByDateRange": {
       "get": {
         "tags": [
           "weather-controller"
@@ -775,7 +775,16 @@
         "operationId": "getWeatherByDateEntries",
         "parameters": [
           {
-            "name": "date",
+            "name": "dateFrom",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "dateTo",
             "in": "query",
             "required": true,
             "schema": {

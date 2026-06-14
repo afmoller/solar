@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -29,33 +30,36 @@ public class WeatherController extends AbstractV1BaseController {
     }
 
     @GetMapping(value = "/weather/weatherbydate")
-    public ResponseEntity<TimeAndWeatherValues> getWeatherByDateEntries(@RequestParam LocalDate selectedDate) {
-        List<WeatherDataEntryDateDto> weatherByDateEntries = weatherControllerApi.getWeatherByDateEntries(selectedDate);
+    public ResponseEntity<TimeAndWeatherValues> getWeatherByDateEntries(
+            @RequestParam LocalDate selectedDateFrom,
+            @RequestParam LocalDate selectedDateTo) {
 
-        Map<LocalTime, WeatherDataEntryDateDto> serverEntriesByTime = weatherByDateEntries
+        List<WeatherDataEntryDateDto> weatherByDateEntries = weatherControllerApi.getWeatherByDateEntries(selectedDateFrom, selectedDateTo);
+
+        Map<LocalDateTime, WeatherDataEntryDateDto> serverEntriesByDateTime = weatherByDateEntries
                 .stream()
                 .collect(Collectors.toMap(
-                        entry -> entry.getDateUtc().toLocalTime().withSecond(0).withNano(0),
+                        entry -> entry.getDateUtc().withSecond(0).withNano(0),
                         entry -> entry,
                         (objectWithSameKey, anotherObjectWithSameKey) -> anotherObjectWithSameKey));
 
-        LocalTime midnightStartOfDay = LocalTime.MIN;
-        LocalTime queryEndTime = getQueryEndtime(selectedDate);
+        LocalDateTime midnightStartOfSelectedDateFrom = LocalDateTime.of(selectedDateFrom, LocalTime.MIN);
+        LocalDateTime queryEndDateTime = getQueryEndtime(selectedDateTo);
 
-        TimeAndWeatherValues timeAndWeatherValues = new TimeAndWeatherValues(queryEndTime);
+        TimeAndWeatherValues timeAndWeatherValues = new TimeAndWeatherValues(midnightStartOfSelectedDateFrom, queryEndDateTime);
 
-        LocalTime queryLocalTime = midnightStartOfDay;
+        LocalDateTime queryLocalDateTime = midnightStartOfSelectedDateFrom;
 
         int index = 0;
 
         while (true) {
-            WeatherDataEntryDateDto weatherDataEntryDateDto = serverEntriesByTime.get(queryLocalTime);
+            WeatherDataEntryDateDto weatherDataEntryDateDto = serverEntriesByDateTime.get(queryLocalDateTime);
 
             if (weatherDataEntryDateDto == null) {
                 // sometimes the data delivery from the weather station is not
                 // always once per minute, if so, then go one minute back and
                 // take that value.
-                weatherDataEntryDateDto = serverEntriesByTime.get(queryLocalTime.minusMinutes(1));
+                weatherDataEntryDateDto = serverEntriesByDateTime.get(queryLocalDateTime.minusMinutes(1));
             }
 
             if (weatherDataEntryDateDto != null) {
@@ -73,10 +77,10 @@ public class WeatherController extends AbstractV1BaseController {
                 timeAndWeatherValues.setValueToWindSpeedInMeterPerSecondsList(index, weatherDataEntryDateDto.getWindSpeedInMeterPerSecond());
             }
 
-            if (queryLocalTime.equals(queryEndTime)) {
+            if (queryLocalDateTime.equals(queryEndDateTime)) {
                 break;
             } else {
-                queryLocalTime = queryLocalTime.plusMinutes(5);
+                queryLocalDateTime = queryLocalDateTime.plusMinutes(5);
             }
 
             index++;
@@ -85,17 +89,17 @@ public class WeatherController extends AbstractV1BaseController {
         return ResponseEntity.of(Optional.of(timeAndWeatherValues));
     }
 
-    private LocalTime getQueryEndtime(LocalDate selectedDate) {
+    private LocalDateTime getQueryEndtime(LocalDate selectedDate) {
 
-        LocalTime queryEndTime;
+        LocalDateTime queryEndDateTime;
 
         if (selectedDate.isEqual(LocalDate.now())) {
-            LocalTime now = LocalTime.now().withSecond(0).withNano(0);
-            queryEndTime = now.minusMinutes(now.getMinute() % 5);
+            LocalDateTime now = LocalDateTime.of(selectedDate, LocalTime.now().withSecond(0).withNano(0));
+            queryEndDateTime = now.minusMinutes(now.getMinute() % 5);
         } else {
-            queryEndTime = LocalTime.MAX.withSecond(0).withNano(0).minusMinutes(4);
+            queryEndDateTime = LocalDateTime.of(selectedDate, LocalTime.MAX.withSecond(0).withNano(0).minusMinutes(4));
         }
 
-        return queryEndTime;
+        return queryEndDateTime;
     }
 }

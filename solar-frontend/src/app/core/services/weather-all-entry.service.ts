@@ -19,7 +19,7 @@ export class WeatherAllEntryService {
     this.service = this.baseUrl + '/api/v1/weather/weatherbydate';
   }
 
-  public findAll(selectedDate: string): Observable<WeatherAllentry> {
-    return this.http.get<WeatherAllentry>(this.service + '?selectedDate=' + selectedDate);
+  public findAll(selectedDateFrom: string, selectedDateTo: string): Observable<WeatherAllentry> {
+    return this.http.get<WeatherAllentry>(this.service + '?selectedDateFrom=' + selectedDateFrom + '&selectedDateTo=' + selectedDateTo);
   }
 }

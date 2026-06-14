@@ -1,5 +1,6 @@
 package moller.solar.solarbackend.dto.timeandvalues;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,13 @@ public class TimeAndWeatherValues {
     private final Float[] maxDailyGustInMeterPerSecondValues;
     private final Float[] rainRateInMillimetersPerHourValues;
 
-    public TimeAndWeatherValues(LocalTime queryEndTime) {
-        minToMaxLocalTimes = initializeMinToMaxLocalTimesList(queryEndTime);
+    public TimeAndWeatherValues(
+            LocalDateTime queryStartDateTime,
+            LocalDateTime queryEndDateTime) {
+
+        minToMaxLocalTimes = initializeMinToMaxLocalTimesList(
+                queryStartDateTime,
+                queryEndDateTime);
 
         int size = minToMaxLocalTimes.size();
 
@@ -140,18 +146,20 @@ public class TimeAndWeatherValues {
         return rainRateInMillimetersPerHourValues;
     }
 
-    private List<LocalTime> initializeMinToMaxLocalTimesList(LocalTime queryEndTime) {
+    private List<LocalTime> initializeMinToMaxLocalTimesList(
+            LocalDateTime queryStartDateTime,
+            LocalDateTime queryEndDateTime) {
 
-        LocalTime queryLocalTime = LocalTime.MIN;
+        LocalDateTime queryLocalTime = queryStartDateTime;
 
         List<LocalTime> localTimeList = new ArrayList<>();
 
         while (true) {
-            localTimeList.add(queryLocalTime);
+            localTimeList.add(queryLocalTime.toLocalTime());
             queryLocalTime = queryLocalTime.plusMinutes(5);
 
-            if (queryLocalTime.equals(queryEndTime)) {
-                localTimeList.add(queryLocalTime);
+            if (queryLocalTime.equals(queryEndDateTime)) {
+                localTimeList.add(queryLocalTime.toLocalTime());
                 break;
             }
         }

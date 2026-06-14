@@ -62,14 +62,24 @@
     
     <form [formGroup]="inputForm">
       <div>
-        <span>Date</span>
+        <span>From</span>
       </div>
       <div>
-        <input id="selectedDate" type="date" formControlName="selectedDate" (change)="selectedDateChange()" title="Selected date">
+        <input id="selectedDateFrom" type="date" formControlName="selectedDateFrom" (change)="dateChange('selectedDateFrom')" title="Selected date from">
       </div>
       <div>
-        <button class="button" type="button" (click)="decreaseDate('selectedDate')">-</button>
-        <button class="button" type="button" (click)="increaseDate('selectedDate')">+</button>
+        <button class="button" type="button" (click)="decreaseDate('selectedDateFrom')">-</button>
+        <button class="button" type="button" (click)="increaseDate('selectedDateFrom')">+</button>
+      </div>
+      <div>
+        <span>To</span>
+      </div>
+      <div>
+        <input id="selectedDateTo" type="date" formControlName="selectedDateTo" (change)="dateChange('selectedDateTo')" title="Selected date to">
+      </div>
+      <div>
+        <button class="button" type="button" (click)="decreaseDate('selectedDateTo')">-</button>
+        <button class="button" type="button" (click)="increaseDate('selectedDateTo')">+</button>
       </div>
     </form>
           
