@@ -132,7 +132,7 @@ export class WeatherAllComponent implements OnInit {
     if (dateField === 'selectedDateTo') {
       // Only change the from date automatically if the value is not set or if the
       // from date is later than the to date.
-      if ((!fromDateValue && toDateValue) || (new Date(fromDateValue) > new Date(toDateValue))) {
+      if ((!fromDateValue && toDateValue) || (new Date(fromDateValue) > new Date(toDateValue))) {       
         this.inputForm.get('selectedDateFrom')?.setValue(toDateValue);
       }
     } else if (dateField === 'selectedDateFrom') {
@@ -143,7 +143,20 @@ export class WeatherAllComponent implements OnInit {
       }
     }
 
+    this.restrictDateRangeIdNeeded(toDateValue, fromDateValue);
+
     this.loadDataAndPopulateChart(this.inputForm.get('selectedDateFrom')?.value, this.inputForm.get('selectedDateTo')?.value);
+  }
+
+  private restrictDateRangeIdNeeded(toDateValue: string, fromDateValue: string) {
+    let daysInBetween = (new Date(toDateValue).getTime() - new Date(fromDateValue).getTime()) / (1000 * 60 * 60 * 24);
+
+    if (daysInBetween > 7) {
+      let fromDataAsDate = new Date(fromDateValue);
+      fromDataAsDate.setDate(fromDataAsDate.getDate() + 7);
+
+      this.inputForm.get('selectedDateTo')?.setValue(this.getDateAsString(fromDataAsDate));
+    }
   }
 
   private shiftDateFieldValue(dateField: string, shiftValue: number) {
