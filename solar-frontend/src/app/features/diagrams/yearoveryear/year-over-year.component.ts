@@ -8,7 +8,8 @@ import {
   OnInit,
   Component,
   ViewChild,
-  inject
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -28,6 +29,7 @@ import {
     selector: 'app-year-over-year',
     templateUrl: './year-over-year.component.html',
     styleUrls: ['./year-over-year.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatTableModule,
         MatSidenavModule,

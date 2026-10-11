@@ -15,10 +15,11 @@ import {
   ReactiveFormsModule
 } from "@angular/forms";
 
-import { 
+import {
   Component,
   inject,
-  signal
+  signal,
+  ChangeDetectionStrategy
 } from "@angular/core";
 
 import { 
@@ -64,6 +65,7 @@ export const MY_FORMATS = {
         ReactiveFormsModule,
         MatTooltipModule
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [
         MatDatepickerModule,
         {

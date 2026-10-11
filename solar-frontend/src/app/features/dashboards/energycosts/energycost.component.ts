@@ -18,7 +18,8 @@ import {
   inject,
   OnInit,
   Component,
-  signal
+  signal,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -59,6 +60,7 @@ export const MY_FORMATS = {
         MatDatepickerModule,
         MatNativeDateModule
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [
         MatDatepickerModule,
         {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Dataexportentry } from '../../core/models/dataexportentry';
 import { DataExportEntryService } from '../../core/services/data-export-entry.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
@@ -7,6 +7,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
     selector: 'app-dataexportentry',
     templateUrl: './dataexportentry.component.html',
     styleUrls: ['./dataexportentry.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         ReactiveFormsModule
     ]

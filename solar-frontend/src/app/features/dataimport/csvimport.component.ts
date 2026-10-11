@@ -1,5 +1,5 @@
 import { Subscription, finalize } from 'rxjs';
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +25,7 @@ interface Month {
     selector: 'app-csvimport',
     templateUrl: './csvimport.component.html',
     styleUrls: ['./csvimport.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatIconModule,
         MatButtonModule,

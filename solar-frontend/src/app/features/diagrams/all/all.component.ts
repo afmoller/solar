@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
@@ -17,6 +17,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     selector: 'app-all',
     templateUrl: './all.component.html',
     styleUrls: ['./all.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         BaseChartDirective,
         ReactiveFormsModule,

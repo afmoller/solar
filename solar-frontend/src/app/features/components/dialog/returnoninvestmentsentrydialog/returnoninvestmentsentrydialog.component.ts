@@ -14,10 +14,11 @@ import {
   ReactiveFormsModule
 } from "@angular/forms";
 
-import { 
+import {
   Component,
   inject,
-  signal
+  signal,
+  ChangeDetectionStrategy
 } from "@angular/core";
 
 import { 
@@ -62,6 +63,7 @@ export const MY_FORMATS = {
         MatDatepickerModule,
         ReactiveFormsModule,
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     providers: [
         MatDatepickerModule,
         {

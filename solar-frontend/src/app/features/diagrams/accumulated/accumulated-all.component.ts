@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
@@ -8,6 +8,7 @@ import { AccumulatedAllEntryService } from '../../../core/services/accumulated-a
     selector: 'app-accumulated-all',
     templateUrl: './accumulated-all.component.html',
     styleUrls: ['./accumulated-all.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         BaseChartDirective,
     ]

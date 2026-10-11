@@ -6,7 +6,8 @@ import { SummaryPerMonthEntryService } from 'src/app/core/services/summary-per-m
 import {
   Component,
   OnInit,
-  inject
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -18,6 +19,7 @@ import {
     selector: 'app-summarypermonthentry',
     templateUrl: './summarypermonthentry.component.html',
     styleUrls: ['./summarypermonthentry.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatInputModule,
         MatTableModule,

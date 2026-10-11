@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren, inject, ChangeDetectionStrategy } from '@angular/core';
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
@@ -12,6 +12,7 @@ import { WeatherAllEntryService } from 'src/app/core/services/weather-all-entry.
     selector: 'app-weather-all',
     templateUrl: './weather-all.component.html',
     styleUrls: ['./weather-all.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         BaseChartDirective,
         ReactiveFormsModule,

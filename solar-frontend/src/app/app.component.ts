@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
@@ -23,6 +23,7 @@ import {
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
       FormsModule,
       RouterModule,

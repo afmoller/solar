@@ -6,7 +6,8 @@ import { SummaryPerDayEntryService } from '../../../core/services/summary-per-da
 import {
   OnInit,
   Component,
-  inject
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -18,6 +19,7 @@ import {
     selector: 'app-summaryperdayentry',
     templateUrl: './summaryperdayentry.component.html',
     styleUrls: ['./summaryperdayentry.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatInputModule,
         MatTableModule,

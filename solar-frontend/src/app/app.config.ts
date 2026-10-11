@@ -6,9 +6,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { httpStatusInterceptor } from "./core/interceptors/http-status.interceptor";
 import { jwtTokenAuthInterceptor } from "./core/interceptors/jwt-token-auth.interceptor";
 
-import { 
+import {
   withInterceptors,
-  provideHttpClient
+  provideHttpClient,
+  withXhr
 } from "@angular/common/http";
 
 import {
@@ -26,7 +27,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideRouter(routes),
     provideCharts(withDefaultRegisterables()),
-    provideHttpClient(withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),
+    provideHttpClient(withXhr(), withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),
       {
         provide: "SocialAuthServiceConfig",
         useValue: {

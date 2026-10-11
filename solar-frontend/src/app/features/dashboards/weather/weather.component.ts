@@ -5,7 +5,8 @@ import { WeatherTableentry } from 'src/app/core/dto/weathertableentry';
 import {
   inject,
   OnInit,
-  Component
+  Component,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -17,6 +18,7 @@ import {
     selector: 'app-weather',
     templateUrl: './weather.component.html',
     styleUrls: ['./weather.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
       MatTableModule
     ]

@@ -12,7 +12,8 @@ import {
   OnInit,
   Component,
   OnDestroy,
-  inject
+  inject,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -25,6 +26,7 @@ import {
     selector: 'app-google-login-logout',
     templateUrl: './loginlogout.component.html',
     styleUrl: './loginlogout.component.scss',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
       RouterModule,
       MatIconModule,
