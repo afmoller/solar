@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.6</version>
+        <version>4.1.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -24,7 +24,7 @@
 
         <springdoc-openapi-starter-webmvc-ui.version>3.0.3</springdoc-openapi-starter-webmvc-ui.version>
         <commons-csv.version>1.14.1</commons-csv.version>
-        <org.springframework.boot.version>4.0.6</org.springframework.boot.version>
+        <org.springframework.boot.version>4.1.1</org.springframework.boot.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <openapi-generator-maven-plugin.version>7.22.0</openapi-generator-maven-plugin.version>
 
