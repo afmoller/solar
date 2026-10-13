@@ -4,12 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { environment } from '../../../environments/environment';
+import { environment } from 'environments/environment';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CsvImportResult } from 'src/app/core/models/csvimportresult';
+import { CsvImportResult } from '/app/core/models/csvimportresult';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { SummaryPerDayEntryService } from 'src/app/core/services/summary-per-day-entry.service';
+import { SummaryPerDayEntryService } from '/app/core/services/summary-per-day-entry.service';
 
 interface Year {
   value: number;
@@ -126,10 +126,6 @@ export class CsvImportComponent  {
   }
 
   aggregationDisabled(): boolean {
-    if (this.selectedYear && this.selectedMonth) {
-      return false;
-    } else {
-      return true;
-    }
+    return !(this.selectedYear && this.selectedMonth);
   }
 }

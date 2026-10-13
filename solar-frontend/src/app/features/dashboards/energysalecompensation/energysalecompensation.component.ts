@@ -12,8 +12,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import { EnergySaleCompensationentry } from 'src/app/core/models/energysalecompensationentry';
-import { EnergySaleCompensationService } from 'src/app/core/services/energy-sale-compensation.service';
+import { EnergySaleCompensationentry } from '/app/core/models/energysalecompensationentry';
+import { EnergySaleCompensationService } from '/app/core/services/energy-sale-compensation.service';
 import { EnergySaleCompensationEntryDialogComponent } from '../../components/dialog/energysalecompensationentrydialog/energysalecompensationentrydialog.component';
 
 import {
@@ -162,7 +162,7 @@ export class EnergySaleCompensationComponent implements OnInit {
   }
 
   oddOrEven(yearAsString: string) {
-    let yearAsNumber: number = new Number(yearAsString).valueOf();
+    let yearAsNumber: number = Number(yearAsString).valueOf();
 
     if ((yearAsNumber % 2) == 1) {
       return 'odd';

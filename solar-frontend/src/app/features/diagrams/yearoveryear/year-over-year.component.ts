@@ -2,7 +2,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { ActivatedRoute } from '@angular/router';
 import Annotation from 'chartjs-plugin-annotation';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { YearOverYearEntryService } from '../../../core/services/year-over-year.service';
+import { YearOverYearEntryService } from 'app/core/services/year-over-year.service';
 
 import {
   OnInit,

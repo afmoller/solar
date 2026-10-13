@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginLogoutComponent } from 'src/app/common/loginlogout/loginlogout.component';
+import { LoginLogoutComponent } from '/app/common/loginlogout/loginlogout.component';
 
 @Component({
   selector: 'app-googleloginpage',

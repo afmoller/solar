@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
-import { AccumulatedAllEntryService } from '../../../core/services/accumulated-all-entry.service';
+import { AccumulatedAllEntryService } from 'app/core/services/accumulated-all-entry.service';
 
 @Component({
     selector: 'app-accumulated-all',

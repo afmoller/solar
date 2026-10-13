@@ -2,12 +2,11 @@ import { Component, OnInit, ViewChild, inject, ChangeDetectionStrategy } from '@
 import { Chart, ChartConfiguration, ChartEvent, ChartType, Colors } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import Annotation from 'chartjs-plugin-annotation';
-import { Allentry } from '../../../core/models/allentry';
-import { AllEntryService } from '../../../core/services/all-entry.service';
-import { SummaryPerDayEntryService } from '../../../core/services/summary-per-day-entry.service';
+import { AllEntryService } from 'app/core/services/all-entry.service';
+import { SummaryPerDayEntryService } from 'app/core/services/summary-per-day-entry.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DataExportEntryService } from 'src/app/core/services/data-export-entry.service';
+import { DataExportEntryService } from '/app/core/services/data-export-entry.service';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';

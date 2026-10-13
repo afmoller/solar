@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { WeatherAllEntryService } from 'src/app/core/services/weather-all-entry.service';
+import { WeatherAllEntryService } from '/app/core/services/weather-all-entry.service';
 
 @Component({
     selector: 'app-weather-all',
@@ -133,7 +133,7 @@ export class WeatherAllComponent implements OnInit {
     if (dateField === 'selectedDateTo') {
       // Only change the from date automatically if the value is not set or if the
       // from date is later than the to date.
-      if ((!fromDateValue && toDateValue) || (new Date(fromDateValue) > new Date(toDateValue))) {       
+      if ((!fromDateValue && toDateValue) || (new Date(fromDateValue) > new Date(toDateValue))) {
         this.inputForm.get('selectedDateFrom')?.setValue(toDateValue);
       }
     } else if (dateField === 'selectedDateFrom') {
@@ -319,21 +319,21 @@ export class WeatherAllComponent implements OnInit {
   // events
   public chartClicked(source: string): void {
     if (source === 'lineChartData') {
-      this.rainLineChartDataVisible = this.opened ? false: true;
-      this.solarAndHumidityLineChartDataVisible = this.opened ? false: true;
-      this.baroLineChartDataVisible = this.opened ? false: true;
+      this.rainLineChartDataVisible = !this.opened;
+      this.solarAndHumidityLineChartDataVisible = !this.opened;
+      this.baroLineChartDataVisible = !this.opened;
     } else if (source === 'rainLineChartData') {
-      this.lineChartDataVisible = this.opened ? false: true;
-      this.solarAndHumidityLineChartDataVisible = this.opened ? false: true;
-      this.baroLineChartDataVisible = this.opened ? false: true;
+      this.lineChartDataVisible = !this.opened;
+      this.solarAndHumidityLineChartDataVisible = !this.opened;
+      this.baroLineChartDataVisible = !this.opened;
     } else if (source === 'solarAndHumidityLineChartData') {
-      this.rainLineChartDataVisible = this.opened ? false: true;
-      this.lineChartDataVisible = this.opened ? false: true;
-      this.baroLineChartDataVisible = this.opened ? false: true;
+      this.rainLineChartDataVisible = !this.opened;
+      this.lineChartDataVisible = !this.opened;
+      this.baroLineChartDataVisible = !this.opened;
     } else {
-      this.rainLineChartDataVisible = this.opened ? false: true;
-      this.lineChartDataVisible = this.opened ? false: true;
-      this.solarAndHumidityLineChartDataVisible = this.opened ? false: true;
+      this.rainLineChartDataVisible = !this.opened;
+      this.lineChartDataVisible = !this.opened;
+      this.solarAndHumidityLineChartDataVisible = !this.opened;
     }
   }
 

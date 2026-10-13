@@ -1,7 +1,7 @@
 import { MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule} from '@angular/material/form-field';
-import { Summaryperdayentry } from 'src/app/core/models/summaryperdayentry';
-import { SummaryPerDayEntryService } from '../../../core/services/summary-per-day-entry.service';
+import { Summaryperdayentry } from '/app/core/models/summaryperdayentry';
+import { SummaryPerDayEntryService } from 'app/core/services/summary-per-day-entry.service';
 
 import {
   OnInit,

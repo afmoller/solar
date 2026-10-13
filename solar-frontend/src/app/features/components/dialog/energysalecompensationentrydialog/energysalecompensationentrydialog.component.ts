@@ -9,7 +9,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import moment, { Moment } from 'moment';
 
-import { 
+import {
   FormsModule,
   ReactiveFormsModule
 } from "@angular/forms";
@@ -21,7 +21,7 @@ import {
   ChangeDetectionStrategy
 } from "@angular/core";
 
-import { 
+import {
   MatDialogRef,
   MatDialogClose,
   MatDialogActions,
@@ -33,7 +33,7 @@ import {
   MAT_DATE_LOCALE,
   MAT_DATE_FORMATS
 } from "@angular/material/core";
-import { EnergySaleCompensationentry } from "src/app/core/models/energysalecompensationentry";
+import { EnergySaleCompensationentry } from "/app/core/models/energysalecompensationentry";
 
 export const MY_FORMATS = {
   parse: {
@@ -84,17 +84,17 @@ export const MY_FORMATS = {
 export class EnergySaleCompensationEntryDialogComponent {
 
   readonly dialogRef = inject(MatDialogRef<EnergySaleCompensationEntryDialogComponent>);
-    
+
   entryId: number | undefined;
   compensationDateAsMoment = signal<Moment>(moment());
   compensationAmountInMinorUnit = signal<number>(0);
   productionYear = signal<number>(0);
   productionFromDateAsMoment = signal<Moment>(moment());
   productionToDateAsMoment = signal<Moment>(moment());
-  
+
   constructor() {
   }
- 
+
   public initiateDialog(energySaleCompensationentry: EnergySaleCompensationentry) {
     this.entryId = energySaleCompensationentry.id;
     this.compensationDateAsMoment.set(moment(energySaleCompensationentry.compensationDate));

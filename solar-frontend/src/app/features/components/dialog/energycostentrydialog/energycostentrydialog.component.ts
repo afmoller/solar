@@ -7,10 +7,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { EnergyCostentry } from "src/app/core/models/energycostentry";
+import { EnergyCostentry } from "/app/core/models/energycostentry";
 import moment, { Moment } from 'moment';
 
-import { 
+import {
   FormsModule,
   ReactiveFormsModule
 } from "@angular/forms";
@@ -22,7 +22,7 @@ import {
   ChangeDetectionStrategy
 } from "@angular/core";
 
-import { 
+import {
   MatDialogRef,
   MatDialogClose,
   MatDialogActions,
@@ -84,7 +84,7 @@ export const MY_FORMATS = {
 export class EnergyCostEntryDialogComponent {
 
   readonly dialogRef = inject(MatDialogRef<EnergyCostEntryDialogComponent>);
-    
+
   entryId: number | undefined;
   dateToAsMoment = signal<Moment>(moment());
   dateFromAsMoment = signal<Moment>(moment());
@@ -98,7 +98,7 @@ export class EnergyCostEntryDialogComponent {
 
   constructor() {
   }
- 
+
   public initiateDialog(energyCostEntry: EnergyCostentry) {
     this.entryId = energyCostEntry.id;
     this.dateToAsMoment.set(moment(energyCostEntry.toDate));
@@ -127,7 +127,7 @@ export class EnergyCostEntryDialogComponent {
       feeFourInTenThousands: this.feefourintenthousands(),
       energyCostPerKwhInTenThousands: this.energycostperkwhintenthousands(),
       electricalGridCostInTenThousands: this.electricalgridcostintenthousands(),
-      valueAddedTaxPercentageRateInMinorUnit: this.valueaddedtaxpercentagerateinminorunit()      
+      valueAddedTaxPercentageRateInMinorUnit: this.valueaddedtaxpercentagerateinminorunit()
     }
   }
 }

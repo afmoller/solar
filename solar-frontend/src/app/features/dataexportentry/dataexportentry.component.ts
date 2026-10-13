@@ -1,6 +1,6 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { Dataexportentry } from '../../core/models/dataexportentry';
-import { DataExportEntryService } from '../../core/services/data-export-entry.service';
+import { Dataexportentry } from 'app/core/models/dataexportentry';
+import { DataExportEntryService } from 'app/core/services/data-export-entry.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({

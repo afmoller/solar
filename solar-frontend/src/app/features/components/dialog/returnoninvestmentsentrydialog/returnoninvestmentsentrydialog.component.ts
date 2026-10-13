@@ -6,10 +6,10 @@ import { MatButtonModule } from "@angular/material/button";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ReturnOnInvestmentEntry } from "src/app/core/models/returnoninvestmententry";
+import { ReturnOnInvestmentEntry } from "/app/core/models/returnoninvestmententry";
 import moment, { Moment } from 'moment';
 
-import { 
+import {
   FormsModule,
   ReactiveFormsModule
 } from "@angular/forms";
@@ -21,7 +21,7 @@ import {
   ChangeDetectionStrategy
 } from "@angular/core";
 
-import { 
+import {
   MatDialogRef,
   MatDialogClose,
   MatDialogActions,
@@ -82,7 +82,7 @@ export const MY_FORMATS = {
 export class ReturnOnInvestmentEntryDialogComponent {
 
   readonly dialogRef = inject(MatDialogRef<ReturnOnInvestmentEntryDialogComponent>);
-    
+
   dateAsMoment = signal<Moment>(moment());
   description = signal<string>('');
   amountIsPositive = signal<boolean>(true);
@@ -91,7 +91,7 @@ export class ReturnOnInvestmentEntryDialogComponent {
 
   constructor() {
   }
- 
+
   public initiateDialog(returnOnInvestmentEntry: ReturnOnInvestmentEntry) {
     this.entryId = returnOnInvestmentEntry.id;
     this.dateAsMoment.set(moment(returnOnInvestmentEntry.date));

@@ -1,8 +1,7 @@
 import { routes } from "./app.routes";
 import { provideRouter } from "@angular/router";
 import { ApplicationConfig } from "@angular/core";
-import { environment } from "src/environments/environment";
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { environment } from "/environments/environment";
 import { httpStatusInterceptor } from "./core/interceptors/http-status.interceptor";
 import { jwtTokenAuthInterceptor } from "./core/interceptors/jwt-token-auth.interceptor";
 
@@ -24,7 +23,6 @@ import {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideAnimations(),
     provideRouter(routes),
     provideCharts(withDefaultRegisterables()),
     provideHttpClient(withXhr(), withInterceptors([jwtTokenAuthInterceptor, httpStatusInterceptor])),

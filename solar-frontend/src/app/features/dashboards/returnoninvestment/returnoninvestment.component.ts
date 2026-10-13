@@ -13,8 +13,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import { ReturnOnInvestmentEntry } from 'src/app/core/models/returnoninvestmententry';
-import { ReturnOnInvestmentService } from 'src/app/core/services/return-on-investment.service';
+import { ReturnOnInvestmentEntry } from '/app/core/models/returnoninvestmententry';
+import { ReturnOnInvestmentService } from '/app/core/services/return-on-investment.service';
 import { ReturnOnInvestmentEntryDialogComponent } from '../../components/dialog/returnoninvestmentsentrydialog/returnoninvestmentsentrydialog.component';
 
 import {
