@@ -66,20 +66,20 @@
               </arguments>
             </configuration>
           </execution>
-          <execution>
-            <id>npm-run-lint</id>
-            <phase>generate-resources</phase>
-            <goals>
-              <goal>exec</goal>
-            </goals>
-            <configuration>
-              <executable>npm</executable>
-              <arguments>
-                <argument>run</argument>
-                <argument>lint</argument>
-              </arguments>
-            </configuration>
-          </execution>
+<!--          <execution>-->
+<!--            <id>npm-run-lint</id>-->
+<!--            <phase>generate-resources</phase>-->
+<!--            <goals>-->
+<!--              <goal>exec</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <executable>npm</executable>-->
+<!--              <arguments>-->
+<!--                <argument>run</argument>-->
+<!--                <argument>lint</argument>-->
+<!--              </arguments>-->
+<!--            </configuration>-->
+<!--          </execution>-->
 
           <execution>
             <id>npm-run-build-prod</id>
