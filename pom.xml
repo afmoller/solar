@@ -42,6 +42,7 @@
         <module>solar-backend</module>
         <module>solar-weather-persistence-api</module>
         <module>solar-weather-backend</module>
+        <module>solar-docker</module>
     </modules>
 
     <dependencyManagement>

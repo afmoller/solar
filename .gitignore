@@ -25,3 +25,13 @@
 /solar-persistence/mvnw
 /solar-persistence/mvnw.cmd
 /logs/*
+/solar-docker/target/classes/compose.yml
+/solar-docker/target/classes/backend/Dockerfile
+/solar-docker/target/classes/frontend/Dockerfile
+/solar-docker/target/classes/persistence/Dockerfile
+/solar-docker/target/classes/weather-backend/Dockerfile
+/solar-docker/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+/solar-docker/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+/solar-docker/target/classes/frontend/config/nginx.conf
+/solar-docker/target/maven-archiver/pom.properties
+/solar-docker/target/solar-docker-1.0.0-SNAPSHOT.jar
