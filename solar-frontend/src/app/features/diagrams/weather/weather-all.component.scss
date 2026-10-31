@@ -7,9 +7,9 @@
 }
 
 .large {
-  height: calc(100vh - var(--toolbar-height));
+  height: calc(100dvh - var(--toolbar-height));
 }
 
 .small {
-  height: calc((100vh - var(--toolbar-height)) / 4);
+  height: calc((100dvh - var(--toolbar-height)) / 4);
 }

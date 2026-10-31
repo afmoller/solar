@@ -4,12 +4,12 @@
 
 .diagram-container {
   background-color: rgb(255, 255, 255);
-  height: calc(100vh - var(--toolbar-height));
+  height: calc(100dvh - var(--toolbar-height));
 }
 
 .table-container {
   padding: 0;
-  height: calc(100vh - var(--toolbar-height));
+  height: calc(100dvh - var(--toolbar-height));
   overflow: auto;
 }
 
