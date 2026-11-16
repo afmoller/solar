@@ -809,6 +809,75 @@
           }
         }
       }
+    },
+    "/api/v1/weather/getLatestEntriesByYear": {
+      "get": {
+        "tags": [
+          "weather-controller"
+        ],
+        "operationId": "getLatestWeatherEntriesByYear",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherDataEntryYearlyRainDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/weather/getLatestEntriesByMonth": {
+      "get": {
+        "tags": [
+          "weather-controller"
+        ],
+        "operationId": "getLatestWeatherEntriesByMonth",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherDataEntryMonthlyRainDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/weather/getLatestEntriesByDay": {
+      "get": {
+        "tags": [
+          "weather-controller"
+        ],
+        "operationId": "getLatestWeatherEntriesByDay",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherDataEntryDailyRainDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1327,6 +1396,72 @@
           "solarRadiation",
           "rainRateInMillimetersPerHour",
           "hourlyRainInMillimeters",
+          "dailyRainInMillimeters"
+        ]
+      },
+      "WeatherDataEntryYearlyRainDto": {
+        "type": "object",
+        "properties": {
+          "dateUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "yearlyRainInMillimeters": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "required": [
+          "dateUtc",
+          "yearlyRainInMillimeters"
+        ]
+      },
+      "WeatherDataEntryMonthlyRainDto": {
+        "type": "object",
+        "properties": {
+          "dateUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "yearlyRainInMillimeters": {
+            "type": "number",
+            "format": "float"
+          },
+          "monthlyRainInMillimeters": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "required": [
+          "dateUtc",
+          "yearlyRainInMillimeters",
+          "monthlyRainInMillimeters"
+        ]
+      },
+      "WeatherDataEntryDailyRainDto": {
+        "type": "object",
+        "properties": {
+          "dateUtc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "yearlyRainInMillimeters": {
+            "type": "number",
+            "format": "float"
+          },
+          "monthlyRainInMillimeters": {
+            "type": "number",
+            "format": "float"
+          },
+          "dailyRainInMillimeters": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "required": [
+          "dateUtc",
+          "yearlyRainInMillimeters",
+          "monthlyRainInMillimeters",
           "dailyRainInMillimeters"
         ]
       }

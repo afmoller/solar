@@ -1,10 +1,12 @@
 package moller.solar.solarpersistence.service;
 
-import moller.openapi.persistence.solar.model.WeatherDataEntry;
-import moller.openapi.persistence.solar.model.WeatherDataEntryDateDto;
+import moller.openapi.persistence.solar.model.*;
 import moller.solar.solarpersistence.mapper.WeatherMapper;
 import moller.solar.solarpersistence.persistence.entity.WeatherStationEntryEntity;
+import moller.solar.solarpersistence.persistence.projection.WeatherStationDailyRainProjection;
 import moller.solar.solarpersistence.persistence.projection.WeatherStationEntryProjection;
+import moller.solar.solarpersistence.persistence.projection.WeatherStationMonthlyRainProjection;
+import moller.solar.solarpersistence.persistence.projection.WeatherStationYearlyRainProjection;
 import moller.solar.solarpersistence.persistence.repository.WeatherStationRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,4 +36,20 @@ public class WeatherService {
         List<WeatherStationEntryProjection> weatherInformationForDate = weatherStationRepository.getWeatherInformationForDate(dateFrom, dateTo);
         return weatherMapper.mapToDto(weatherInformationForDate);
     }
+
+    public List<WeatherDataEntryYearlyRainDto> getLatestWeatherEntriesByYear() {
+        List<WeatherStationYearlyRainProjection> latestWeatherEntriesByYear = weatherStationRepository.getLatestWeatherEntriesByYear();
+        return weatherMapper.mapToYearlyDto(latestWeatherEntriesByYear);
+    }
+
+    public List<WeatherDataEntryMonthlyRainDto> getLatestWeatherEntriesByMonth() {
+        List<WeatherStationMonthlyRainProjection> latestWeatherEntriesByMonth = weatherStationRepository.getLatestWeatherEntriesByMonth();
+        return weatherMapper.mapToMonthlyDto(latestWeatherEntriesByMonth);
+    }
+
+    public List<WeatherDataEntryDailyRainDto> getLatestWeatherEntriesByDay() {
+        List<WeatherStationDailyRainProjection> latestWeatherEntriesByDay = weatherStationRepository.getLatestWeatherEntriesByDay();
+        return weatherMapper.mapToDailyDto(latestWeatherEntriesByDay);
+    }
+
 }

@@ -1,9 +1,11 @@
 package moller.solar.solarpersistence.mapper;
 
-import moller.openapi.persistence.solar.model.WeatherDataEntry;
-import moller.openapi.persistence.solar.model.WeatherDataEntryDateDto;
+import moller.openapi.persistence.solar.model.*;
 import moller.solar.solarpersistence.persistence.entity.WeatherStationEntryEntity;
+import moller.solar.solarpersistence.persistence.projection.WeatherStationDailyRainProjection;
 import moller.solar.solarpersistence.persistence.projection.WeatherStationEntryProjection;
+import moller.solar.solarpersistence.persistence.projection.WeatherStationMonthlyRainProjection;
+import moller.solar.solarpersistence.persistence.projection.WeatherStationYearlyRainProjection;
 import org.mapstruct.Mapper;
 
 import java.time.ZoneId;
@@ -71,6 +73,36 @@ public abstract class WeatherMapper {
                         .hourlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.hourlyrainin()))
                         .rainRateInMillimetersPerHour(inchesToMillimeters(weatherStationEntryProjection.rainratein()))
                         .dateUtc(weatherStationEntryProjection.dateutc().atZoneSameInstant(ZoneId.of("Europe/Paris")).toLocalDateTime()))
+                .toList();
+    }
+
+    public List<WeatherDataEntryYearlyRainDto> mapToYearlyDto(List<WeatherStationYearlyRainProjection> weatherStationEntryProjections) {
+        return weatherStationEntryProjections
+                .stream()
+                .map(weatherStationEntryProjection -> new WeatherDataEntryYearlyRainDto()
+                        .dateUtc(weatherStationEntryProjection.dateutc().atZone(ZoneId.of("Europe/Paris")).toLocalDateTime())
+                        .yearlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.yearlyrainin().floatValue())))
+                .toList();
+    }
+
+    public List<WeatherDataEntryMonthlyRainDto> mapToMonthlyDto(List<WeatherStationMonthlyRainProjection> weatherStationEntryProjections) {
+        return weatherStationEntryProjections
+                .stream()
+                .map(weatherStationEntryProjection -> new WeatherDataEntryMonthlyRainDto()
+                        .dateUtc(weatherStationEntryProjection.dateutc().atZone(ZoneId.of("Europe/Paris")).toLocalDateTime())
+                        .yearlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.yearlyrainin().floatValue()))
+                        .monthlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.monthlyrainin().floatValue())))
+                .toList();
+    }
+
+    public List<WeatherDataEntryDailyRainDto> mapToDailyDto(List<WeatherStationDailyRainProjection> weatherStationEntryProjections) {
+        return weatherStationEntryProjections
+                .stream()
+                .map(weatherStationEntryProjection -> new WeatherDataEntryDailyRainDto()
+                        .dateUtc(weatherStationEntryProjection.dateutc().atZone(ZoneId.of("Europe/Paris")).toLocalDateTime())
+                        .yearlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.yearlyrainin().floatValue()))
+                        .monthlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.monthlyrainin().floatValue()))
+                        .dailyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.dailyrainin().floatValue())))
                 .toList();
     }
 

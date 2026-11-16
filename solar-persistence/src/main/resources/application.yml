@@ -17,6 +17,11 @@ spring:
         hibernate:
           dialect: org.hibernate.dialect.PostgreSQLDialect
 
+cron:
+  latest-weather-entries-by-day: '0 0 * * * *'
+  latest-weather-entries-by-month: '-'
+  latest-weather-entries-by-year: '-'
+
 security:
   allowed-email-claim: ${ALLOWED_EMAIL_CLAIM:configure-allowed-email}
 
@@ -38,7 +43,7 @@ logging:
             sql:
               BasicBinder: INFO
         session:
-          metrics: DEBUG
+          metrics: INFO
         statistics: INFO
         orm:
           jdbc:
