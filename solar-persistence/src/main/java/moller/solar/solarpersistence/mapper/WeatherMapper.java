@@ -9,6 +9,7 @@ import moller.solar.solarpersistence.persistence.projection.WeatherStationYearly
 import org.mapstruct.Mapper;
 
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Mapper(componentModel = "spring", config = MapstructConfig.class)
@@ -80,7 +81,7 @@ public abstract class WeatherMapper {
         return weatherStationEntryProjections
                 .stream()
                 .map(weatherStationEntryProjection -> new WeatherDataEntryYearlyRainDto()
-                        .dateUtc(weatherStationEntryProjection.dateutc().atZone(ZoneId.of("Europe/Paris")).toLocalDateTime())
+                        .dateUtc(weatherStationEntryProjection.dateutc().atOffset(ZoneOffset.UTC).toLocalDateTime())
                         .yearlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.yearlyrainin().floatValue())))
                 .toList();
     }
@@ -89,7 +90,7 @@ public abstract class WeatherMapper {
         return weatherStationEntryProjections
                 .stream()
                 .map(weatherStationEntryProjection -> new WeatherDataEntryMonthlyRainDto()
-                        .dateUtc(weatherStationEntryProjection.dateutc().atZone(ZoneId.of("Europe/Paris")).toLocalDateTime())
+                        .dateUtc(weatherStationEntryProjection.dateutc().atOffset(ZoneOffset.UTC).toLocalDateTime())
                         .yearlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.yearlyrainin().floatValue()))
                         .monthlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.monthlyrainin().floatValue())))
                 .toList();
@@ -99,7 +100,7 @@ public abstract class WeatherMapper {
         return weatherStationEntryProjections
                 .stream()
                 .map(weatherStationEntryProjection -> new WeatherDataEntryDailyRainDto()
-                        .dateUtc(weatherStationEntryProjection.dateutc().atZone(ZoneId.of("Europe/Paris")).toLocalDateTime())
+                        .dateUtc(weatherStationEntryProjection.dateutc().atOffset(ZoneOffset.UTC).toLocalDateTime())
                         .yearlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.yearlyrainin().floatValue()))
                         .monthlyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.monthlyrainin().floatValue()))
                         .dailyRainInMillimeters(inchesToMillimeters(weatherStationEntryProjection.dailyrainin().floatValue())))

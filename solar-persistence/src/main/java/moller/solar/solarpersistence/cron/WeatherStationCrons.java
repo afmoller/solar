@@ -10,7 +10,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,11 +54,11 @@ public class WeatherStationCrons {
 
         WeatherStationDailyRainProjection firstLatestWeatherEntriesByDay = latestWeatherEntriesByDay.getFirst();
 
-        OffsetDateTime offsetDateTimeOfLatestWeatherEntryByDay = OffsetDateTime.ofInstant(firstLatestWeatherEntriesByDay.dateutc(), ZoneId.of("Europe/Paris"));
+        OffsetDateTime offsetDateTimeOfLatestWeatherEntryByDay = OffsetDateTime.ofInstant(firstLatestWeatherEntriesByDay.dateutc(), ZoneOffset.UTC);
 
         WeatherStationRainDailyEntity latestWeatherStationRainDailyEntity = latestWeatherStationRainDailyEntityEntryOptional.get();
 
-        if (!latestWeatherStationRainDailyEntity.getDateutc().toLocalDate().isEqual(offsetDateTimeOfLatestWeatherEntryByDay.toLocalDate())) {
+        if (!latestWeatherStationRainDailyEntity.getDateutc().truncatedTo(ChronoUnit.DAYS).isEqual(offsetDateTimeOfLatestWeatherEntryByDay.truncatedTo(ChronoUnit.DAYS))) {
             persistAsWeatherStationRainDailyEntities(latestWeatherEntriesByDay);
         } else if (latestWeatherStationRainDailyEntity.getDateutc().isEqual(offsetDateTimeOfLatestWeatherEntryByDay)) {
             if (latestWeatherEntriesByDay.size() > 1) {
@@ -92,7 +93,7 @@ public class WeatherStationCrons {
                 latestWeatherEntriesByDay
                         .stream()
                         .map(weatherStationDailyRainProjection -> populateEntity(
-                                OffsetDateTime.ofInstant(weatherStationDailyRainProjection.dateutc(), ZoneId.of("Europe/Paris")),
+                                OffsetDateTime.ofInstant(weatherStationDailyRainProjection.dateutc(), ZoneOffset.UTC),
                                 new WeatherStationRainDailyEntity(),
                                 weatherStationDailyRainProjection))
                         .toList());
@@ -107,6 +108,8 @@ public class WeatherStationCrons {
         weatherStationRainDailyEntity.setDailyrainin(weatherStationDailyRainProjection.dailyrainin().floatValue());
         weatherStationRainDailyEntity.setYearlyrainin(weatherStationDailyRainProjection.yearlyrainin().floatValue());
         weatherStationRainDailyEntity.setMonthlyrainin(weatherStationDailyRainProjection.monthlyrainin().floatValue());
+        weatherStationRainDailyEntity.setYear(offsetDateTime.getYear());
+        weatherStationRainDailyEntity.setMonth(offsetDateTime.getMonthValue());
 
         return weatherStationRainDailyEntity;
     }

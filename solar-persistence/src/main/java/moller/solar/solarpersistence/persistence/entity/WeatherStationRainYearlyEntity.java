@@ -8,14 +8,14 @@ import java.time.OffsetDateTime;
 @Table(name = "WEATHER_STATION_RAIN_YEARLY")
 public class WeatherStationRainYearlyEntity {
 
-    public static final String ID_PK = "ID_PK";
-    public static final String DATEUTC = "DATEUTC";
-    public static final String YEARLYRAININ = "YEARLYRAININ";
+    private static final String ID = "ID";
+    private static final String DATEUTC = "DATEUTC";
+    private static final String YEARLYRAININ = "YEARLYRAININ";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "weather_station_rain_yearly_generator")
     @SequenceGenerator(name = "weather_station_rain_yearly_generator", sequenceName = "WEATHER_STATION_RAIN_YEARLY_SEQ", allocationSize = 1)
-    @Column(name = ID_PK)
+    @Column(name = ID)
     private Integer id;
 
     @Column(name = DATEUTC)
